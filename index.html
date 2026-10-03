@@ -1,0 +1,3888 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hay Day — Guide Complet</title>
+  <style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --sidebar-width: 300px;
+  --green-dark: #2d5a27;
+  --green-mid: #4a8c3f;
+  --green-light: #7cbd6e;
+  --green-bg: #e8f5e1;
+  --brown: #8b6914;
+  --gold: #d4a017;
+  --yellow-bg: #fff8dc;
+  --header-bg: #1a3a15;
+  --text: #2c2c2c;
+  --text-light: #666;
+  --border: #c8e6c9;
+  --shadow: rgba(0,0,0,0.1);
+  --card-bg: #fff;
+  --hover: #f1f8e9;
+  --unknown: #ff9800;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--text);
+  background: var(--green-bg);
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  width: var(--sidebar-width);
+  background: var(--header-bg);
+  color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  overflow-y: auto;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-header {
+  padding: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  text-align: center;
+}
+
+.sidebar-header h1 {
+  font-size: 18px;
+  margin-bottom: 4px;
+  color: var(--gold);
+}
+
+.sidebar-header p {
+  font-size: 11px;
+  color: rgba(255,255,255,0.6);
+}
+
+.sidebar-search {
+  padding: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.sidebar-search input {
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  outline: none;
+}
+
+.sidebar-search input::placeholder {
+  color: rgba(255,255,255,0.4);
+}
+
+.sidebar-search input:focus {
+  background: rgba(255,255,255,0.25);
+}
+
+.sidebar-nav {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 0;
+}
+
+.nav-section {
+  padding: 0;
+}
+
+.nav-section-title {
+  padding: 8px 16px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgba(255,255,255,0.4);
+  cursor: default;
+  font-weight: 600;
+}
+
+.nav-item {
+  display: block;
+  padding: 7px 16px 7px 24px;
+  color: rgba(255,255,255,0.75);
+  text-decoration: none;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s;
+  border-left: 3px solid transparent;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nav-item:hover {
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+}
+
+.nav-item.active {
+  color: var(--gold);
+  border-left-color: var(--gold);
+  background: rgba(212,160,23,0.1);
+}
+
+/* Main content */
+.main {
+  margin-left: var(--sidebar-width);
+  flex: 1;
+  padding: 0;
+  min-height: 100vh;
+}
+
+.page-header {
+  background: linear-gradient(135deg, var(--green-dark), var(--green-mid));
+  color: #fff;
+  padding: 30px 40px;
+}
+
+.page-header h2 {
+  font-size: 28px;
+  margin-bottom: 6px;
+}
+
+.page-header p {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.content {
+  padding: 24px 40px 80px;
+}
+
+/* Category cards */
+.category-card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px var(--shadow);
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+
+.category-header {
+  background: var(--green-mid);
+  color: #fff;
+  padding: 14px 20px;
+  font-size: 18px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.category-header .icon {
+  font-size: 24px;
+}
+
+/* Product table */
+.product-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.product-table th {
+  background: #f5f5f5;
+  padding: 10px 16px;
+  text-align: left;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-light);
+  border-bottom: 2px solid var(--border);
+  font-weight: 600;
+}
+
+.product-table td {
+  padding: 8px 16px;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 14px;
+}
+
+.product-table tr:hover {
+  background: var(--hover);
+}
+
+.product-name {
+  font-weight: 500;
+}
+
+.product-price {
+  font-family: 'Consolas', monospace;
+  color: var(--brown);
+  font-weight: 600;
+}
+
+.product-time {
+  font-family: 'Consolas', monospace;
+  color: var(--text-light);
+}
+
+.product-time.unknown {
+  color: var(--unknown);
+  font-weight: 600;
+}
+
+/* Price table */
+.price-table-wrapper {
+  overflow-x: auto;
+}
+
+.price-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.price-table th {
+  background: #f5f5f5;
+  padding: 8px 10px;
+  text-align: center;
+  border-bottom: 2px solid var(--border);
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--text-light);
+  font-weight: 600;
+}
+
+.price-table th:first-child {
+  text-align: left;
+  padding-left: 16px;
+  position: sticky;
+  left: 0;
+  background: #f5f5f5;
+  z-index: 2;
+  min-width: 160px;
+}
+
+.price-table td {
+  padding: 6px 10px;
+  text-align: center;
+  border-bottom: 1px solid #f0f0f0;
+  font-family: 'Consolas', monospace;
+  font-size: 13px;
+}
+
+.price-table td:first-child {
+  text-align: left;
+  font-family: inherit;
+  padding-left: 16px;
+  position: sticky;
+  left: 0;
+  background: var(--card-bg);
+  z-index: 1;
+  font-weight: 500;
+}
+
+.price-table tr:hover td {
+  background: var(--hover);
+}
+
+.price-table tr:hover td:first-child {
+  background: var(--hover);
+}
+
+.price-table tr:hover td:first-child {
+  background: var(--hover);
+}
+
+/* Sub-group headings in prices */
+.subgroup-header {
+  background: var(--yellow-bg);
+  padding: 10px 16px;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--brown);
+  border-bottom: 1px solid var(--border);
+}
+
+/* Multiplier table special */
+.multiplier-table td:first-child {
+  font-weight: 600;
+  color: var(--green-dark);
+}
+
+/* Filter bar */
+.filter-bar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.filter-bar input,
+.filter-bar select {
+  padding: 10px 16px;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  background: var(--card-bg);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.filter-bar input:focus,
+.filter-bar select:focus {
+  border-color: var(--green-mid);
+}
+
+.filter-bar input {
+  flex: 1;
+  min-width: 200px;
+}
+
+.filter-bar select {
+  min-width: 180px;
+}
+
+/* Stats bar */
+.stats-bar {
+  display: flex;
+  gap: 16px;
+  padding: 12px 20px;
+  background: var(--yellow-bg);
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 13px;
+  color: var(--text-light);
+  flex-wrap: wrap;
+}
+
+.stats-bar .stat {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.stats-bar .stat-value {
+  font-weight: 600;
+  color: var(--text);
+}
+
+/* Back to top */
+.back-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 44px;
+  height: 44px;
+  background: var(--green-mid);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  transition: opacity 0.3s;
+}
+
+.back-to-top:hover {
+  background: var(--green-dark);
+}
+
+.back-to-top.visible {
+  display: flex;
+}
+
+/* View toggle */
+.view-toggle {
+  display: flex;
+  gap: 4px;
+  background: #f0f0f0;
+  border-radius: 8px;
+  padding: 3px;
+}
+
+.view-toggle button {
+  padding: 7px 16px;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--text-light);
+  transition: all 0.15s;
+}
+
+.view-toggle button.active {
+  background: var(--card-bg);
+  color: var(--text);
+  box-shadow: 0 1px 3px var(--shadow);
+  font-weight: 600;
+}
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-light);
+}
+
+.empty-state .icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+
+.empty-state h3 {
+  font-size: 18px;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+
+/* Scrollbar */
+.sidebar-nav::-webkit-scrollbar,
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar-nav::-webkit-scrollbar-track,
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar-nav::-webkit-scrollbar-thumb,
+.sidebar::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.15);
+  border-radius: 3px;
+}
+
+/* Section content (text sections) */
+.section-content {
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.section-content h3 {
+  font-size: 18px;
+  color: var(--green-dark);
+  margin: 28px 0 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--border);
+}
+
+.section-content h3:first-child {
+  margin-top: 0;
+}
+
+.section-content p {
+  margin-bottom: 14px;
+}
+
+.section-content ul {
+  margin: 10px 0 16px;
+  padding-left: 24px;
+}
+
+.section-content li {
+  margin-bottom: 6px;
+}
+
+.section-content blockquote {
+  background: var(--yellow-bg);
+  border-left: 4px solid var(--gold);
+  padding: 12px 16px;
+  margin: 16px 0;
+  border-radius: 0 6px 6px 0;
+  font-style: italic;
+}
+
+.wiki-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 14px 0 20px;
+  font-size: 13px;
+}
+
+.wiki-table th {
+  background: var(--green-dark);
+  color: #fff;
+  padding: 8px 12px;
+  text-align: left;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.wiki-table td {
+  padding: 7px 12px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.wiki-table tr:nth-child(even) {
+  background: #fafafa;
+}
+
+.wiki-table tr:hover {
+  background: var(--hover);
+}
+
+.wiki-table-wrapper {
+  overflow-x: auto;
+  margin-bottom: 20px;
+}
+
+.animal-card {
+  background: var(--card-bg);
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin-bottom: 12px;
+  border-left: 4px solid var(--green-mid);
+}
+
+.animal-card h4 {
+  color: var(--green-dark);
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.animal-card ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+/* Home / Landing page */
+.home-header {
+  text-align: center;
+  padding: 40px 20px 20px;
+  background: linear-gradient(135deg, var(--green-dark), var(--green-mid));
+  color: #fff;
+  border-radius: 16px;
+  margin-bottom: 32px;
+}
+
+.home-header h1 {
+  font-size: 28px;
+  margin-bottom: 16px;
+  color: var(--gold);
+}
+
+.home-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 24px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.home-meta p {
+  margin: 0;
+}
+
+.home-desc {
+  font-size: 15px;
+  opacity: 0.85;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.home-toc {
+  margin: 32px 0;
+}
+
+.home-toc h2 {
+  text-align: center;
+  margin-bottom: 24px;
+  color: var(--green-dark);
+}
+
+.toc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 10px;
+}
+
+.toc-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 18px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 14px;
+  text-decoration: none;
+  color: var(--text);
+}
+
+.toc-item:hover {
+  background: var(--hover);
+  border-color: var(--green-mid);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px var(--shadow);
+}
+
+.toc-item span {
+  font-weight: 500;
+}
+
+.home-footer {
+  text-align: center;
+  padding: 20px;
+  margin-top: 32px;
+  font-size: 12px;
+  color: var(--text-light);
+  border-top: 1px solid var(--border);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+    max-height: 50vh;
+  }
+  .main {
+    margin-left: 0;
+  }
+  .content {
+    padding: 16px;
+  }
+  .page-header {
+    padding: 20px;
+  }
+  .page-header h2 {
+    font-size: 22px;
+  }
+  .price-table th:first-child,
+  .price-table td:first-child {
+    position: static;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <h1>🌾 Hay Day</h1>
+      <p>Guide complet — v1.58+</p>
+    </div>
+    <div class="sidebar-nav" id="sidebar-nav"></div>
+  </nav>
+  <main class="main">
+    <div id="app"></div>
+  </main>
+  <button class="back-to-top" id="back-to-top" title="Retour en haut">↑</button>
+  <script>
+const productsData = [
+  {
+    id: 1,
+    name: "Cultures (Champs)",
+    icon: "🌱",
+    products: [
+      { name: "Ail", price: 14, time: "10 min" },
+      { name: "Ananas", price: 14, time: "10 min" },
+      { name: "Argile", price: 18, time: "20 min" },
+      { name: "Artichaut", price: 82, time: "30 min" },
+      { name: "Asperge", price: 43, time: "6 h" },
+      { name: "Aubergine", price: 14, time: "10 min" },
+      { name: "Avoine", price: 7, time: "5 min" },
+      { name: "Banane", price: 104, time: "1 h" },
+      { name: "Betterave", price: 14, time: "10 min" },
+      { name: "Blé", price: 3, time: "2 min" },
+      { name: "Brocoli", price: 21, time: "5 min" },
+      { name: "Cacao", price: 86, time: "16" },
+      { name: "Café", price: 64, time: "8 h" },
+      { name: "Camomille", price: 10, time: "20 min" },
+      { name: "Canne à sucre", price: 14, time: "10 min" },
+      { name: "Carotte", price: 7, time: "5 min" },
+      { name: "Cassis", price: 94, time: "?" },
+      { name: "Champignon", price: 10, time: "20 min" },
+      { name: "Chou", price: 18, time: "20 min" },
+      { name: "Chou kale", price: 108, time: "30 min" },
+      { name: "Chou-fleur", price: 21, time: "5 min" },
+      { name: "Citron", price: 93, time: "18" },
+      { name: "Citrouille", price: 32, time: "1 h" },
+      { name: "Concombre", price: 14, time: "10 min" },
+      { name: "Coton", price: 28, time: "2 h" },
+      { name: "Daikon", price: 90, time: "1 h" },
+      { name: "Épinard", price: 79, time: "?" },
+      { name: "Fleur de sureau", price: 144, time: "20 min" },
+      { name: "Fraise", price: 50, time: "20 min" },
+      { name: "Fruit de la passion", price: 18, time: "20 min" },
+      { name: "Gingembre", price: 28, time: "2 h" },
+      { name: "Gombo", price: 93, time: "18" },
+      { name: "Goyave", price: 111, time: "1 h" },
+      { name: "Grenade", price: 111, time: "1 h" },
+      { name: "Haricot noir", price: 7, time: "5 min" },
+      { name: "Indigo", price: 25, time: "2 h" },
+      { name: "Laitue", price: 32, time: "1 h" },
+      { name: "Lavande", price: 97, time: "19" },
+      { name: "Luffa", price: 108, time: "30 min" },
+      { name: "Lys", price: 21, time: "5 min" },
+      { name: "Maïs", price: 7, time: "5 min" },
+      { name: "Mangue", price: 100, time: "20 min" },
+      { name: "Menthe", price: 32, time: "1 h" },
+      { name: "Mûre", price: 82, time: "30 min" },
+      { name: "Myrtille", price: 82, time: "30 min" },
+      { name: "Myrtille (fruit)", price: 82, time: "30 min" },
+      { name: "Noix de coco", price: 108, time: "30 min" },
+      { name: "Oignon", price: 39, time: "16 h" },
+      { name: "Olive", price: 82, time: "30 min" },
+      { name: "Orange", price: 97, time: "19" },
+      { name: "Papaye", price: 162, time: "1 h" },
+      { name: "Pastèque", price: 39, time: "16 h" },
+      { name: "Pêche", price: 100, time: "20 min" },
+      { name: "Piment", price: 36, time: "4 h" },
+      { name: "Piment doux", price: 162, time: "1 h" },
+      { name: "Piment vert", price: 36, time: "4 h" },
+      { name: "Pivoine", price: 36, time: "4 h" },
+      { name: "Poireau", price: 39, time: "16 h" },
+      { name: "Pois chiche", price: 18, time: "20 min" },
+      { name: "Pomme de terre", price: 36, time: "4 h" },
+      { name: "Prune", price: 82, time: "30 min" },
+      { name: "Raisin", price: 32, time: "1 h" },
+      { name: "Rhubarbe", price: 79, time: "?" },
+      { name: "Riz", price: 18, time: "20 min" },
+      { name: "Rose", price: 61, time: "?" },
+      { name: "Sésame", price: 18, time: "20 min" },
+      { name: "Soja", price: 10, time: "20 min" },
+      { name: "Thé", price: 43, time: "6 h" },
+      { name: "Tomate", price: 43, time: "6 h" },
+      { name: "Tournesol", price: 21, time: "5 min" },
+      { name: "Vanille", price: 180, time: "2 h" },
+      { name: "Wasabi", price: 126, time: "1 h" },
+    ]
+  },
+  {
+    id: 2,
+    name: "Arbres Fruitiers",
+    icon: "🌳",
+    products: [
+      { name: "Bananier", price: 72, time: "30 min" },
+      { name: "Cerisier", price: 68, time: "13" },
+      { name: "Cocotier", price: 100, time: "20 min" },
+      { name: "Goyavier", price: 105, time: "1 j 10 h" },
+      { name: "Grenadier", price: 110, time: "1 j 3 h" },
+      { name: "Manguier", price: 96, time: "1 j 8 h" },
+      { name: "Olivier", price: 88, time: "1 j" },
+      { name: "Pêcher", price: 84, time: "1 j 6 h" },
+      { name: "Poirier", price: 80, time: "?" },
+      { name: "Pommier", price: 39, time: "16 h" },
+      { name: "Prunier", price: 92, time: "1 j" },
+    ]
+  },
+  {
+    id: 3,
+    name: "Buissons Fruitiers",
+    icon: "🫐",
+    products: [
+      { name: "Cassissier", price: 94, time: "?" },
+      { name: "Framboisier", price: 46, time: "18 h" },
+      { name: "Mûrier", price: 90, time: "1 h" },
+      { name: "Myrtillier", price: 98, time: "1 j 10 h" },
+    ]
+  },
+  {
+    id: 4,
+    name: "Produits Animaux",
+    icon: "🐄",
+    products: [
+      { name: "Bacon", price: 50, time: "20 min" },
+      { name: "Cacahuète", price: 234, time: "45 min" },
+      { name: "Cire d'abeille", price: 234, time: "45 min" },
+      { name: "Miel", price: 154, time: "20 min" },
+      { name: "Nid d'abeille", price: 68, time: "13" },
+      { name: "Côte d'agneau", price: 36, time: "4 h" },
+      { name: "Filet de poisson", price: 54, time: "6 h" },
+      { name: "Laine", price: 54, time: "6 h" },
+      { name: "Lait", price: 32, time: "1 h" },
+      { name: "Lait de chèvre", price: 64, time: "8 h" },
+      { name: "Œuf", price: 18, time: "20 min" },
+      { name: "Plume de canard", price: 140, time: "45 min" },
+      { name: "Queue de homard", price: 201, time: "1 h" },
+    ]
+  },
+  {
+    id: 5,
+    name: "Moulin à Aliments (Feed Mill)",
+    icon: "⚙️",
+    products: [
+      { name: "Fagot de blé", price: 50, time: "20 min" },
+      { name: "Nourriture agneau", price: 18, time: "20 min" },
+      { name: "Nourriture chèvre", price: 14, time: "10 min" },
+      { name: "Nourriture cochon", price: 14, time: "10 min" },
+      { name: "Nourriture mouton", price: 14, time: "10 min" },
+      { name: "Nourriture poule", price: 7, time: "5 min" },
+      { name: "Nourriture vache", price: 14, time: "10 min" },
+      { name: "Seau de viande", price: 72, time: "30 min" },
+    ]
+  },
+  {
+    id: 6,
+    name: "Laiterie (Dairy)",
+    icon: "🥛",
+    products: [
+      { name: "Beurre", price: 82, time: "30 min" },
+      { name: "Crème", price: 50, time: "20 min" },
+      { name: "Fromage", price: 122, time: "1 h" },
+      { name: "Fromage de chèvre", price: 162, time: "1 h" },
+    ]
+  },
+  {
+    id: 7,
+    name: "Sucrière (Sugar Mill)",
+    icon: "🍬",
+    products: [
+      { name: "Sirop", price: 90, time: "1 h" },
+      { name: "Sucre blanc", price: 50, time: "20 min" },
+      { name: "Sucre brun", price: 32, time: "1 h" },
+    ]
+  },
+  {
+    id: 8,
+    name: "Boulangerie (Bakery)",
+    icon: "🥖",
+    products: [
+      { name: "Barres ananas-coco", price: 284, time: "4 h" },
+      { name: "Biscuit gingembre", price: 273, time: "30 min" },
+      { name: "Cookie", price: 104, time: "1 h" },
+      { name: "Macaron", price: 421, time: "30 min" },
+      { name: "Muffin framboise", price: 140, time: "45 min" },
+      { name: "Muffin mûre", price: 226, time: "45 min" },
+      { name: "Muffin myrtille", price: 230, time: "45 min" },
+      { name: "Pain", price: 21, time: "5 min" },
+      { name: "Pain banane", price: 424, time: "30 min" },
+      { name: "Pain de maïs", price: 72, time: "30 min" },
+      { name: "Pain pomme de terre", price: 284, time: "4 h" },
+      { name: "Pizza", price: 190, time: "15 min" },
+      { name: "Pizza épicée", price: 226, time: "45 min" },
+      { name: "Pizza Frutti di Mare", price: 403, time: "15 min" },
+    ]
+  },
+  {
+    id: 9,
+    name: "BBQ (Grill)",
+    icon: "🥩",
+    products: [
+      { name: "Asperges grillées", price: 486, time: "1 h" },
+      { name: "Aubergine grillée", price: 324, time: "1 h" },
+      { name: "Bacon & Œufs", price: 201, time: "1 h" },
+      { name: "Banane pancake", price: 352, time: "3 h" },
+      { name: "Brochette d'agneau", price: 90, time: "1 h" },
+      { name: "Brochette homard", price: 417, time: "40 min" },
+      { name: "Brochette poisson", price: 176, time: "2 h" },
+      { name: "Hamburger", price: 180, time: "2 h" },
+      { name: "Légumes d'hiver", price: 198, time: "15 min" },
+      { name: "Oignon grillé", price: 190, time: "15 min" },
+      { name: "Pain à l'ail", price: 198, time: "15 min" },
+      { name: "Pancakes", price: 108, time: "30 min" },
+      { name: "Patate au four", price: 298, time: "35 min" },
+      { name: "Poisson burger", price: 226, time: "45 min" },
+      { name: "Poisson frit & frites", price: 244, time: "1 h" },
+      { name: "Poivrons farcis", price: 352, time: "3 h" },
+      { name: "Tomates grillées", price: 118, time: "1 h" },
+    ]
+  },
+  {
+    id: 10,
+    name: "Four à Tartes (Pie Oven)",
+    icon: "🥧",
+    products: [
+      { name: "Aubergine parmesan", price: 442, time: "2 h" },
+      { name: "Casserole", price: 367, time: "2 h" },
+      { name: "Parmigiana", price: 442, time: "2 h" },
+      { name: "Quiche asperge", price: 302, time: "2 h" },
+      { name: "Tarte au poulet", price: 280, time: "1 h" },
+      { name: "Tarte bacon", price: 219, time: "3 h" },
+      { name: "Tarte carotte", price: 82, time: "30 min" },
+      { name: "Tarte chocolat", price: 514, time: "2 h" },
+      { name: "Tarte citron", price: 446, time: "2 h" },
+      { name: "Tarte citrouille", price: 158, time: "2 h" },
+      { name: "Tarte feta", price: 223, time: "1 h" },
+      { name: "Tarte fruit passion", price: 111, time: "1 h" },
+      { name: "Tarte pêche", price: 435, time: "2 h" },
+      { name: "Tarte pomme", price: 270, time: "2 h" },
+      { name: "Tourte champignons", price: 162, time: "1 h" },
+      { name: "Tourte poisson", price: 226, time: "45 min" },
+    ]
+  },
+  {
+    id: 11,
+    name: "Machine à Pop-corn (Popcorn Pot)",
+    icon: "🍿",
+    products: [
+      { name: "Pop-corn", price: 32, time: "1 h" },
+      { name: "Pop-corn beurre", price: 126, time: "1 h" },
+      { name: "Pop-corn chocolat", price: 248, time: "5 min" },
+      { name: "Pop-corn miel", price: 360, time: "1 h" },
+      { name: "Pop-corn piment", price: 122, time: "1 h" },
+      { name: "Snack mix", price: 309, time: "1 h" },
+    ]
+  },
+  {
+    id: 12,
+    name: "Four à Gâteaux (Cake Oven)",
+    icon: "🎂",
+    products: [
+      { name: "Cheesecake", price: 284, time: "4 h" },
+      { name: "Gâteau ananas", price: 259, time: "30 min" },
+      { name: "Gâteau carotte", price: 165, time: "1 h" },
+      { name: "Gâteau chocolat", price: 320, time: "2 h" },
+      { name: "Gâteau citron", price: 896, time: "2 h" },
+      { name: "Gâteau crème", price: 219, time: "3 h" },
+      { name: "Gâteau fancy", price: 450, time: "15 min" },
+      { name: "Gâteau feta-pomme de terre", price: 309, time: "1 h" },
+      { name: "Gâteau fraise", price: 316, time: "3 h" },
+      { name: "Gâteau fruit", price: 450, time: "15 min" },
+      { name: "Gâteau fruits rouges", price: 255, time: "1 h" },
+      { name: "Gâteau grenade", price: 316, time: "3 h" },
+      { name: "Gâteau miel-pomme", price: 482, time: "3 h" },
+      { name: "Gâteau myrtille cheesecake", price: 500, time: "4 h" },
+      { name: "Gâteau roulé chocolat", price: 604, time: "1 h" },
+    ]
+  },
+  {
+    id: 13,
+    name: "Métier à Tisser (Loom)",
+    icon: "🧵",
+    products: [
+      { name: "Chapeau laine bleu", price: 111, time: "1 h" },
+      { name: "Écharpe fleurie", price: 295, time: "1 h" },
+      { name: "Écharpe rouge", price: 288, time: "2 h" },
+      { name: "Pull", price: 151, time: "2 h" },
+      { name: "Pull bleu", price: 208, time: "3 h" },
+      { name: "Tissu coton", price: 108, time: "30 min" },
+    ]
+  },
+  {
+    id: 14,
+    name: "Machine à Coudre (Sewing)",
+    icon: "🪡",
+    products: [
+      { name: "Chemise coton", price: 241, time: "45 min" },
+      { name: "Compresse", price: 324, time: "1 h" },
+      { name: "Couverture", price: 1098, time: "3 h" },
+      { name: "Oreiller", price: 676, time: "3 h" },
+      { name: "Pantalon laine", price: 309, time: "1 h" },
+      { name: "Robe violette", price: 327, time: "2 h" },
+    ]
+  },
+  {
+    id: 15,
+    name: "Presse-Agrumes (Juice Press)",
+    icon: "🍊",
+    products: [
+      { name: "Jus ananas", price: 68, time: "13" },
+      { name: "Jus baies", price: 205, time: "16 h" },
+      { name: "Jus carotte", price: 46, time: "18 h" },
+      { name: "Jus cerise", price: 216, time: "2 h" },
+      { name: "Jus fruit passion", price: 64, time: "8 h" },
+      { name: "Jus goyave", price: 252, time: "7 h" },
+      { name: "Jus mangue", price: 230, time: "45 min" },
+      { name: "Jus orange", price: 234, time: "45 min" },
+      { name: "Jus pastèque", price: 108, time: "30 min" },
+      { name: "Jus pomme", price: 129, time: "2 h" },
+      { name: "Jus raisin", price: 104, time: "1 h" },
+      { name: "Jus tomate", price: 162, time: "1 h" },
+    ]
+  },
+  {
+    id: 16,
+    name: "Glaces (Ice Cream Maker)",
+    icon: "🍦",
+    products: [
+      { name: "Affogato", price: 435, time: "2 h" },
+      { name: "Banane split", price: 403, time: "15 min" },
+      { name: "Glace chocolat", price: 342, time: "2 h" },
+      { name: "Glace fraise", price: 331, time: "4 h" },
+      { name: "Glace menthe", price: 288, time: "2 h" },
+      { name: "Glace noix de coco", price: 320, time: "2 h" },
+      { name: "Glace pêche", price: 450, time: "15 min" },
+      { name: "Glace sésame", price: 176, time: "2 h" },
+      { name: "Glace vanille", price: 172, time: "2 h" },
+      { name: "Milkshake beurre cacahuète", price: 619, time: "1 h" },
+      { name: "Popsicle cerise", price: 352, time: "3 h" },
+      { name: "Sorbet fruit", price: 518, time: "1 h" },
+      { name: "Sorbet orange", price: 399, time: "3 h" },
+    ]
+  },
+  {
+    id: 17,
+    name: "Soupière (Soup Kitchen)",
+    icon: "🥣",
+    products: [
+      { name: "Soupe agneau", price: 180, time: "2 h" },
+      { name: "Soupe ail", price: 327, time: "2 h" },
+      { name: "Soupe asperge", price: 255, time: "1 h" },
+      { name: "Soupe brocoli", price: 237, time: "1 h" },
+      { name: "Soupe carotte", price: 270, time: "2 h" },
+      { name: "Soupe champignon", price: 176, time: "2 h" },
+      { name: "Soupe chou", price: 270, time: "2 h" },
+      { name: "Soupe chou-fleur", price: 253, time: "?" },
+      { name: "Soupe citrouille", price: 392, time: "2 h" },
+      { name: "Soupe homard", price: 612, time: "2 h" },
+      { name: "Soupe nouilles", price: 432, time: "2 h" },
+      { name: "Soupe oignon", price: 327, time: "2 h" },
+      { name: "Soupe poisson", price: 298, time: "35 min" },
+      { name: "Soupe poivron", price: 439, time: "1 h" },
+      { name: "Soupe pomme de terre", price: 255, time: "1 h" },
+      { name: "Soupe tomate", price: 478, time: "1 h" },
+    ]
+  },
+  {
+    id: 18,
+    name: "Confiturier (Jam Maker)",
+    icon: "🍓",
+    products: [
+      { name: "Chutney myrtille", price: 579, time: "4 h" },
+      { name: "Confiture cerise", price: 334, time: "7 h" },
+      { name: "Confiture fraise", price: 270, time: "2 h" },
+      { name: "Confiture framboise", price: 252, time: "7 h" },
+      { name: "Confiture fruit passion", price: 118, time: "1 h" },
+      { name: "Confiture mûre", price: 388, time: "8 h" },
+      { name: "Confiture pêche", price: 464, time: "8 h" },
+      { name: "Confiture pomme", price: 219, time: "3 h" },
+      { name: "Confiture prune", price: 385, time: "5 h" },
+      { name: "Confiture raisin", price: 162, time: "1 h" },
+      { name: "Marmelade orange", price: 457, time: "2 h" },
+    ]
+  },
+  {
+    id: 19,
+    name: "Bijouterie (Jeweler)",
+    icon: "💍",
+    products: [
+      { name: "Bague diamant", price: 270, time: "2 h" },
+      { name: "Bague platine", price: 824, time: "4 h" },
+      { name: "Bracelet argent", price: 514, time: "2 h" },
+      { name: "Bracelet fer", price: 658, time: "1 h" },
+      { name: "Collier or", price: 727, time: "3 h" },
+      { name: "Pendentif fleur", price: 698, time: "1 h" },
+    ]
+  },
+  {
+    id: 20,
+    name: "Saucerie (Sauce Maker)",
+    icon: "🫙",
+    products: [
+      { name: "Citron curd", price: 378, time: "25 min" },
+      { name: "Houmous", price: 277, time: "45 min" },
+      { name: "Huile olive", price: 277, time: "45 min" },
+      { name: "Mayonnaise", price: 367, time: "2 h" },
+      { name: "Salsa", price: 252, time: "7 h" },
+      { name: "Sauce pimentée", price: 453, time: "40 min" },
+      { name: "Sauce soja", price: 154, time: "20 min" },
+      { name: "Sauce tomate", price: 230, time: "45 min" },
+      { name: "Trempette haricots", price: 453, time: "40 min" },
+      { name: "Trempette olive", price: 468, time: "40 min" },
+      { name: "Vinaigrette", price: 288, time: "2 h" },
+    ]
+  },
+  {
+    id: 21,
+    name: "Kiosque à Café (Coffee Kiosk)",
+    icon: "☕",
+    products: [
+      { name: "Caffè latte", price: 219, time: "3 h" },
+      { name: "Caffè mocha", price: 291, time: "15 min" },
+      { name: "Caramel latte", price: 345, time: "15 min" },
+      { name: "Chocolat chaud", price: 316, time: "3 h" },
+      { name: "Espresso", price: 248, time: "5 min" },
+      { name: "Iced banana latte", price: 277, time: "45 min" },
+      { name: "Raspberry mocha", price: 259, time: "30 min" },
+    ]
+  },
+  {
+    id: 22,
+    name: "Machine à Bonbons (Candy Machine)",
+    icon: "🍬",
+    products: [
+      { name: "Barbe à papa", price: 226, time: "45 min" },
+      { name: "Barre aux fruits", price: 168, time: "?" },
+      { name: "Barre chocolatée", price: 460, time: "20 h" },
+      { name: "Barre chocolatée au lait", price: 126, time: "1 h" },
+      { name: "Barre miel", price: 140, time: "45 min" },
+      { name: "Cacahuètes miel", price: 468, time: "40 min" },
+      { name: "Caramel", price: 176, time: "2 h" },
+      { name: "Jelly beans", price: 684, time: "81" },
+      { name: "Pomme caramel", price: 255, time: "1 h" },
+      { name: "Sésame brittle", price: 270, time: "2 h" },
+      { name: "Sucette", price: 342, time: "2 h" },
+    ]
+  },
+  {
+    id: 23,
+    name: "Sushi Bar",
+    icon: "🍣",
+    products: [
+      { name: "Boule de riz", price: 464, time: "8 h" },
+      { name: "Grand sushi roll", price: 648, time: "1 h" },
+      { name: "Sushi homard", price: 637, time: "1 h" },
+      { name: "Sushi œuf", price: 550, time: "2 h" },
+      { name: "Sushi roll", price: 489, time: "1 h" },
+    ]
+  },
+  {
+    id: 24,
+    name: "Fonderies (Smelter)",
+    icon: "🔥",
+    products: [
+      { name: "Charbon raffiné", price: 108, time: "30 min" },
+      { name: "Lingot argent", price: 147, time: "8 h" },
+      { name: "Lingot fer", price: 129, time: "2 h" },
+      { name: "Lingot or", price: 180, time: "2 h" },
+      { name: "Lingot platine", price: 205, time: "16 h" },
+    ]
+  },
+  {
+    id: 25,
+    name: "Deep Fryer",
+    icon: "🍟",
+    products: [
+      { name: "Ailes poulet", price: 162, time: "1 h" },
+      { name: "Bacon fries", price: 302, time: "2 h" },
+      { name: "Barre chocolat frite", price: 658, time: "1 h" },
+      { name: "Beignets oignon", price: 126, time: "1 h" },
+      { name: "Calamars frits", price: 180, time: "2 h" },
+      { name: "Chili poppers", price: 406, time: "40 min" },
+      { name: "Falafel", price: 226, time: "45 min" },
+      { name: "Frites", price: 90, time: "1 h" },
+      { name: "Pies de poche", price: 295, time: "1 h" },
+      { name: "Samosa", price: 223, time: "1 h" },
+      { name: "Tempura légumes", price: 205, time: "16 h" },
+    ]
+  },
+  {
+    id: 26,
+    name: "Yogurt Maker",
+    icon: "🥛",
+    products: [
+      { name: "Bol petit-déjeuner", price: 604, time: "1 h" },
+      { name: "Yaourt fraise", price: 529, time: "1 h" },
+      { name: "Yaourt nature", price: 234, time: "45 min" },
+      { name: "Yaourt tropical", price: 457, time: "2 h" },
+    ]
+  },
+  {
+    id: 27,
+    name: "Candle Maker",
+    icon: "🕯️",
+    products: [
+      { name: "Bougie citron", price: 457, time: "2 h" },
+      { name: "Bougie fleurie", price: 442, time: "2 h" },
+      { name: "Bougie fraise", price: 370, time: "2 h" },
+      { name: "Bougie framboise", price: 360, time: "1 h" },
+      { name: "Bougie simple", price: 72, time: "30 min" },
+      { name: "Bougies colorées", price: 324, time: "1 h" },
+    ]
+  },
+  {
+    id: 28,
+    name: "Flower Shop",
+    icon: "💐",
+    products: [
+      { name: "Bouquet bright", price: 338, time: "20 min" },
+      { name: "Bouquet d'anniversaire", price: 349, time: "1 h" },
+      { name: "Bouquet de bonbons", price: 554, time: "3 h" },
+      { name: "Bouquet doux", price: 298, time: "35 min" },
+      { name: "Bouquet gracieux", price: 500, time: "4 h" },
+      { name: "Bouquet légumes", price: 352, time: "3 h" },
+      { name: "Bouquet rustique", price: 208, time: "3 h" },
+    ]
+  },
+  {
+    id: 29,
+    name: "Stew Pot",
+    icon: "🥘",
+    products: [
+      { name: "Chili con carne", price: 224, time: "?" },
+      { name: "Curry légumes (marmite)", price: 196, time: "?" },
+      { name: "Ragoût bœuf", price: 180, time: "2 h" },
+      { name: "Ragoût chili", price: 370, time: "2 h" },
+      { name: "Ragoût hiver", price: 295, time: "1 h" },
+      { name: "Ragoût pois chiche", price: 284, time: "4 h" },
+      { name: "Ragoût poulet", price: 162, time: "1 h" },
+    ]
+  },
+  {
+    id: 30,
+    name: "Hot Dog Stand",
+    icon: "🌭",
+    products: [
+      { name: "Corn dog", price: 529, time: "1 h" },
+      { name: "Hot-dog", price: 370, time: "2 h" },
+      { name: "Onion dog", price: 306, time: "1 h" },
+      { name: "Tofu dog", price: 367, time: "2 h" },
+    ]
+  },
+  {
+    id: 31,
+    name: "Cupcake Maker",
+    icon: "🧁",
+    products: [
+      { name: "Cupcake cookie", price: 712, time: "2 h" },
+      { name: "Cupcake goyave", price: 583, time: "1 h" },
+      { name: "Cupcake nature", price: 280, time: "1 h" },
+      { name: "Cupcake tropical", price: 572, time: "2 h" },
+    ]
+  },
+  {
+    id: 32,
+    name: "Wok",
+    icon: "🥘",
+    products: [
+      { name: "Curry de légumes", price: 205, time: "16 h" },
+      { name: "Nouilles cacahuète", price: 597, time: "2 h" },
+      { name: "Poisson épicé", price: 543, time: "1 h" },
+      { name: "Riz frit", price: 205, time: "16 h" },
+      { name: "Sauté d'agneau", price: 270, time: "2 h" },
+      { name: "Tofu sauté", price: 306, time: "1 h" },
+    ]
+  },
+  {
+    id: 33,
+    name: "Perfumerie",
+    icon: "🧴",
+    products: [
+      { name: "Diffuseur calme", price: 169, time: "1 h" },
+      { name: "Diffuseur frais", price: 349, time: "1 h" },
+      { name: "Parfum zest", price: 388, time: "8 h" },
+    ]
+  },
+  {
+    id: 34,
+    name: "Donut Maker",
+    icon: "🍩",
+    products: [
+      { name: "Donut bacon", price: 388, time: "8 h" },
+      { name: "Donut crème", price: 230, time: "45 min" },
+      { name: "Donut croquant", price: 594, time: "30 min" },
+      { name: "Donut fourré", price: 403, time: "15 min" },
+      { name: "Donut pépites", price: 313, time: "20 min" },
+      { name: "Donut sucre", price: 129, time: "2 h" },
+    ]
+  },
+  {
+    id: 35,
+    name: "Taco Kitchen",
+    icon: "🌮",
+    products: [
+      { name: "Fish taco", price: 392, time: "2 h" },
+      { name: "Nachos", price: 432, time: "2 h" },
+      { name: "Pizza mexicaine", price: 453, time: "40 min" },
+      { name: "Quesadilla", price: 241, time: "45 min" },
+      { name: "Taco", price: 396, time: "45 min" },
+    ]
+  },
+  {
+    id: 36,
+    name: "Fondue Pot",
+    icon: "🫕",
+    products: [
+      { name: "Fondue bacon", price: 507, time: "30 min" },
+      { name: "Fondue chocolat", price: 626, time: "25 min" },
+      { name: "Fondue fromage", price: 493, time: "20 min" },
+      { name: "Fondue tropicale", price: 417, time: "40 min" },
+    ]
+  },
+  {
+    id: 37,
+    name: "Fudge Shop",
+    icon: "🍬",
+    products: [
+      { name: "Fudge cacahuète", price: 1141, time: "1 h" },
+      { name: "Fudge chili", price: 540, time: "2 h" },
+      { name: "Fudge citron", price: 590, time: "1 h" },
+      { name: "Fudge menthe", price: 522, time: "35 min" },
+      { name: "Fudge rich", price: 644, time: "2 h" },
+    ]
+  },
+  {
+    id: 38,
+    name: "Waffle Maker",
+    icon: "🧇",
+    products: [
+      { name: "Gaufre chocolat", price: 637, time: "1 h" },
+      { name: "Gaufre fruits rouges", price: 604, time: "1 h" },
+      { name: "Gaufre myrtille", price: 669, time: "42 min" },
+      { name: "Gaufre nature", price: 198, time: "15 min" },
+      { name: "Gaufre petit-déjeuner", price: 424, time: "30 min" },
+    ]
+  },
+  {
+    id: 39,
+    name: "Pasta Kitchen",
+    icon: "🍝",
+    products: [
+      { name: "Gnocchis", price: 475, time: "1 h" },
+      { name: "Lasagnes légumes", price: 532, time: "40 min" },
+      { name: "Pâtes brocoli", price: 345, time: "15 min" },
+      { name: "Pâtes carbonara", price: 410, time: "2 h" },
+      { name: "Pâtes champignons", price: 280, time: "1 h" },
+      { name: "Pâtes épicées", price: 576, time: "1 h" },
+      { name: "Pâtes homard", price: 637, time: "1 h" },
+    ]
+  },
+  {
+    id: 40,
+    name: "Sandwich Bar",
+    icon: "🥪",
+    products: [
+      { name: "Goat cheese toast", price: 302, time: "2 h" },
+      { name: "Oignon melt", price: 417, time: "40 min" },
+      { name: "Pain de mie toast", price: 255, time: "1 h" },
+      { name: "Sandwich bacon", price: 648, time: "1 h" },
+      { name: "Sandwich beurre cacahuète", price: 601, time: "25 min" },
+      { name: "Sandwich concombre", price: 464, time: "8 h" },
+      { name: "Sandwich fromage", price: 86, time: "16" },
+      { name: "Sandwich œuf", price: 583, time: "1 h" },
+      { name: "Veggie bagel", price: 532, time: "40 min" },
+      { name: "Wrap hummus", price: 374, time: "30 min" },
+    ]
+  },
+  {
+    id: 41,
+    name: "Essential Oils Lab",
+    icon: "🧪",
+    products: [
+      { name: "Huile essentielle camomille", price: 72, time: "30 min" },
+      { name: "Huile essentielle citron", price: 288, time: "2 h" },
+      { name: "Huile essentielle gingembre", price: 162, time: "1 h" },
+      { name: "Huile essentielle menthe", price: 172, time: "2 h" },
+    ]
+  },
+  {
+    id: 42,
+    name: "Bath Kiosk",
+    icon: "🛁",
+    products: [
+      { name: "Lotion citron", price: 403, time: "15 min" },
+      { name: "Masque visage miel", price: 320, time: "2 h" },
+      { name: "Savon exfoliant", price: 363, time: "1 h" },
+      { name: "Savon miel", price: 327, time: "2 h" },
+      { name: "Savon riche", price: 266, time: "40 min" },
+    ]
+  },
+  {
+    id: 43,
+    name: "Milkshake Bar",
+    icon: "🥤",
+    products: [
+      { name: "Milkshake fruité", price: 759, time: "2 h" },
+      { name: "Milkshake mocha", price: 856, time: "30 min" },
+      { name: "Milkshake vanille", price: 673, time: "45 min" },
+    ]
+  },
+  {
+    id: 44,
+    name: "Pasta Maker",
+    icon: "🍝",
+    products: [
+      { name: "Nouilles riz", price: 100, time: "20 min" },
+      { name: "Pâtes fraîches", price: 43, time: "6 h" },
+    ]
+  },
+  {
+    id: 45,
+    name: "Omelet Station",
+    icon: "🍳",
+    products: [
+      { name: "Omelette fromage", price: 464, time: "8 h" },
+      { name: "Omelette nature", price: 136, time: "1 h" },
+      { name: "Omelette pomme de terre", price: 270, time: "2 h" },
+      { name: "Omelette printemps", price: 230, time: "45 min" },
+      { name: "Omelette riz", price: 572, time: "2 h" },
+    ]
+  },
+  {
+    id: 46,
+    name: "Porridge Bar",
+    icon: "🥣",
+    products: [
+      { name: "Porridge frais", price: 435, time: "2 h" },
+      { name: "Porridge pomme", price: 522, time: "35 min" },
+      { name: "Porridge sucré", price: 466, time: "45 min" },
+    ]
+  },
+  {
+    id: 47,
+    name: "Salad Bar",
+    icon: "🥗",
+    products: [
+      { name: "Salade betterave", price: 234, time: "45 min" },
+      { name: "Salade BLT", price: 723, time: "1 h" },
+      { name: "Salade champignon", price: 216, time: "2 h" },
+      { name: "Salade chou", price: 468, time: "40 min" },
+      { name: "Salade été", price: 554, time: "3 h" },
+      { name: "Salade feta", price: 745, time: "1 h" },
+      { name: "Salade fruit", price: 597, time: "2 h" },
+      { name: "Salade fruits de mer", price: 763, time: "2 h" },
+      { name: "Salade haricots", price: 169, time: "1 h" },
+      { name: "Salade légumes", price: 266, time: "40 min" },
+      { name: "Salade orange", price: 558, time: "2 h" },
+      { name: "Salade pâtes", price: 759, time: "2 h" },
+    ]
+  },
+  {
+    id: 48,
+    name: "Smoothie Mixer",
+    icon: "🥤",
+    products: [
+      { name: "Smoothie cacao", price: 511, time: "40 min" },
+      { name: "Smoothie concombre", price: 266, time: "40 min" },
+      { name: "Smoothie fraise", price: 108, time: "30 min" },
+      { name: "Smoothie fruits rouges", price: 547, time: "1 h" },
+      { name: "Smoothie mixte", price: 504, time: "30 min" },
+      { name: "Smoothie pêche", price: 504, time: "30 min" },
+      { name: "Smoothie prune", price: 522, time: "35 min" },
+      { name: "Smoothie sésame noir", price: 313, time: "20 min" },
+      { name: "Smoothie tropical", price: 475, time: "1 h" },
+      { name: "Smoothie vert", price: 320, time: "2 h" },
+      { name: "Smoothie yaourt", price: 349, time: "1 h" },
+    ]
+  },
+  {
+    id: 49,
+    name: "Tea Stand",
+    icon: "🍵",
+    products: [
+      { name: "Thé à la menthe", price: 255, time: "1 h" },
+      { name: "Thé au citron", price: 241, time: "45 min" },
+      { name: "Thé au miel", price: 313, time: "20 min" },
+      { name: "Thé camomille", price: 144, time: "20 min" },
+      { name: "Thé glacé", price: 252, time: "7 h" },
+      { name: "Thé grenade", price: 313, time: "20 min" },
+      { name: "Thé orange", price: 255, time: "1 h" },
+      { name: "Thé pomme-gingembre", price: 169, time: "1 h" },
+      { name: "Thé vert", price: 241, time: "45 min" },
+    ]
+  },
+];
+
+const pricesData = [
+  {
+    id: 0,
+    name: "Tableau des coefficients multiplicateurs",
+    icon: "\u{1F4CA}",
+    headers: ["Qt\u00E9", "\u00D7 (par rapport \u00E0 la qt\u00E9 pr\u00E9c\u00E9dente)"],
+    rows: [
+      { name: "1", prices: [] },
+      { name: "2", prices: [2.0] },
+      { name: "3", prices: [1.5] },
+      { name: "4", prices: [1.333] },
+      { name: "5", prices: [1.25] },
+      { name: "6", prices: [1.2] },
+      { name: "7", prices: [1.167] },
+      { name: "8", prices: [1.143] },
+      { name: "9", prices: [1.125] },
+      { name: "10", prices: [1.111] }
+    ]
+  },
+  {
+    id: 1,
+    name: "Cultures (Champs)",
+    icon: "\u{1F331}",
+    headers: ["Produit", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+    rows: [
+      { name: "Bl\u00E9", prices: [3, 6, 9, 12, 15, 18, 21, 24, 27, 30] },
+      { name: "Ma\u00EFs", prices: [7, 14, 21, 28, 35, 42, 49, 56, 63, 70] },
+      { name: "Soja", prices: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100] },
+      { name: "Canne \u00E0 sucre", prices: [14, 28, 42, 56, 70, 84, 98, 112, 126, 140] },
+      { name: "Carotte", prices: [7, 14, 21, 28, 35, 42, 49, 56, 63, 70] },
+      { name: "Indigo", prices: [25, 50, 75, 100, 125, 150, 175, 200, 225, 250] },
+      { name: "Citrouille", prices: [32, 64, 96, 128, 160, 192, 224, 256, 288, 320] },
+      { name: "Coton", prices: [28, 56, 84, 112, 140, 168, 196, 224, 252, 280] },
+      { name: "Piment", prices: [36, 72, 108, 144, 180, 216, 252, 288, 324, 360] },
+      { name: "Tomate", prices: [43, 86, 129, 172, 215, 258, 301, 344, 387, 430] },
+      { name: "Rose", prices: [61, 122, 183, 244, 305, 366, 427, 488, 549, 610] },
+      { name: "Fraise", prices: [50, 100, 150, 200, 250, 300, 350, 400, 450, 500] },
+      { name: "Myrtille", prices: [82, 164, 246, 328, 410, 492, 574, 656, 738, 820] },
+      { name: "Pomme de terre", prices: [36, 72, 108, 144, 180, 216, 252, 288, 324, 360] },
+      { name: "Laitue", prices: [32, 64, 96, 128, 160, 192, 224, 256, 288, 320] },
+      { name: "Oignon", prices: [39, 78, 117, 156, 195, 234, 273, 312, 351, 390] },
+      { name: "M\u00FBre", prices: [82, 164, 246, 328, 410, 492, 574, 656, 738, 820] },
+      { name: "Ail", prices: [14, 28, 42, 56, 70, 84, 98, 112, 126, 140] },
+      { name: "Poireau", prices: [39, 78, 117, 156, 195, 234, 273, 312, 351, 390] },
+      { name: "Past\u00E8que", prices: [39, 78, 117, 156, 195, 234, 273, 312, 351, 390] },
+      { name: "Chou", prices: [18, 36, 54, 72, 90, 108, 126, 144, 162, 180] },
+      { name: "Betterave", prices: [14, 28, 42, 56, 70, 84, 98, 112, 126, 140] },
+      { name: "Rhubarbe", prices: [79, 158, 237, 316, 395, 474, 553, 632, 711, 790] },
+      { name: "Piment vert", prices: [36, 72, 108, 144, 180, 216, 252, 288, 324, 360] },
+      { name: "Champignon", prices: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100] },
+      { name: "S\u00E9same", prices: [18, 36, 54, 72, 90, 108, 126, 144, 162, 180] },
+      { name: "Artichaut", prices: [82, 164, 246, 328, 410, 492, 574, 656, 738, 820] },
+      { name: "Pois chiche", prices: [18, 36, 54, 72, 90, 108, 126, 144, 162, 180] },
+      { name: "Lys", prices: [21, 42, 63, 84, 105, 126, 147, 168, 189, 210] },
+      { name: "\u00C9pinard", prices: [79, 158, 237, 316, 395, 474, 553, 632, 711, 790] },
+      { name: "Gombo", prices: [93, 186, 279, 372, 465, 558, 651, 744, 837, 930] },
+      { name: "Fruit de la passion", prices: [18, 36, 54, 72, 90, 108, 126, 144, 162, 180] },
+      { name: "Aubergine", prices: [14, 28, 42, 56, 70, 84, 98, 112, 126, 140] },
+      { name: "Luffa", prices: [108, 216, 324, 432, 540, 648, 756, 864, 972, 1080] },
+      { name: "Gingembre", prices: [28, 56, 84, 112, 140, 168, 196, 224, 252, 280] },
+      { name: "Lavande", prices: [97, 194, 291, 388, 485, 582, 679, 776, 873, 970] },
+      { name: "Fleur de sureau", prices: [144, 288, 432, 576, 720, 864, 1008, 1152, 1296, 1440] },
+      { name: "Chou kale", prices: [108, 216, 324, 432, 540, 648, 756, 864, 972, 1080] },
+      { name: "Papaye", prices: [162, 324, 486, 648, 810, 972, 1134, 1296, 1458, 1620] },
+      { name: "Daikon", prices: [90, 180, 270, 360, 450, 540, 630, 720, 810, 900] },
+      { name: "Vanille", prices: [180, 360, 540, 720, 900, 1080, 1260, 1440, 1620, 1800] },
+      { name: "Wasabi", prices: [126, 252, 378, 504, 630, 756, 882, 1008, 1134, 1260] },
+      { name: "Piment doux", prices: [162, 324, 486, 648, 810, 972, 1134, 1296, 1458, 1620] },
+      { name: "Haricot noir", prices: [7, 14, 21, 28, 35, 42, 49, 56, 63, 70] },
+      { name: "Asperge", prices: [43, 86, 129, 172, 215, 258, 301, 344, 387, 430] },
+      { name: "Ananas", prices: [14, 28, 42, 56, 70, 84, 98, 112, 126, 140] },
+      { name: "Riz", prices: [18, 36, 54, 72, 90, 108, 126, 144, 162, 180] },
+      { name: "Olive", prices: [82, 164, 246, 328, 410, 492, 574, 656, 738, 820] },
+      { name: "Avoine", prices: [7, 14, 21, 28, 35, 42, 49, 56, 63, 70] },
+      { name: "Concombre", prices: [14, 28, 42, 56, 70, 84, 98, 112, 126, 140] },
+      { name: "Orange", prices: [97, 194, 291, 388, 485, 582, 679, 776, 873, 970] },
+      { name: "Camomille", prices: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100] },
+      { name: "Chou-fleur", prices: [21, 42, 63, 84, 105, 126, 147, 168, 189, 210] },
+      { name: "Menthe", prices: [32, 64, 96, 128, 160, 192, 224, 256, 288, 320] },
+      { name: "Raisin", prices: [32, 64, 96, 128, 160, 192, 224, 256, 288, 320] },
+      { name: "Banane", prices: [104, 208, 312, 416, 520, 624, 728, 832, 936, 1040] },
+      { name: "Mangue", prices: [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000] },
+      { name: "Noix de coco", prices: [108, 216, 324, 432, 540, 648, 756, 864, 972, 1080] },
+      { name: "Goyave", prices: [111, 222, 333, 444, 555, 666, 777, 888, 999, 1110] },
+      { name: "Grenade", prices: [111, 222, 333, 444, 555, 666, 777, 888, 999, 1110] },
+      { name: "Th\u00E9", prices: [43, 86, 129, 172, 215, 258, 301, 344, 387, 430] },
+      { name: "Pivoine", prices: [36, 72, 108, 144, 180, 216, 252, 288, 324, 360] },
+      { name: "Brocoli", prices: [21, 42, 63, 84, 105, 126, 147, 168, 189, 210] },
+      { name: "Prune", prices: [82, 164, 246, 328, 410, 492, 574, 656, 738, 820] },
+      { name: "Argile", prices: [18, 36, 54, 72, 90, 108, 126, 144, 162, 180] },
+      { name: "P\u00EAche", prices: [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000] },
+      { name: "Cacao", prices: [86, 172, 258, 344, 430, 516, 602, 688, 774, 860] },
+      { name: "Caf\u00E9", prices: [64, 128, 192, 256, 320, 384, 448, 512, 576, 640] },
+      { name: "Tournesol", prices: [21, 42, 63, 84, 105, 126, 147, 168, 189, 210] },
+      { name: "Citron", prices: [93, 186, 279, 372, 465, 558, 651, 744, 837, 930] },
+      { name: "Myrtille (fruit)", prices: [82, 164, 246, 328, 410, 492, 574, 656, 738, 820] },
+      { name: "Cassis", prices: [94, 188, 282, 376, 470, 564, 658, 752, 846, 940] }
+    ]
+  },
+  {
+    id: 2,
+    name: "Arbres Fruitiers",
+    icon: "\u{1F333}",
+    headers: ["Produit", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+    rows: [
+      { name: "Pomme", prices: [39, 78, 117, 156, 195, 234, 273, 312, 351, 390] },
+      { name: "Cerise", prices: [68, 136, 204, 272, 340, 408, 476, 544, 612, 680] },
+      { name: "Banane", prices: [72, 144, 216, 288, 360, 432, 504, 576, 648, 720] },
+      { name: "Poire", prices: [80, 160, 240, 320, 400, 480, 560, 640, 720, 800] },
+      { name: "P\u00EAche", prices: [84, 168, 252, 336, 420, 504, 588, 672, 756, 840] },
+      { name: "Olive", prices: [88, 176, 264, 352, 440, 528, 616, 704, 792, 880] },
+      { name: "Prune", prices: [92, 184, 276, 368, 460, 552, 644, 736, 828, 920] },
+      { name: "Mangue", prices: [96, 192, 288, 384, 480, 576, 672, 768, 864, 960] },
+      { name: "Noix de coco", prices: [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000] },
+      { name: "Goyave", prices: [105, 210, 315, 420, 525, 630, 735, 840, 945, 1050] },
+      { name: "Grenade", prices: [110, 220, 330, 440, 550, 660, 770, 880, 990, 1100] }
+    ]
+  },
+  {
+    id: 3,
+    name: "Buissons Fruitiers",
+    icon: "\u{1FAD0}",
+    headers: ["Produit", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+    rows: [
+      { name: "Framboise", prices: [46, 92, 138, 184, 230, 276, 322, 368, 414, 460] },
+      { name: "M\u00FBre", prices: [90, 180, 270, 360, 450, 540, 630, 720, 810, 900] },
+      { name: "Cassis", prices: [94, 188, 282, 376, 470, 564, 658, 752, 846, 940] },
+      { name: "Myrtille", prices: [98, 196, 294, 392, 490, 588, 686, 784, 882, 980] }
+    ]
+  },
+  {
+    id: 4,
+    name: "Produits Animaux",
+    icon: "\u{1F404}",
+    headers: ["Produit", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+    rows: [
+      { name: "\u0152uf", prices: [18, 36, 54, 72, 90, 108, 126, 144, 162, 180] },
+      { name: "Lait", prices: [32, 64, 96, 128, 160, 192, 224, 256, 288, 320] },
+      { name: "Bacon", prices: [50, 100, 150, 200, 250, 300, 350, 400, 450, 500] },
+      { name: "Laine", prices: [54, 108, 162, 216, 270, 324, 378, 432, 486, 540] },
+      { name: "C\u00F4te d'agneau", prices: [36, 72, 108, 144, 180, 216, 252, 288, 324, 360] },
+      { name: "Lait de ch\u00E8vre", prices: [64, 128, 192, 256, 320, 384, 448, 512, 576, 640] },
+      { name: "Filet de poisson", prices: [54, 108, 162, 216, 270, 324, 378, 432, 486, 540] },
+      { name: "Miel", prices: [154, 308, 462, 616, 770, 924, 1078, 1232, 1386, 1540] },
+      { name: "Queue de homard", prices: [201, 402, 603, 804, 1005, 1206, 1407, 1608, 1809, 2010] },
+      { name: "Plume de canard", prices: [140, 280, 420, 560, 700, 840, 980, 1120, 1260, 1400] },
+      { name: "Cacahu\u00E8te", prices: [234, 468, 702, 936, 1170, 1404, 1638, 1872, 2106, 2340] },
+      { name: "Nid d'abeille", prices: [68, 136, 204, 272, 340, 408, 476, 544, 612, 680] },
+      { name: "Cire d'abeille", prices: [234, 468, 702, 936, 1170, 1404, 1638, 1872, 2106, 2340] }
+    ]
+  },
+  {
+    id: 5,
+    name: "Moulin \u00E0 Aliments (Feed Mill)",
+    icon: "\u{1F33E}",
+    headers: ["Produit", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+    rows: [
+      { name: "Nourriture poule", prices: [7, 14, 21, 28, 35, 42, 49, 56, 63, 70] },
+      { name: "Nourriture vache", prices: [14, 28, 42, 56, 70, 84, 98, 112, 126, 140] },
+      { name: "Nourriture cochon", prices: [14, 28, 42, 56, 70, 84, 98, 112, 126, 140] },
+      { name: "Nourriture mouton", prices: [14, 28, 42, 56, 70, 84, 98, 112, 126, 140] },
+      { name: "Nourriture agneau", prices: [18, 36, 54, 72, 90, 108, 126, 144, 162, 180] },
+      { name: "Nourriture ch\u00E8vre", prices: [14, 28, 42, 56, 70, 84, 98, 112, 126, 140] },
+      { name: "Fagot de bl\u00E9", prices: [50, 100, 150, 200, 250, 300, 350, 400, 450, 500] },
+      { name: "Seau de viande", prices: [72, 144, 216, 288, 360, 432, 504, 576, 648, 720] }
+    ]
+  },
+  {
+    id: 6,
+    name: "Laiterie (Dairy)",
+    icon: "\u{1F9C0}",
+    headers: ["Produit", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+    rows: [
+      { name: "Cr\u00E8me", prices: [50, 100, 150, 200, 250, 300, 350, 400, 450, 500] },
+      { name: "Beurre", prices: [82, 164, 246, 328, 410, 492, 574, 656, 738, 820] },
+      { name: "Fromage", prices: [122, 244, 366, 488, 610, 732, 854, 976, 1098, 1220] },
+      { name: "Fromage de ch\u00E8vre", prices: [162, 324, 486, 648, 810, 972, 1134, 1296, 1458, 1620] }
+    ]
+  },
+  {
+    id: 7,
+    name: "Sucri\u00E8re (Sugar Mill)",
+    icon: "\u{1F36C}",
+    headers: ["Produit", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+    rows: [
+      { name: "Sucre brun", prices: [32, 64, 96, 128, 160, 192, 224, 256, 288, 320] },
+      { name: "Sucre blanc", prices: [50, 100, 150, 200, 250, 300, 350, 400, 450, 500] },
+      { name: "Sirop", prices: [90, 180, 270, 360, 450, 540, 630, 720, 810, 900] }
+    ]
+  },
+  {
+    id: 8,
+    name: "Boulangerie (Bakery)",
+    icon: "\u{1F35E}",
+    headers: ["Produit", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+    rows: [
+      { name: "Pain", prices: [21, 42, 63, 84, 105, 126, 147, 168, 189, 210] },
+      { name: "Pain de ma\u00EFs", prices: [72, 144, 216, 288, 360, 432, 504, 576, 648, 720] },
+      { name: "Cookie", prices: [104, 208, 312, 416, 520, 624, 728, 832, 936, 1040] },
+      { name: "Muffin framboise", prices: [140, 280, 420, 560, 700, 840, 980, 1120, 1260, 1400] },
+      { name: "Pizza", prices: [190, 380, 570, 760, 950, 1140, 1330, 1520, 1710, 1900] },
+      { name: "Pizza \u00E9pic\u00E9e", prices: [226, 452, 678, 904, 1130, 1356, 1582, 1808, 2034, 2260] },
+      { name: "Pain pomme de terre", prices: [284, 568, 852, 1136, 1420, 1704, 1988, 2272, 2556, 2840] },
+      { name: "Biscuit gingembre", prices: [273, 546, 819, 1092, 1365, 1638, 1911, 2184, 2457, 2730] },
+      { name: "Pain banane", prices: [424, 848, 1272, 1696, 2120, 2544, 2968, 3392, 3816, 4240] },
+      { name: "Macaron", prices: [421, 842, 1263, 1684, 2105, 2526, 2947, 3368, 3789, 4210] },
+      { name: "Pizza Frutti di Mare", prices: [403, 806, 1209, 1612, 2015, 2418, 2821, 3224, 3627, 4030] },
+      { name: "Muffin m\u00FBre", prices: [226, 452, 678, 904, 1130, 1356, 1582, 1808, 2034, 2260] },
+      { name: "Muffin myrtille", prices: [230, 460, 690, 920, 1150, 1380, 1610, 1840, 2070, 2300] },
+      { name: "Barres ananas-coco", prices: [284, 568, 852, 1136, 1420, 1704, 1988, 2272, 2556, 2840] }
+    ]
+  }
+,
+  {
+    id: 9,
+    name: "BBQ (Grill)",
+    icon: "\u{1F356}",
+    headers: ["Produit", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+    rows: [
+      { name: "Pancakes", prices: [108, 216, 324, 432, 540, 648, 756, 864, 972, 1080] },
+      { name: "Bacon & \u0152ufs", prices: [201, 402, 603, 804, 1005, 1206, 1407, 1608, 1809, 2010] },
+      { name: "Hamburger", prices: [180, 360, 540, 720, 900, 1080, 1260, 1440, 1620, 1800] },
+      { name: "Poisson burger", prices: [226, 452, 678, 904, 1130, 1356, 1582, 1808, 2034, 2260] },
+      { name: "Tomates grill\u00E9es", prices: [118, 236, 354, 472, 590, 708, 826, 944, 1062, 1180] },
+      { name: "Patate au four", prices: [298, 596, 894, 1192, 1490, 1788, 2086, 2384, 2682, 2980] },
+      { name: "Poisson frit & frites", prices: [244, 488, 732, 976, 1220, 1464, 1708, 1952, 2196, 2440] },
+      { name: "Brochette homard", prices: [417, 834, 1251, 1668, 2085, 2502, 2919, 3336, 3753, 4170] },
+      { name: "Pain \u00E0 l'ail", prices: [198, 396, 594, 792, 990, 1188, 1386, 1584, 1782, 1980] },
+      { name: "Oignon grill\u00E9", prices: [190, 380, 570, 760, 950, 1140, 1330, 1520, 1710, 1900] },
+      { name: "L\u00E9gumes d'hiver", prices: [198, 396, 594, 792, 990, 1188, 1386, 1584, 1782, 1980] },
+      { name: "Poivrons farcis", prices: [352, 704, 1056, 1408, 1760, 2112, 2464, 2816, 3168, 3520] },
+      { name: "Aubergine grill\u00E9e", prices: [324, 648, 972, 1296, 1620, 1944, 2268, 2592, 2916, 3240] },
+      { name: "Brochette poisson", prices: [176, 352, 528, 704, 880, 1056, 1232, 1408, 1584, 1760] },
+      { name: "Asperges grill\u00E9es", prices: [486, 972, 1458, 1944, 2430, 2916, 3402, 3888, 4374, 4860] },
+      { name: "Brochette d'agneau", prices: [90, 180, 270, 360, 450, 540, 630, 720, 810, 900] },
+      { name: "Banane pancake", prices: [352, 704, 1056, 1408, 1760, 2112, 2464, 2816, 3168, 3520] }
+    ]
+  },
+  {
+    id: 10,
+    name: "Four \u00E0 Tartes (Pie Oven)",
+    icon: "\u{1F967}",
+    headers: ["Produit", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+    rows: [
+      { name: "Tarte carotte", prices: [82, 164, 246, 328, 410, 492, 574, 656, 738, 820] },
+      { name: "Tarte citrouille", prices: [158, 316, 474, 632, 790, 948, 1106, 1264, 1422, 1580] },
+      { name: "Tarte bacon", prices: [219, 438, 657, 876, 1095, 1314, 1533, 1752, 1971, 2190] },
+      { name: "Tarte pomme", prices: [270, 540, 810, 1080, 1350, 1620, 1890, 2160, 2430, 2700] },
+      { name: "Tourte poisson", prices: [226, 452, 678, 904, 1130, 1356, 1582, 1808, 2034, 2260] },
+      { name: "Tarte feta", prices: [223, 446, 669, 892, 1115, 1338, 1561, 1784, 2007, 2230] },
+      { name: "Casserole", prices: [367, 734, 1101, 1468, 1835, 2202, 2569, 2936, 3303, 3670] },
+      { name: "Tarte chocolat", prices: [514, 1028, 1542, 2056, 2570, 3084, 3598, 4112, 4626, 5140] },
+      { name: "Tarte citron", prices: [446, 892, 1338, 1784, 2230, 2676, 3122, 3568, 4014, 4460] },
+      { name: "Tarte p\u00EAche", prices: [435, 870, 1305, 1740, 2175, 2610, 3045, 3480, 3915, 4350] },
+      { name: "Tarte fruit passion", prices: [111, 222, 333, 444, 555, 666, 777, 888, 999, 1110] },
+      { name: "Tourte champignons", prices: [162, 324, 486, 648, 810, 972, 1134, 1296, 1458, 1620] },
+      { name: "Parmigiana", prices: [442, 884, 1326, 1768, 2210, 2652, 3094, 3536, 3978, 4420] },
+      { name: "Tarte au poulet", prices: [280, 560, 840, 1120, 1400, 1680, 1960, 2240, 2520, 2800] },
+      { name: "Quiche asperge", prices: [302, 604, 906, 1208, 1510, 1812, 2114, 2416, 2718, 3020] },
+      { name: "Aubergine parmesan", prices: [442, 884, 1326, 1768, 2210, 2652, 3094, 3536, 3978, 4420] }
+    ]
+  },
+  {
+    id: 11,
+    name: "Machine \u00E0 Pop-corn (Popcorn Pot)",
+    icon: "\u{1F37F}",
+    headers: ["Produit", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+    rows: [
+      { name: "Pop-corn", prices: [32, 64, 96, 128, 160, 192, 224, 256, 288, 320] },
+      { name: "Pop-corn beurre", prices: [126, 252, 378, 504, 630, 756, 882, 1008, 1134, 1260] },
+      { name: "Pop-corn piment", prices: [122, 244, 366, 488, 610, 732, 854, 976, 1098, 1220] },
+      { name: "Pop-corn miel", prices: [360, 720, 1080, 1440, 1800, 2160, 2520, 2880, 3240, 3600] },
+      { name: "Pop-corn chocolat", prices: [248, 496, 744, 992, 1240, 1488, 1736, 1984, 2232, 2480] },
+      { name: "Snack mix", prices: [309, 618, 927, 1236, 1545, 1854, 2163, 2472, 2781, 3090] }
+    ]
+  },
+  {
+    id: 12,
+    name: "Four \u00E0 G\u00E2teaux (Cake Oven)",
+    icon: "\u{1F382}",
+    headers: ["Produit", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+    rows: [
+      { name: "G\u00E2teau carotte", prices: [165, 330, 495, 660, 825, 990, 1155, 1320, 1485, 1650] },
+      { name: "G\u00E2teau cr\u00E8me", prices: [219, 438, 657, 876, 1095, 1314, 1533, 1752, 1971, 2190] },
+      { name: "G\u00E2teau fruits rouges", prices: [255, 510, 765, 1020, 1275, 1530, 1785, 2040, 2295, 2550] },
+      { name: "Cheesecake", prices: [284, 568, 852, 1136, 1420, 1704, 1988, 2272, 2556, 2840] },
+      { name: "G\u00E2teau chocolat", prices: [320, 640, 960, 1280, 1600, 1920, 2240, 2560, 2880, 3200] },
+      { name: "G\u00E2teau fraise", prices: [316, 632, 948, 1264, 1580, 1896, 2212, 2528, 2844, 3160] },
+      { name: "G\u00E2teau feta-pomme de terre", prices: [309, 618, 927, 1236, 1545, 1854, 2163, 2472, 2781, 3090] },
+      { name: "G\u00E2teau miel-pomme", prices: [482, 964, 1446, 1928, 2410, 2892, 3374, 3856, 4338, 4820] },
+      { name: "G\u00E2teau fancy", prices: [450, 900, 1350, 1800, 2250, 2700, 3150, 3600, 4050, 4500] },
+      { name: "G\u00E2teau ananas", prices: [259, 518, 777, 1036, 1295, 1554, 1813, 2072, 2331, 2590] },
+      { name: "G\u00E2teau citron", prices: [896, 1792, 2688, 3584, 4480, 5376, 6272, 7168, 8064, 8960] },
+      { name: "G\u00E2teau myrtille cheesecake", prices: [500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000] },
+      { name: "G\u00E2teau fruit", prices: [450, 900, 1350, 1800, 2250, 2700, 3150, 3600, 4050, 4500] },
+      { name: "G\u00E2teau roul\u00E9 chocolat", prices: [604, 1208, 1812, 2416, 3020, 3624, 4228, 4832, 5436, 6040] },
+      { name: "G\u00E2teau grenade", prices: [316, 632, 948, 1264, 1580, 1896, 2212, 2528, 2844, 3160] }
+    ]
+  },
+  {
+    id: 13,
+    name: "M\u00E9tier \u00E0 Tisser (Loom) & Machine \u00E0 Coudre",
+    icon: "\u{1F9F5}",
+    headers: ["Produit", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+    rows: [
+      { name: "Pull", prices: [151, 302, 453, 604, 755, 906, 1057, 1208, 1359, 1510] },
+      { name: "Tissu coton", prices: [108, 216, 324, 432, 540, 648, 756, 864, 972, 1080] },
+      { name: "Chapeau laine bleu", prices: [111, 222, 333, 444, 555, 666, 777, 888, 999, 1110] },
+      { name: "Pull bleu", prices: [208, 416, 624, 832, 1040, 1248, 1456, 1664, 1872, 2080] },
+      { name: "\u00C9charpe rouge", prices: [288, 576, 864, 1152, 1440, 1728, 2016, 2304, 2592, 2880] },
+      { name: "\u00C9charpe fleurie", prices: [295, 590, 885, 1180, 1475, 1770, 2065, 2360, 2655, 2950] },
+      { name: "Chemise coton", prices: [241, 482, 723, 964, 1205, 1446, 1687, 1928, 2169, 2410] },
+      { name: "Pantalon laine", prices: [309, 618, 927, 1236, 1545, 1854, 2163, 2472, 2781, 3090] },
+      { name: "Robe violette", prices: [327, 654, 981, 1308, 1635, 1962, 2289, 2616, 2943, 3270] },
+      { name: "Oreiller", prices: [676, 1352, 2028, 2704, 3380, 4056, 4732, 5408, 6084, 6760] },
+      { name: "Couverture", prices: [1098, 2196, 3294, 4392, 5490, 6588, 7686, 8784, 9882, 10980] },
+      { name: "Compresse", prices: [324, 648, 972, 1296, 1620, 1944, 2268, 2592, 2916, 3240] }
+    ]
+  },
+  {
+    id: 14,
+    name: "Presse-Agrumes (Juice Press)",
+    icon: "\u{1F9C3}",
+    headers: ["Produit", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+    rows: [
+      { name: "Jus carotte", prices: [46, 92, 138, 184, 230, 276, 322, 368, 414, 460] },
+      { name: "Jus pomme", prices: [129, 258, 387, 516, 645, 774, 903, 1032, 1161, 1290] },
+      { name: "Jus cerise", prices: [216, 432, 648, 864, 1080, 1296, 1512, 1728, 1944, 2160] },
+      { name: "Jus tomate", prices: [162, 324, 486, 648, 810, 972, 1134, 1296, 1458, 1620] },
+      { name: "Jus baies", prices: [205, 410, 615, 820, 1025, 1230, 1435, 1640, 1845, 2050] },
+      { name: "Jus orange", prices: [234, 468, 702, 936, 1170, 1404, 1638, 1872, 2106, 2340] },
+      { name: "Jus ananas", prices: [68, 136, 204, 272, 340, 408, 476, 544, 612, 680] },
+      { name: "Jus raisin", prices: [104, 208, 312, 416, 520, 624, 728, 832, 936, 1040] },
+      { name: "Jus fruit passion", prices: [64, 128, 192, 256, 320, 384, 448, 512, 576, 640] },
+      { name: "Jus past\u00E8que", prices: [108, 216, 324, 432, 540, 648, 756, 864, 972, 1080] },
+      { name: "Jus mangue", prices: [230, 460, 690, 920, 1150, 1380, 1610, 1840, 2070, 2300] },
+      { name: "Jus goyave", prices: [252, 504, 756, 1008, 1260, 1512, 1764, 2016, 2268, 2520] }
+    ]
+  }
+,
+  {
+    id: 15,
+    name: "Glaces (Ice Cream Maker)",
+    icon: "\u{1F366}",
+    headers: ["Produit", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+    rows: [
+      { name: "Glace vanille", prices: [172, 344, 516, 688, 860, 1032, 1204, 1376, 1548, 1720] },
+      { name: "Glace fraise", prices: [331, 662, 993, 1324, 1655, 1986, 2317, 2648, 2979, 3310] },
+      { name: "Glace chocolat", prices: [342, 684, 1026, 1368, 1710, 2052, 2394, 2736, 3078, 3420] },
+      { name: "Glace s\u00E9same", prices: [176, 352, 528, 704, 880, 1056, 1232, 1408, 1584, 1760] },
+      { name: "Glace p\u00EAche", prices: [450, 900, 1350, 1800, 2250, 2700, 3150, 3600, 4050, 4500] },
+      { name: "Glace menthe", prices: [288, 576, 864, 1152, 1440, 1728, 2016, 2304, 2592, 2880] },
+      { name: "Glace noix de coco", prices: [320, 640, 960, 1280, 1600, 1920, 2240, 2560, 2880, 3200] },
+      { name: "Sorbet orange", prices: [399, 798, 1197, 1596, 1995, 2394, 2793, 3192, 3591, 3990] },
+      { name: "Sorbet fruit", prices: [518, 1036, 1554, 2072, 2590, 3108, 3626, 4144, 4662, 5180] },
+      { name: "Affogato", prices: [435, 870, 1305, 1740, 2175, 2610, 3045, 3480, 3915, 4350] },
+      { name: "Milkshake beurre cacahu\u00E8te", prices: [619, 1238, 1857, 2476, 3095, 3714, 4333, 4952, 5571, 6190] },
+      { name: "Banane split", prices: [403, 806, 1209, 1612, 2015, 2418, 2821, 3224, 3627, 4030] },
+      { name: "Popsicle cerise", prices: [352, 704, 1056, 1408, 1760, 2112, 2464, 2816, 3168, 3520] }
+    ]
+  },
+  {
+    id: 16,
+    name: "Soupi\u00E8re (Soup Kitchen)",
+    icon: "\u{1F35C}",
+    headers: ["Produit", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+    rows: [
+      { name: "Soupe tomate", prices: [478, 956, 1434, 1912, 2390, 2868, 3346, 3824, 4302, 4780] },
+      { name: "Soupe citrouille", prices: [392, 784, 1176, 1568, 1960, 2352, 2744, 3136, 3528, 3920] },
+      { name: "Soupe carotte", prices: [270, 540, 810, 1080, 1350, 1620, 1890, 2160, 2430, 2700] },
+      { name: "Soupe asperge", prices: [255, 510, 765, 1020, 1275, 1530, 1785, 2040, 2295, 2550] },
+      { name: "Soupe agneau", prices: [180, 360, 540, 720, 900, 1080, 1260, 1440, 1620, 1800] },
+      { name: "Soupe homard", prices: [612, 1224, 1836, 2448, 3060, 3672, 4284, 4896, 5508, 6120] },
+      { name: "Soupe poisson", prices: [298, 596, 894, 1192, 1490, 1788, 2086, 2384, 2682, 2980] },
+      { name: "Soupe chou", prices: [270, 540, 810, 1080, 1350, 1620, 1890, 2160, 2430, 2700] },
+      { name: "Soupe ail", prices: [327, 654, 981, 1308, 1635, 1962, 2289, 2616, 2943, 3270] },
+      { name: "Soupe oignon", prices: [327, 654, 981, 1308, 1635, 1962, 2289, 2616, 2943, 3270] },
+      { name: "Soupe pomme de terre", prices: [255, 510, 765, 1020, 1275, 1530, 1785, 2040, 2295, 2550] },
+      { name: "Soupe poivron", prices: [439, 878, 1317, 1756, 2195, 2634, 3073, 3512, 3951, 4390] },
+      { name: "Soupe brocoli", prices: [237, 474, 711, 948, 1185, 1422, 1659, 1896, 2133, 2370] },
+      { name: "Soupe champignon", prices: [176, 352, 528, 704, 880, 1056, 1232, 1408, 1584, 1760] },
+      { name: "Soupe nouilles", prices: [432, 864, 1296, 1728, 2160, 2592, 3024, 3456, 3888, 4320] },
+      { name: "Soupe chou-fleur", prices: [253, 506, 759, 1012, 1265, 1518, 1771, 2024, 2277, 2530] }
+    ]
+  },
+  {
+    id: 17,
+    name: "Confiturier (Jam Maker)",
+    icon: "\u{1F36F}",
+    headers: ["Produit", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+    rows: [
+      { name: "Confiture pomme", prices: [219, 438, 657, 876, 1095, 1314, 1533, 1752, 1971, 2190] },
+      { name: "Confiture framboise", prices: [252, 504, 756, 1008, 1260, 1512, 1764, 2016, 2268, 2520] },
+      { name: "Confiture m\u00FBre", prices: [388, 776, 1164, 1552, 1940, 2328, 2716, 3104, 3492, 3880] },
+      { name: "Confiture cerise", prices: [334, 668, 1002, 1336, 1670, 2004, 2338, 2672, 3006, 3340] },
+      { name: "Confiture fraise", prices: [270, 540, 810, 1080, 1350, 1620, 1890, 2160, 2430, 2700] },
+      { name: "Confiture p\u00EAche", prices: [464, 928, 1392, 1856, 2320, 2784, 3248, 3712, 4176, 4640] },
+      { name: "Confiture prune", prices: [385, 770, 1155, 1540, 1925, 2310, 2695, 3080, 3465, 3850] },
+      { name: "Marmelade orange", prices: [457, 914, 1371, 1828, 2285, 2742, 3199, 3656, 4113, 4570] },
+      { name: "Confiture raisin", prices: [162, 324, 486, 648, 810, 972, 1134, 1296, 1458, 1620] },
+      { name: "Chutney myrtille", prices: [579, 1158, 1737, 2316, 2895, 3474, 4053, 4632, 5211, 5790] },
+      { name: "Confiture fruit passion", prices: [118, 236, 354, 472, 590, 708, 826, 944, 1062, 1180] }
+    ]
+  },
+  {
+    id: 18,
+    name: "Bijouterie (Jeweler)",
+    icon: "\u{1F48D}",
+    headers: ["Produit", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+    rows: [
+      { name: "Bracelet argent", prices: [514, 1028, 1542, 2056, 2570, 3084, 3598, 4112, 4626, 5140] },
+      { name: "Collier or", prices: [727, 1454, 2181, 2908, 3635, 4362, 5089, 5816, 6543, 7270] },
+      { name: "Bague platine", prices: [824, 1648, 2472, 3296, 4120, 4944, 5768, 6592, 7416, 8240] },
+      { name: "Bague diamant", prices: [270, 540, 810, 1080, 1350, 1620, 1890, 2160, 2430, 2700] },
+      { name: "Bracelet fer", prices: [658, 1316, 1974, 2632, 3290, 3948, 4606, 5264, 5922, 6580] },
+      { name: "Pendentif fleur", prices: [698, 1396, 2094, 2792, 3490, 4188, 4886, 5584, 6282, 6980] }
+    ]
+  },
+  {
+    id: 19,
+    name: "Saucerie (Sauce Maker)",
+    icon: "\u{1F373}",
+    headers: ["Produit", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+    rows: [
+      { name: "Sauce soja", prices: [154, 308, 462, 616, 770, 924, 1078, 1232, 1386, 1540] },
+      { name: "Sauce tomate", prices: [230, 460, 690, 920, 1150, 1380, 1610, 1840, 2070, 2300] },
+      { name: "Mayonnaise", prices: [367, 734, 1101, 1468, 1835, 2202, 2569, 2936, 3303, 3670] },
+      { name: "Houmous", prices: [277, 554, 831, 1108, 1385, 1662, 1939, 2216, 2493, 2770] },
+      { name: "Vinaigrette", prices: [288, 576, 864, 1152, 1440, 1728, 2016, 2304, 2592, 2880] },
+      { name: "Salsa", prices: [252, 504, 756, 1008, 1260, 1512, 1764, 2016, 2268, 2520] },
+      { name: "Sauce piment\u00E9e", prices: [453, 906, 1359, 1812, 2265, 2718, 3171, 3624, 4077, 4530] },
+      { name: "Huile olive", prices: [277, 554, 831, 1108, 1385, 1662, 1939, 2216, 2493, 2770] },
+      { name: "Trempette haricots", prices: [453, 906, 1359, 1812, 2265, 2718, 3171, 3624, 4077, 4530] },
+      { name: "Citron curd", prices: [378, 756, 1134, 1512, 1890, 2268, 2646, 3024, 3402, 3780] },
+      { name: "Trempette olive", prices: [468, 936, 1404, 1872, 2340, 2808, 3276, 3744, 4212, 4680] }
+    ]
+  },
+  {
+    id: 20,
+    name: "Kiosque \u00E0 Caf\u00E9 (Coffee Kiosk)",
+    icon: "\u2615",
+    headers: ["Produit", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+    rows: [
+      { name: "Espresso", prices: [248, 496, 744, 992, 1240, 1488, 1736, 1984, 2232, 2480] },
+      { name: "Caff\u00E8 latte", prices: [219, 438, 657, 876, 1095, 1314, 1533, 1752, 1971, 2190] },
+      { name: "Caff\u00E8 mocha", prices: [291, 582, 873, 1164, 1455, 1746, 2037, 2328, 2619, 2910] },
+      { name: "Raspberry mocha", prices: [259, 518, 777, 1036, 1295, 1554, 1813, 2072, 2331, 2590] },
+      { name: "Chocolat chaud", prices: [316, 632, 948, 1264, 1580, 1896, 2212, 2528, 2844, 3160] },
+      { name: "Caramel latte", prices: [345, 690, 1035, 1380, 1725, 2070, 2415, 2760, 3105, 3450] },
+      { name: "Iced banana latte", prices: [277, 554, 831, 1108, 1385, 1662, 1939, 2216, 2493, 2770] }
+    ]
+  }
+,
+  {
+    id: 21,
+    name: "Machine \u00E0 Bonbons (Candy Machine)",
+    icon: "\u{1F36C}",
+    headers: ["Produit", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+    rows: [
+      { name: "Pomme caramel", prices: [255, 510, 765, 1020, 1275, 1530, 1785, 2040, 2295, 2550] },
+      { name: "Caramel", prices: [176, 352, 528, 704, 880, 1056, 1232, 1408, 1584, 1760] },
+      { name: "Sucette", prices: [342, 684, 1026, 1368, 1710, 2052, 2394, 2736, 3078, 3420] },
+      { name: "Barre chocolat\u00E9e", prices: [460, 920, 1380, 1840, 2300, 2760, 3220, 3680, 4140, 4600] },
+      { name: "Jelly beans", prices: [684, 1368, 2052, 2736, 3420, 4104, 4788, 5472, 6156, 6840] },
+      { name: "Cacahu\u00E8tes miel", prices: [468, 936, 1404, 1872, 2340, 2808, 3276, 3744, 4212, 4680] },
+      { name: "Barre aux fruits", prices: [168, 336, 504, 672, 840, 1008, 1176, 1344, 1512, 1680] },
+      { name: "Barre miel", prices: [140, 280, 420, 560, 700, 840, 980, 1120, 1260, 1400] },
+      { name: "Barre chocolat\u00E9e au lait", prices: [126, 252, 378, 504, 630, 756, 882, 1008, 1134, 1260] },
+      { name: "Barbe \u00E0 papa", prices: [226, 452, 678, 904, 1130, 1356, 1582, 1808, 2034, 2260] },
+      { name: "S\u00E9same brittle", prices: [270, 540, 810, 1080, 1350, 1620, 1890, 2160, 2430, 2700] }
+    ]
+  },
+  {
+    id: 22,
+    name: "Sushi Bar",
+    icon: "\u{1F363}",
+    headers: ["Produit", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+    rows: [
+      { name: "Sushi roll", prices: [489, 978, 1467, 1956, 2445, 2934, 3423, 3912, 4401, 4890] },
+      { name: "Sushi homard", prices: [637, 1274, 1911, 2548, 3185, 3822, 4459, 5096, 5733, 6370] },
+      { name: "Sushi \u0153uf", prices: [550, 1100, 1650, 2200, 2750, 3300, 3850, 4400, 4950, 5500] },
+      { name: "Grand sushi roll", prices: [648, 1296, 1944, 2592, 3240, 3888, 4536, 5184, 5832, 6480] },
+      { name: "Boule de riz", prices: [464, 928, 1392, 1856, 2320, 2784, 3248, 3712, 4176, 4640] }
+    ]
+  },
+  {
+    id: 23,
+    name: "Fonderies (Smelter)",
+    icon: "\u{1F3DB}",
+    headers: ["Produit", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+    rows: [
+      { name: "Charbon raffin\u00E9", prices: [108, 216, 324, 432, 540, 648, 756, 864, 972, 1080] },
+      { name: "Lingot fer", prices: [129, 258, 387, 516, 645, 774, 903, 1032, 1161, 1290] },
+      { name: "Lingot argent", prices: [147, 294, 441, 588, 735, 882, 1029, 1176, 1323, 1470] },
+      { name: "Lingot or", prices: [180, 360, 540, 720, 900, 1080, 1260, 1440, 1620, 1800] },
+      { name: "Lingot platine", prices: [205, 410, 615, 820, 1025, 1230, 1435, 1640, 1845, 2050] }
+    ]
+  }
+,
+  {
+    id: 24,
+    name: "Autres B\u00E2timents de Production",
+    icon: "\u{1F3ED}",
+    headers: ["Produit", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+    subsections: [
+      {
+        name: "Wok",
+        rows: [
+          { name: "Curry de l\u00E9gumes", prices: [205, 410, 615, 820, 1025, 1230, 1435, 1640, 1845, 2050] },
+          { name: "Saut\u00E9 d'agneau", prices: [270, 540, 810, 1080, 1350, 1620, 1890, 2160, 2430, 2700] },
+          { name: "Riz frit", prices: [205, 410, 615, 820, 1025, 1230, 1435, 1640, 1845, 2050] },
+          { name: "Poisson \u00E9pic\u00E9", prices: [543, 1086, 1629, 2172, 2715, 3258, 3801, 4344, 4887, 5430] },
+          { name: "Nouilles cacahu\u00E8te", prices: [597, 1194, 1791, 2388, 2985, 3582, 4179, 4776, 5373, 5970] },
+          { name: "Tofu saut\u00E9", prices: [306, 612, 918, 1224, 1530, 1836, 2142, 2448, 2754, 3060] }
+        ]
+      },
+      {
+        name: "Salad Bar",
+        rows: [
+          { name: "Salade feta", prices: [745, 1490, 2235, 2980, 3725, 4470, 5215, 5960, 6705, 7450] },
+          { name: "Salade haricots", prices: [169, 338, 507, 676, 845, 1014, 1183, 1352, 1521, 1690] },
+          { name: "Salade BLT", prices: [723, 1446, 2169, 2892, 3615, 4338, 5061, 5784, 6507, 7230] },
+          { name: "Salade fruits de mer", prices: [763, 1526, 2289, 3052, 3815, 4578, 5341, 6104, 6867, 7630] },
+          { name: "Salade p\u00E2tes", prices: [759, 1518, 2277, 3036, 3795, 4554, 5313, 6072, 6831, 7590] },
+          { name: "Salade fruit", prices: [597, 1194, 1791, 2388, 2985, 3582, 4179, 4776, 5373, 5970] },
+          { name: "Salade betterave", prices: [234, 468, 702, 936, 1170, 1404, 1638, 1872, 2106, 2340] },
+          { name: "Salade chou", prices: [468, 936, 1404, 1872, 2340, 2808, 3276, 3744, 4212, 4680] },
+          { name: "Salade champignon", prices: [216, 432, 648, 864, 1080, 1296, 1512, 1728, 1944, 2160] },
+          { name: "Salade orange", prices: [558, 1116, 1674, 2232, 2790, 3348, 3906, 4464, 5022, 5580] },
+          { name: "Salade \u00E9t\u00E9", prices: [554, 1108, 1662, 2216, 2770, 3324, 3878, 4432, 4986, 5540] },
+          { name: "Salade l\u00E9gumes", prices: [266, 532, 798, 1064, 1330, 1596, 1862, 2128, 2394, 2660] }
+        ]
+      },
+      {
+        name: "Sandwich Bar",
+        rows: [
+          { name: "Sandwich fromage", prices: [86, 172, 258, 344, 430, 516, 602, 688, 774, 860] },
+          { name: "Sandwich \u0153uf", prices: [583, 1166, 1749, 2332, 2915, 3498, 4081, 4664, 5247, 5830] },
+          { name: "Sandwich bacon", prices: [648, 1296, 1944, 2592, 3240, 3888, 4536, 5184, 5832, 6480] },
+          { name: "Sandwich beurre cacahu\u00E8te", prices: [601, 1202, 1803, 2404, 3005, 3606, 4207, 4808, 5409, 6010] },
+          { name: "Sandwich concombre", prices: [464, 928, 1392, 1856, 2320, 2784, 3248, 3712, 4176, 4640] },
+          { name: "Veggie bagel", prices: [532, 1064, 1596, 2128, 2660, 3192, 3724, 4256, 4788, 5320] },
+          { name: "Goat cheese toast", prices: [302, 604, 906, 1208, 1510, 1812, 2114, 2416, 2718, 3020] },
+          { name: "Pain de mie toast", prices: [255, 510, 765, 1020, 1275, 1530, 1785, 2040, 2295, 2550] },
+          { name: "Oignon melt", prices: [417, 834, 1251, 1668, 2085, 2502, 2919, 3336, 3753, 4170] },
+          { name: "Wrap hummus", prices: [374, 748, 1122, 1496, 1870, 2244, 2618, 2992, 3366, 3740] }
+        ]
+      },
+      {
+        name: "Smoothie Mixer",
+        rows: [
+          { name: "Smoothie fraise", prices: [108, 216, 324, 432, 540, 648, 756, 864, 972, 1080] },
+          { name: "Smoothie tropical", prices: [475, 950, 1425, 1900, 2375, 2850, 3325, 3800, 4275, 4750] },
+          { name: "Smoothie vert", prices: [320, 640, 960, 1280, 1600, 1920, 2240, 2560, 2880, 3200] },
+          { name: "Smoothie fruits rouges", prices: [547, 1094, 1641, 2188, 2735, 3282, 3829, 4376, 4923, 5470] },
+          { name: "Smoothie p\u00EAche", prices: [504, 1008, 1512, 2016, 2520, 3024, 3528, 4032, 4536, 5040] },
+          { name: "Smoothie yaourt", prices: [349, 698, 1047, 1396, 1745, 2094, 2443, 2792, 3141, 3490] },
+          { name: "Smoothie concombre", prices: [266, 532, 798, 1064, 1330, 1596, 1862, 2128, 2394, 2660] },
+          { name: "Smoothie cacao", prices: [511, 1022, 1533, 2044, 2555, 3066, 3577, 4088, 4599, 5110] },
+          { name: "Smoothie s\u00E9same noir", prices: [313, 626, 939, 1252, 1565, 1878, 2191, 2504, 2817, 3130] },
+          { name: "Smoothie mixte", prices: [504, 1008, 1512, 2016, 2520, 3024, 3528, 4032, 4536, 5040] },
+          { name: "Smoothie prune", prices: [522, 1044, 1566, 2088, 2610, 3132, 3654, 4176, 4698, 5220] }
+        ]
+      },
+      {
+        name: "Hot Dog Stand",
+        rows: [
+          { name: "Hot-dog", prices: [370, 740, 1110, 1480, 1850, 2220, 2590, 2960, 3330, 3700] },
+          { name: "Tofu dog", prices: [367, 734, 1101, 1468, 1835, 2202, 2569, 2936, 3303, 3670] },
+          { name: "Corn dog", prices: [529, 1058, 1587, 2116, 2645, 3174, 3703, 4232, 4761, 5290] },
+          { name: "Onion dog", prices: [306, 612, 918, 1224, 1530, 1836, 2142, 2448, 2754, 3060] }
+        ]
+      },
+      {
+        name: "Donut Maker",
+        rows: [
+          { name: "Donut sucre", prices: [129, 258, 387, 516, 645, 774, 903, 1032, 1161, 1290] },
+          { name: "Donut p\u00E9pites", prices: [313, 626, 939, 1252, 1565, 1878, 2191, 2504, 2817, 3130] },
+          { name: "Donut croquant", prices: [594, 1188, 1782, 2376, 2970, 3564, 4158, 4752, 5346, 5940] },
+          { name: "Donut cr\u00E8me", prices: [230, 460, 690, 920, 1150, 1380, 1610, 1840, 2070, 2300] },
+          { name: "Donut bacon", prices: [388, 776, 1164, 1552, 1940, 2328, 2716, 3104, 3492, 3880] },
+          { name: "Donut fourr\u00E9", prices: [403, 806, 1209, 1612, 2015, 2418, 2821, 3224, 3627, 4030] }
+        ]
+      },
+      {
+        name: "Taco Kitchen",
+        rows: [
+          { name: "Pizza mexicaine", prices: [453, 906, 1359, 1812, 2265, 2718, 3171, 3624, 4077, 4530] },
+          { name: "Taco", prices: [396, 792, 1188, 1584, 1980, 2376, 2772, 3168, 3564, 3960] },
+          { name: "Quesadilla", prices: [241, 482, 723, 964, 1205, 1446, 1687, 1928, 2169, 2410] },
+          { name: "Fish taco", prices: [392, 784, 1176, 1568, 1960, 2352, 2744, 3136, 3528, 3920] },
+          { name: "Nachos", prices: [432, 864, 1296, 1728, 2160, 2592, 3024, 3456, 3888, 4320] }
+        ]
+      },
+      {
+        name: "Omelet Station",
+        rows: [
+          { name: "Omelette nature", prices: [136, 272, 408, 544, 680, 816, 952, 1088, 1224, 1360] },
+          { name: "Omelette printemps", prices: [230, 460, 690, 920, 1150, 1380, 1610, 1840, 2070, 2300] },
+          { name: "Omelette fromage", prices: [464, 928, 1392, 1856, 2320, 2784, 3248, 3712, 4176, 4640] },
+          { name: "Omelette riz", prices: [572, 1144, 1716, 2288, 2860, 3432, 4004, 4576, 5148, 5720] },
+          { name: "Omelette pomme de terre", prices: [270, 540, 810, 1080, 1350, 1620, 1890, 2160, 2430, 2700] }
+        ]
+      },
+      {
+        name: "Deep Fryer",
+        rows: [
+          { name: "Frites", prices: [90, 180, 270, 360, 450, 540, 630, 720, 810, 900] },
+          { name: "Beignets oignon", prices: [126, 252, 378, 504, 630, 756, 882, 1008, 1134, 1260] },
+          { name: "Ailes poulet", prices: [162, 324, 486, 648, 810, 972, 1134, 1296, 1458, 1620] },
+          { name: "Calamars frits", prices: [180, 360, 540, 720, 900, 1080, 1260, 1440, 1620, 1800] },
+          { name: "Tempura l\u00E9gumes", prices: [205, 410, 615, 820, 1025, 1230, 1435, 1640, 1845, 2050] },
+          { name: "Bacon fries", prices: [302, 604, 906, 1208, 1510, 1812, 2114, 2416, 2718, 3020] },
+          { name: "Chili poppers", prices: [406, 812, 1218, 1624, 2030, 2436, 2842, 3248, 3654, 4060] },
+          { name: "Falafel", prices: [226, 452, 678, 904, 1130, 1356, 1582, 1808, 2034, 2260] },
+          { name: "Samosa", prices: [223, 446, 669, 892, 1115, 1338, 1561, 1784, 2007, 2230] },
+          { name: "Barre chocolat frite", prices: [658, 1316, 1974, 2632, 3290, 3948, 4606, 5264, 5922, 6580] },
+          { name: "Pies de poche", prices: [295, 590, 885, 1180, 1475, 1770, 2065, 2360, 2655, 2950] }
+        ]
+      },
+      {
+        name: "Tea Stand",
+        rows: [
+          { name: "Th\u00E9 vert", prices: [241, 482, 723, 964, 1205, 1446, 1687, 1928, 2169, 2410] },
+          { name: "Th\u00E9 au miel", prices: [313, 626, 939, 1252, 1565, 1878, 2191, 2504, 2817, 3130] },
+          { name: "Th\u00E9 au citron", prices: [241, 482, 723, 964, 1205, 1446, 1687, 1928, 2169, 2410] },
+          { name: "Th\u00E9 orange", prices: [255, 510, 765, 1020, 1275, 1530, 1785, 2040, 2295, 2550] },
+          { name: "Th\u00E9 \u00E0 la menthe", prices: [255, 510, 765, 1020, 1275, 1530, 1785, 2040, 2295, 2550] },
+          { name: "Th\u00E9 pomme-gingembre", prices: [169, 338, 507, 676, 845, 1014, 1183, 1352, 1521, 1690] },
+          { name: "Th\u00E9 camomille", prices: [144, 288, 432, 576, 720, 864, 1008, 1152, 1296, 1440] },
+          { name: "Th\u00E9 glac\u00E9", prices: [252, 504, 756, 1008, 1260, 1512, 1764, 2016, 2268, 2520] },
+          { name: "Th\u00E9 grenade", prices: [313, 626, 939, 1252, 1565, 1878, 2191, 2504, 2817, 3130] }
+        ]
+      },
+      {
+        name: "Fondue Pot",
+        rows: [
+          { name: "Fondue chocolat", prices: [626, 1252, 1878, 2504, 3130, 3756, 4382, 5008, 5634, 6260] },
+          { name: "Fondue bacon", prices: [507, 1014, 1521, 2028, 2535, 3042, 3549, 4056, 4563, 5070] },
+          { name: "Fondue fromage", prices: [493, 986, 1479, 1972, 2465, 2958, 3451, 3944, 4437, 4930] },
+          { name: "Fondue tropicale", prices: [417, 834, 1251, 1668, 2085, 2502, 2919, 3336, 3753, 4170] }
+        ]
+      },
+      {
+        name: "Pasta Maker",
+        rows: [
+          { name: "P\u00E2tes fra\u00EEches", prices: [43, 86, 129, 172, 215, 258, 301, 344, 387, 430] },
+          { name: "Nouilles riz", prices: [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000] }
+        ]
+      },
+      {
+        name: "Pasta Kitchen",
+        rows: [
+          { name: "Gnocchis", prices: [475, 950, 1425, 1900, 2375, 2850, 3325, 3800, 4275, 4750] },
+          { name: "Lasagnes l\u00E9gumes", prices: [532, 1064, 1596, 2128, 2660, 3192, 3724, 4256, 4788, 5320] },
+          { name: "P\u00E2tes homard", prices: [637, 1274, 1911, 2548, 3185, 3822, 4459, 5096, 5733, 6370] },
+          { name: "P\u00E2tes carbonara", prices: [410, 820, 1230, 1640, 2050, 2460, 2870, 3280, 3690, 4100] },
+          { name: "P\u00E2tes brocoli", prices: [345, 690, 1035, 1380, 1725, 2070, 2415, 2760, 3105, 3450] },
+          { name: "P\u00E2tes \u00E9pic\u00E9es", prices: [576, 1152, 1728, 2304, 2880, 3456, 4032, 4608, 5184, 5760] },
+          { name: "P\u00E2tes champignons", prices: [280, 560, 840, 1120, 1400, 1680, 1960, 2240, 2520, 2800] }
+        ]
+      },
+      {
+        name: "Essential Oils Lab",
+        rows: [
+          { name: "Huile essentielle citron", prices: [288, 576, 864, 1152, 1440, 1728, 2016, 2304, 2592, 2880] },
+          { name: "Huile essentielle camomille", prices: [72, 144, 216, 288, 360, 432, 504, 576, 648, 720] },
+          { name: "Huile essentielle gingembre", prices: [162, 324, 486, 648, 810, 972, 1134, 1296, 1458, 1620] },
+          { name: "Huile essentielle menthe", prices: [172, 344, 516, 688, 860, 1032, 1204, 1376, 1548, 1720] }
+        ]
+      },
+      {
+        name: "Candle Maker",
+        rows: [
+          { name: "Bougie simple", prices: [72, 144, 216, 288, 360, 432, 504, 576, 648, 720] },
+          { name: "Bougie framboise", prices: [360, 720, 1080, 1440, 1800, 2160, 2520, 2880, 3240, 3600] },
+          { name: "Bougie citron", prices: [457, 914, 1371, 1828, 2285, 2742, 3199, 3656, 4113, 4570] },
+          { name: "Bougie fleurie", prices: [442, 884, 1326, 1768, 2210, 2652, 3094, 3536, 3978, 4420] },
+          { name: "Bougies color\u00E9es", prices: [324, 648, 972, 1296, 1620, 1944, 2268, 2592, 2916, 3240] },
+          { name: "Bougie fraise", prices: [370, 740, 1110, 1480, 1850, 2220, 2590, 2960, 3330, 3700] }
+        ]
+      },
+      {
+        name: "Flower Shop",
+        rows: [
+          { name: "Bouquet rustique", prices: [208, 416, 624, 832, 1040, 1248, 1456, 1664, 1872, 2080] },
+          { name: "Bouquet bright", prices: [338, 676, 1014, 1352, 1690, 2028, 2366, 2704, 3042, 3380] },
+          { name: "Bouquet gracieux", prices: [500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000] },
+          { name: "Bouquet d'anniversaire", prices: [349, 698, 1047, 1396, 1745, 2094, 2443, 2792, 3141, 3490] },
+          { name: "Bouquet doux", prices: [298, 596, 894, 1192, 1490, 1788, 2086, 2384, 2682, 2980] },
+          { name: "Bouquet de bonbons", prices: [554, 1108, 1662, 2216, 2770, 3324, 3878, 4432, 4986, 5540] },
+          { name: "Bouquet l\u00E9gumes", prices: [352, 704, 1056, 1408, 1760, 2112, 2464, 2816, 3168, 3520] }
+        ]
+      },
+      {
+        name: "Bath Kiosk",
+        rows: [
+          { name: "Savon miel", prices: [327, 654, 981, 1308, 1635, 1962, 2289, 2616, 2943, 3270] },
+          { name: "Lotion citron", prices: [403, 806, 1209, 1612, 2015, 2418, 2821, 3224, 3627, 4030] },
+          { name: "Savon exfoliant", prices: [363, 726, 1089, 1452, 1815, 2178, 2541, 2904, 3267, 3630] },
+          { name: "Masque visage miel", prices: [320, 640, 960, 1280, 1600, 1920, 2240, 2560, 2880, 3200] },
+          { name: "Savon riche", prices: [266, 532, 798, 1064, 1330, 1596, 1862, 2128, 2394, 2660] }
+        ]
+      },
+      {
+        name: "Yogurt Maker",
+        rows: [
+          { name: "Yaourt nature", prices: [234, 468, 702, 936, 1170, 1404, 1638, 1872, 2106, 2340] },
+          { name: "Yaourt fraise", prices: [529, 1058, 1587, 2116, 2645, 3174, 3703, 4232, 4761, 5290] },
+          { name: "Yaourt tropical", prices: [457, 914, 1371, 1828, 2285, 2742, 3199, 3656, 4113, 4570] },
+          { name: "Bol petit-d\u00E9jeuner", prices: [604, 1208, 1812, 2416, 3020, 3624, 4228, 4832, 5436, 6040] }
+        ]
+      },
+      {
+        name: "Fudge Shop",
+        rows: [
+          { name: "Fudge rich", prices: [644, 1288, 1932, 2576, 3220, 3864, 4508, 5152, 5796, 6440] },
+          { name: "Fudge menthe", prices: [522, 1044, 1566, 2088, 2610, 3132, 3654, 4176, 4698, 5220] },
+          { name: "Fudge chili", prices: [540, 1080, 1620, 2160, 2700, 3240, 3780, 4320, 4860, 5400] },
+          { name: "Fudge citron", prices: [590, 1180, 1770, 2360, 2950, 3540, 4130, 4720, 5310, 5900] },
+          { name: "Fudge cacahu\u00E8te", prices: [1141, 2282, 3423, 4564, 5705, 6846, 7987, 9128, 10269, 11410] }
+        ]
+      },
+      {
+        name: "Stew Pot",
+        rows: [
+          { name: "Rago\u00FBt b\u0153uf", prices: [180, 360, 540, 720, 900, 1080, 1260, 1440, 1620, 1800] },
+          { name: "Rago\u00FBt poulet", prices: [162, 324, 486, 648, 810, 972, 1134, 1296, 1458, 1620] },
+          { name: "Chili con carne", prices: [224, 448, 672, 896, 1120, 1344, 1568, 1792, 2016, 2240] },
+          { name: "Curry l\u00E9gumes (marmite)", prices: [196, 392, 588, 784, 980, 1176, 1372, 1568, 1764, 1960] },
+          { name: "Rago\u00FBt pois chiche", prices: [284, 568, 852, 1136, 1420, 1704, 1988, 2272, 2556, 2840] },
+          { name: "Rago\u00FBt chili", prices: [370, 740, 1110, 1480, 1850, 2220, 2590, 2960, 3330, 3700] },
+          { name: "Rago\u00FBt hiver", prices: [295, 590, 885, 1180, 1475, 1770, 2065, 2360, 2655, 2950] }
+        ]
+      },
+      {
+        name: "Cupcake Maker",
+        rows: [
+          { name: "Cupcake nature", prices: [280, 560, 840, 1120, 1400, 1680, 1960, 2240, 2520, 2800] },
+          { name: "Cupcake goyave", prices: [583, 1166, 1749, 2332, 2915, 3498, 4081, 4664, 5247, 5830] },
+          { name: "Cupcake tropical", prices: [572, 1144, 1716, 2288, 2860, 3432, 4004, 4576, 5148, 5720] },
+          { name: "Cupcake cookie", prices: [712, 1424, 2136, 2848, 3560, 4272, 4984, 5696, 6408, 7120] }
+        ]
+      },
+      {
+        name: "Perfumerie",
+        rows: [
+          { name: "Diffuseur frais", prices: [349, 698, 1047, 1396, 1745, 2094, 2443, 2792, 3141, 3490] },
+          { name: "Parfum zest", prices: [388, 776, 1164, 1552, 1940, 2328, 2716, 3104, 3492, 3880] },
+          { name: "Diffuseur calme", prices: [169, 338, 507, 676, 845, 1014, 1183, 1352, 1521, 1690] }
+        ]
+      },
+      {
+        name: "Waffle Maker",
+        rows: [
+          { name: "Gaufre nature", prices: [198, 396, 594, 792, 990, 1188, 1386, 1584, 1782, 1980] },
+          { name: "Gaufre fruits rouges", prices: [604, 1208, 1812, 2416, 3020, 3624, 4228, 4832, 5436, 6040] },
+          { name: "Gaufre chocolat", prices: [637, 1274, 1911, 2548, 3185, 3822, 4459, 5096, 5733, 6370] },
+          { name: "Gaufre myrtille", prices: [669, 1338, 2007, 2676, 3345, 4014, 4683, 5352, 6021, 6690] },
+          { name: "Gaufre petit-d\u00E9jeuner", prices: [424, 848, 1272, 1696, 2120, 2544, 2968, 3392, 3816, 4240] }
+        ]
+      },
+      {
+        name: "Porridge Bar",
+        rows: [
+          { name: "Porridge pomme", prices: [522, 1044, 1566, 2088, 2610, 3132, 3654, 4176, 4698, 5220] },
+          { name: "Porridge sucr\u00E9", prices: [466, 932, 1398, 1864, 2330, 2796, 3262, 3728, 4194, 4660] },
+          { name: "Porridge frais", prices: [435, 870, 1305, 1740, 2175, 2610, 3045, 3480, 3915, 4350] }
+        ]
+      },
+      {
+        name: "Milkshake Bar",
+        rows: [
+          { name: "Milkshake vanille", prices: [673, 1346, 2019, 2692, 3365, 4038, 4711, 5384, 6057, 6730] },
+          { name: "Milkshake mocha", prices: [856, 1712, 2568, 3424, 4280, 5136, 5992, 6848, 7704, 8560] },
+          { name: "Milkshake fruit\u00E9", prices: [759, 1518, 2277, 3036, 3795, 4554, 5313, 6072, 6831, 7590] }
+        ]
+      }
+    ]
+  }
+];
+
+const sections17Data = [
+  {
+    id: 1,
+    name: "Pr\u00e9sentation G\u00e9n\u00e9rale",
+    icon: "\ud83c\udfe1",
+    html: `<p>Hay Day est un jeu de simulation agricole free-to-play d\u00e9velopp\u00e9 par Supercell. Le joueur incarne un fermier et doit g\u00e9rer sa ferme : cultiver des champs, \u00e9lever des animaux, produire des biens transform\u00e9s, et vendre ses r\u00e9coltes pour agrandir et embellir sa ferme.</p>` +
+`<h3>Caract\u00e9ristiques cl\u00e9s</h3>` +
+`<ul>` +
+`<li><strong>Monde ouvert</strong> : Ferme, Lac de p\u00eache, Ville (Town), Vall\u00e9e (Valley)</li>` +
+`<li><strong>Social</strong> : Voisinage (Neighborhood) jusqu'\u00e0 30 joueurs, Derby, Entraide</li>` +
+`<li><strong>Mises \u00e0 jour r\u00e9guli\u00e8res</strong> : \u00c9v\u00e9nements saisonniers, th\u00e8mes, nouveaux b\u00e2timents</li>` +
+`<li><strong>Pas de fin</strong> : Le jeu continue ind\u00e9finiment, aucun objectif final</li>` +
+`<li><strong>Free-to-play \u00e9quitable</strong> : Les diamants acc\u00e9l\u00e8rent mais ne sont pas indispensables</li>` +
+`</ul>`
+  },
+  {
+    id: 2,
+    name: "D\u00e9marrage & Interface",
+    icon: "\ud83d\udcf1",
+    html: `<h3>\u00c9cran principal</h3>` +
+`<ul>` +
+`<li><strong>Barre d'exp\u00e9rience</strong> (haut) : \u00c9toiles bleues indiquant la progression vers le niveau suivant</li>` +
+`<li><strong>Pi\u00e8ces d'or</strong> : Monnaie principale du jeu</li>` +
+`<li><strong>Diamants</strong> : Monnaie premium</li>` +
+`<li><strong>Niveau</strong> : D\u00e9bloque du nouveau contenu</li>` +
+`<li><strong>Bouton de niveau</strong> : Affiche les d\u00e9blocages du prochain niveau</li>` +
+`</ul>` +
+`<h3>Menus importants</h3>` +
+`<ul>` +
+`<li><strong>Boutique</strong> : Achetez des arbres, animaux, d\u00e9corations, b\u00e2timents</li>` +
+`<li><strong>Journal (Daily Dirt)</strong> : Voir ce que vendent les autres joueurs</li>` +
+`<li><strong>Camion</strong> : Commandes de livraison</li>` +
+`<li><strong>Bateau</strong> : Commandes d'exp\u00e9dition</li>` +
+`<li><strong>Ville</strong> : Acc\u00e8s \u00e0 la ville (d\u00e9bloqu\u00e9e au niveau 34)</li>` +
+`<li><strong>Voisinage</strong> : Gestion du voisinage et du Derby</li>` +
+`<li><strong>Pass de Ferme</strong> : D\u00e9fis saisonniers</li>` +
+`<li><strong>Valley</strong> : Zone de coop\u00e9ration (niveau 52+)</li>` +
+`</ul>`
+  },
+  {
+    id: 3,
+    name: "Monnaies & Ressources",
+    icon: "\ud83d\udcb0",
+    html: `<h3>Pi\u00e8ces (Coins) \u2014 La monnaie principale</h3>` +
+`<ul>` +
+`<li>Gagn\u00e9es en : vendant dans la boutique, livraisons camion/bateau, visiteurs, ville</li>` +
+`<li>Utilis\u00e9es pour : tout achat dans le jeu (b\u00e2timents, arbres, d\u00e9corations)</li>` +
+`</ul>` +
+`<h3>Diamants (Diamonds) \u2014 La monnaie premium</h3>` +
+`<ul>` +
+`<li>Obtenus en : mont\u00e9e de niveau, succ\u00e8s, coffres myst\u00e8res, \u00e9v\u00e9nements, publicit\u00e9s vid\u00e9o</li>` +
+`<li><strong>93 diamants r\u00e9cup\u00e9rables gratuitement</strong> dans le jeu</li>` +
+`<li>Utilis\u00e9s pour : acc\u00e9l\u00e9rer la production, acheter de l'or, d\u00e9bloques slots, d\u00e9corations premium</li>` +
+`</ul>` +
+`<h3>Bons (Vouchers)</h3>` +
+`<ul>` +
+`<li><strong>\ud83d\udfe2 Bons verts</strong> : Pour animaux de compagnie verts</li>` +
+`<li><strong>\ud83d\udd35 Bons bleus</strong> : Pour animaux de compagnie bleus</li>` +
+`<li><strong>\ud83d\udd35 Bons violets</strong> : Pour animaux de compagnie violets</li>` +
+`<li><strong>\ud83d\udfe1 Bons dor\u00e9s</strong> : Pour animaux rares</li>` +
+`<li><strong>\ud83d\udc24 Bons poussin</strong> : Pour animaux sp\u00e9ciaux</li>` +
+`<li>Obtenus via : Derby, bateau, coffres myst\u00e8res, succ\u00e8s</li>` +
+`</ul>` +
+`<h3>Tickets de Derby</h3>` +
+`<ul>` +
+`<li>Gagn\u00e9s en participant au Derby</li>` +
+`<li>\u00c9changeables dans la boutique du Derby</li>` +
+`</ul>` +
+`<h3>Point de R\u00e9putation</h3>` +
+`<ul>` +
+`<li>Gagn\u00e9 en servant les visiteurs de la ville</li>` +
+`<li>D\u00e9bloque des niveaux de r\u00e9putation am\u00e9liorant les b\u00e2timents de la ville</li>` +
+`</ul>`
+  },
+  {
+    id: 4,
+    name: "Les Cultures (Champs)",
+    icon: "\ud83c\udf3e",
+    html: `<p>Les cultures sont plant\u00e9es dans les champs. Chaque graine plant\u00e9e donne 2 r\u00e9coltes. Les champs suppl\u00e9mentaires sont gagn\u00e9s tous les 2 niveaux.</p>` +
+`<table class="wiki-table"><thead><tr><th>Culture</th><th>Niveau</th><th>Prix max</th><th>Temps</th><th>XP</th><th>Par cale bateau</th></tr></thead><tbody>` +
+`<tr><td>Bl\u00e9 (Wheat)</td><td>1</td><td>3,6</td><td>2 min</td><td>1</td><td>50-101</td></tr>` +
+`<tr><td>Ma\u00efs (Corn)</td><td>2</td><td>7,2</td><td>5 min</td><td>1</td><td>50-101</td></tr>` +
+`<tr><td>Soja (Soybean)</td><td>5</td><td>10,8</td><td>20 min</td><td>2</td><td>24-47</td></tr>` +
+`<tr><td>Canne \u00e0 sucre (Sugarcane)</td><td>7</td><td>14,4</td><td>30 min</td><td>3</td><td>14-29</td></tr>` +
+`<tr><td>Carotte (Carrot)</td><td>9</td><td>7,2</td><td>10 min</td><td>2</td><td>30-44</td></tr>` +
+`<tr><td>Indigo (Indigo)</td><td>13</td><td>25,2</td><td>2 h</td><td>5</td><td>8-17</td></tr>` +
+`<tr><td>Citrouille (Pumpkin)</td><td>15</td><td>32,4</td><td>3 h</td><td>6</td><td>9-15</td></tr>` +
+`<tr><td>Coton (Cotton)</td><td>18</td><td>28,8</td><td>2 h 30</td><td>6</td><td>10-16</td></tr>` +
+`<tr><td>Piment (Chili Pepper)</td><td>20</td><td>46,8</td><td>4 h</td><td>7</td><td>7-12</td></tr>` +
+`<tr><td>Tomate (Tomato)</td><td>24</td><td>54,0</td><td>6 h</td><td>8</td><td>5-10</td></tr>` +
+`<tr><td>Rose (Rose)</td><td>26</td><td>61,2</td><td>8 h</td><td>8</td><td>4-9</td></tr>` +
+`<tr><td>Fraise (Strawberry)</td><td>27</td><td>72,0</td><td>10 h</td><td>9</td><td>4-8</td></tr>` +
+`<tr><td>Myrtille (Blueberry)</td><td>30</td><td>28,8</td><td>1 h 30</td><td>4</td><td>17-34</td></tr>` +
+`<tr><td>Pomme de terre (Potato)</td><td>32</td><td>30,6</td><td>1 h 45</td><td>4</td><td>16-32</td></tr>` +
+`<tr><td>Laitue (Lettuce)</td><td>34</td><td>79,2</td><td>12 h</td><td>10</td><td>4-7</td></tr>` +
+`<tr><td>Oignon (Onion)</td><td>38</td><td>43,2</td><td>3 h 30</td><td>7</td><td>9-15</td></tr>` +
+`<tr><td>M\u00fbre (Blackberry)</td><td>40</td><td>90,0</td><td>16 h</td><td>11</td><td>3-6</td></tr>` +
+`<tr><td>Ail (Garlic)</td><td>42</td><td>50,4</td><td>4 h 30</td><td>8</td><td>7-14</td></tr>` +
+`<tr><td>Poireau (Leek)</td><td>45</td><td>61,2</td><td>7 h</td><td>9</td><td>-</td></tr>` +
+`<tr><td>Past\u00e8que (Watermelon)</td><td>47</td><td>97,2</td><td>20 h</td><td>12</td><td>-</td></tr>` +
+`<tr><td>Chou (Cabbage)</td><td>48</td><td>32,4</td><td>2 h</td><td>5</td><td>-</td></tr>` +
+`<tr><td>Betterave (Beetroot)</td><td>51</td><td>68,4</td><td>8 h 30</td><td>10</td><td>-</td></tr>` +
+`<tr><td>Rhubarbe (Rhubarb)</td><td>54</td><td>79,2</td><td>12 h</td><td>11</td><td>-</td></tr>` +
+`<tr><td>Piment vert (Green Pepper)</td><td>55</td><td>54,0</td><td>5 h</td><td>8</td><td>-</td></tr>` +
+`<tr><td>Champignon (Mushroom)</td><td>57</td><td>86,4</td><td>14 h</td><td>12</td><td>-</td></tr>` +
+`<tr><td>Sesame (Sesame)</td><td>59</td><td>75,6</td><td>11 h</td><td>11</td><td>-</td></tr>` +
+`<tr><td>Artichaut (Artichoke)</td><td>62</td><td>82,8</td><td>13 h</td><td>12</td><td>-</td></tr>` +
+`<tr><td>Pois chiche (Chickpea)</td><td>65</td><td>64,8</td><td>8 h</td><td>10</td><td>-</td></tr>` +
+`<tr><td>Fleur de lys (Lily)</td><td>66</td><td>115,0</td><td>1 j</td><td>14</td><td>-</td></tr>` +
+`<tr><td>\u00c9pinard (Spinach)</td><td>71</td><td>90,0</td><td>16 h</td><td>13</td><td>-</td></tr>` +
+`<tr><td>Gombo (Okra)</td><td>73</td><td>93,6</td><td>18 h</td><td>14</td><td>-</td></tr>` +
+`<tr><td>Fruit de la passion (Passion Fruit)</td><td>78</td><td>180,0</td><td>2 j</td><td>18</td><td>-</td></tr>` +
+`<tr><td>Aubergine (Eggplant)</td><td>82</td><td>72,0</td><td>9 h</td><td>11</td><td>-</td></tr>` +
+`<tr><td>Luffa (Luffa)</td><td>86</td><td>108,0</td><td>1 j 2 h</td><td>16</td><td>-</td></tr>` +
+`<tr><td>Poireau (Leek)</td><td>88</td><td>126,0</td><td>1 j 4 h</td><td>17</td><td>-</td></tr>` +
+`<tr><td>Gingembre (Ginger)</td><td>92</td><td>115,2</td><td>22 h</td><td>15</td><td>-</td></tr>` +
+`<tr><td>Lavande (Lavender)</td><td>96</td><td>97,2</td><td>18 h</td><td>14</td><td>-</td></tr>` +
+`<tr><td>Fleur de sureau (Elderberry)</td><td>100</td><td>144,0</td><td>1 j 8 h</td><td>18</td><td>-</td></tr>` +
+`<tr><td>Chou kale (Kale)</td><td>104</td><td>108,0</td><td>20 h</td><td>15</td><td>-</td></tr>` +
+`<tr><td>Papaye (Papaya)</td><td>108</td><td>162,0</td><td>1 j 12 h</td><td>19</td><td>-</td></tr>` +
+`<tr><td>Daikon (Daikon)</td><td>112</td><td>90,0</td><td>14 h</td><td>13</td><td>-</td></tr>` +
+`<tr><td>Vanille (Vanilla)</td><td>116</td><td>180,0</td><td>2 j</td><td>20</td><td>-</td></tr>` +
+`<tr><td>Wasabi (Wasabi)</td><td>120</td><td>126,0</td><td>1 j</td><td>17</td><td>-</td></tr>` +
+`<tr><td>Piment doux (Sweet Pepper)</td><td>125</td><td>162,0</td><td>1 j 16 h</td><td>20</td><td>-</td></tr>` +
+`</tbody></table>`
+  },
+  {
+    id: 5,
+    name: "Arbres & Buissons Fruitiers",
+    icon: "\ud83c\udf33",
+    html: `<h3>Arbres fruitiers</h3>` +
+`<table class="wiki-table"><thead><tr><th>Arbre</th><th>Niveau</th><th>Prix d'achat</th><th>Temps de pousse</th><th>Production</th><th>Prix max/fruit</th><th>Dur\u00e9e de vie</th><th>XP</th></tr></thead><tbody>` +
+`<tr><td>Pommier</td><td>15</td><td>160</td><td>16 h</td><td>3 \u00e0 4 pommes</td><td>39</td><td>7 r\u00e9coltes</td><td>7</td></tr>` +
+`<tr><td>Cerisier</td><td>22</td><td>380</td><td>1 j 3 h</td><td>3 \u00e0 4 cerises</td><td>68</td><td>7 r\u00e9coltes</td><td>13</td></tr>` +
+`<tr><td>Bananier</td><td>29</td><td>420</td><td>1 j</td><td>3 \u00e0 4 bananes</td><td>72</td><td>7 r\u00e9coltes</td><td>14</td></tr>` +
+`<tr><td>Poirier</td><td>33</td><td>500</td><td>1 j 4 h</td><td>2 \u00e0 3 poires</td><td>80</td><td>7 r\u00e9coltes</td><td>15</td></tr>` +
+`<tr><td>P\u00eacher</td><td>37</td><td>540</td><td>1 j 2 h</td><td>3 \u00e0 4 p\u00eaches</td><td>84</td><td>7 r\u00e9coltes</td><td>16</td></tr>` +
+`<tr><td>Olivier</td><td>43</td><td>600</td><td>1 j 1 h</td><td>3 \u00e0 4 olives</td><td>88</td><td>7 r\u00e9coltes</td><td>17</td></tr>` +
+`<tr><td>Prunier</td><td>52</td><td>660</td><td>1 j 1 h</td><td>2 \u00e0 3 prunes</td><td>92</td><td>7 r\u00e9coltes</td><td>18</td></tr>` +
+`<tr><td>Manguier</td><td>60</td><td>770</td><td>1 j 8 h</td><td>3 mangues</td><td>96</td><td>7 r\u00e9coltes</td><td>19</td></tr>` +
+`<tr><td>Cocotier</td><td>67</td><td>810</td><td>1 j 12 h</td><td>2 \u00e0 3 noix de coco</td><td>100</td><td>7 r\u00e9coltes</td><td>20</td></tr>` +
+`<tr><td>Goyavier</td><td>74</td><td>860</td><td>1 j 3 h</td><td>3 goyaves</td><td>105</td><td>7 r\u00e9coltes</td><td>20</td></tr>` +
+`<tr><td>Grenadier</td><td>107</td><td>910</td><td>1 j 3 h</td><td>3 grenades</td><td>110</td><td>7 r\u00e9coltes</td><td>21</td></tr>` +
+`</tbody></table>` +
+`<h3>Buissons fruitiers</h3>` +
+`<table class="wiki-table"><thead><tr><th>Buisson</th><th>Niveau</th><th>Prix d'achat</th><th>Temps de pousse</th><th>Production</th><th>Prix max</th><th>Dur\u00e9e de vie</th><th>XP</th></tr></thead><tbody>` +
+`<tr><td>Framboisier</td><td>19</td><td>240</td><td>18 h</td><td>3 \u00e0 4 framboises</td><td>46,8</td><td>7 r\u00e9coltes</td><td>9</td></tr>` +
+`<tr><td>M\u00fbrrier</td><td>40</td><td>490</td><td>16 h</td><td>3 \u00e0 4 m\u00fbres</td><td>90</td><td>6 r\u00e9coltes</td><td>11</td></tr>` +
+`<tr><td>Cassissier</td><td>50</td><td>520</td><td>1 j</td><td>2 \u00e0 3 cassis</td><td>94</td><td>6 r\u00e9coltes</td><td>18</td></tr>` +
+`<tr><td>Myrtillier</td><td>58</td><td>560</td><td>1 j 2 h</td><td>3 myrtilles</td><td>98</td><td>6 r\u00e9coltes</td><td>19</td></tr>` +
+`</tbody></table>` +
+`<h3>Buissons sp\u00e9ciaux</h3>` +
+`<ul>` +
+`<li><strong>Buisson \u00e0 nectar</strong> (Nectar Bush) : 120 pi\u00e8ces \u2014 Les abeilles collectent le nectar (250 gouttes max par buisson)</li>` +
+`<li><strong>Buisson \u00e0 cacahu\u00e8tes</strong> (Peanut Bush) : 1 200 pi\u00e8ces \u2014 Les \u00e9cureuils collectent (1 000 cacahu\u00e8tes max)</li>` +
+`<li><strong>Arbre \u00e0 ruche</strong> (Beehive Tree) : 4 000 pi\u00e8ces \u2014 Un seul, jamais ne meurt</li>` +
+`<li><strong>Maison des \u00e9cureuils</strong> (Squirrel House) : 45 000 pi\u00e8ces \u2014 Un seul</li>` +
+`</ul>` +
+`<h3>Astuces pour les arbres</h3>` +
+`<ul>` +
+`<li>Plantez beaucoup d'arbres pour un revenu passif</li>` +
+`<li>Les arbres meurent apr\u00e8s ~7 r\u00e9coltes \u2014 utilisez une hache pour les couper</li>` +
+`<li>Les amis peuvent ranimer vos arbres morts une fois (XP gagn\u00e9)</li>` +
+`<li>Les arbres d\u00e9coratifs (\u00e9rables, bouleaux) ne produisent pas de fruits mais embellissent</li>` +
+`</ul>`
+  },
+  {
+    id: 6,
+    name: "Animaux de la Ferme",
+    icon: "\ud83d\udc04",
+    html: `<div class="animal-card">` +
+`<h4>Poules (Chicken) \u2014 Niveau 1</h4>` +
+`<ul>` +
+`<li><strong>Abri</strong> : Poulailler (gratuit au niveau 1)</li>` +
+`<li><strong>Nourriture</strong> : Nourriture pour poules (1 ma\u00efs + 2 bl\u00e9)</li>` +
+`<li><strong>Production</strong> : 1 \u0153uf / 20 min</li>` +
+`<li><strong>Temps de faim</strong> : 5 h</li>` +
+`</ul>` +
+`</div>` +
+`<div class="animal-card">` +
+`<h4>Vaches (Cow) \u2014 Niveau 6</h4>` +
+`<ul>` +
+`<li><strong>Abri</strong> : \u00c9table \u00e0 vaches (40 pi\u00e8ces au niveau 6)</li>` +
+`<li><strong>Nourriture</strong> : Nourriture pour vaches (1 ma\u00efs + 2 soja)</li>` +
+`<li><strong>Production</strong> : 1 lait / 1 h</li>` +
+`<li><strong>Temps de faim</strong> : 5 h</li>` +
+`</ul>` +
+`</div>` +
+`<div class="animal-card">` +
+`<h4>Cochons (Pig) \u2014 Niveau 10</h4>` +
+`<ul>` +
+`<li><strong>Abri</strong> : Enclos \u00e0 cochons (135 pi\u00e8ces)</li>` +
+`<li><strong>Nourriture</strong> : Nourriture pour cochons (1 ma\u00efs + 1 soja + 1 carotte)</li>` +
+`<li><strong>Production</strong> : 1 bacon / 2 h</li>` +
+`<li><strong>Temps de faim</strong> : 5 h</li>` +
+`</ul>` +
+`</div>` +
+`<div class="animal-card">` +
+`<h4>Moutons (Sheep) \u2014 Niveau 16</h4>` +
+`<ul>` +
+`<li><strong>Abri</strong> : Enclos \u00e0 moutons (315 pi\u00e8ces)</li>` +
+`<li><strong>Nourriture</strong> : Nourriture pour moutons (1 ma\u00efs + 2 carottes)</li>` +
+`<li><strong>Production</strong> : 1 laine / 4 h</li>` +
+`<li><strong>Temps de faim</strong> : 5 h</li>` +
+`</ul>` +
+`</div>` +
+`<div class="animal-card">` +
+`<h4>Agneaux (Lambs) \u2014 Niveau 25 <em>(nouveaut\u00e9 2026)</em></h4>` +
+`<ul>` +
+`<li><strong>Abri</strong> : Enclos s\u00e9par\u00e9</li>` +
+`<li><strong>Nourriture</strong> : Nourriture sp\u00e9ciale pour agneaux</li>` +
+`<li><strong>Production</strong> : Laine d'agneau</li>` +
+`</ul>` +
+`</div>` +
+`<div class="animal-card">` +
+`<h4>Ch\u00e8vres (Goat) \u2014 Niveau 32</h4>` +
+`<ul>` +
+`<li><strong>Abri</strong> : Enclos \u00e0 ch\u00e8vres</li>` +
+`<li><strong>Nourriture</strong> : Nourriture pour ch\u00e8vres</li>` +
+`<li><strong>Production</strong> : 1 lait de ch\u00e8vre / 6 h</li>` +
+`<li><strong>Temps de faim</strong> : 5 h</li>` +
+`</ul>` +
+`</div>` +
+`<div class="animal-card">` +
+`<h4>Abeilles (Honey Bee) \u2014 Niveau 39</h4>` +
+`<ul>` +
+`<li><strong>Abri</strong> : Arbre \u00e0 ruche (un seul, 4 000 pi\u00e8ces)</li>` +
+`<li><strong>Production</strong> : Miel via les buissons de nectar</li>` +
+`<li><strong>Processus</strong> : Les abeilles butinent le nectar des buissons \u2192 le rapportent \u00e0 la ruche \u2192 miel r\u00e9coltable</li>` +
+`</ul>` +
+`</div>` +
+`<div class="animal-card">` +
+`<h4>Poissons (Fish) \u2014 Niveau 27</h4>` +
+`<ul>` +
+`<li><strong>Lieu</strong> : Lac de p\u00eache</li>` +
+`<li><strong>\u00c9quipement</strong> : Canne \u00e0 p\u00eache (niveau 27), App\u00e2ts (\u00e9tabli \u00e0 app\u00e2ts, niveau 27)</li>` +
+`<li><strong>Types de poissons</strong> : Carpe, Perche, Poisson-chat, Saumon, Poisson-tigre, etc.</li>` +
+`</ul>` +
+`</div>` +
+`<div class="animal-card">` +
+`<h4>Homards (Lobster) \u2014 Niveau 44</h4>` +
+`<ul>` +
+`<li><strong>Lieu</strong> : Lac de p\u00eache \u2014 Bassin \u00e0 homards</li>` +
+`<li><strong>Nourriture</strong> : App\u00e2t \u00e0 homards</li>` +
+`<li><strong>Production</strong> : 1 homard</li>` +
+`</ul>` +
+`</div>` +
+`<div class="animal-card">` +
+`<h4>Canards (Duck) \u2014 Niveau 50</h4>` +
+`<ul>` +
+`<li><strong>Lieu</strong> : Lac de p\u00eache \u2014 Salon du canard</li>` +
+`<li><strong>Nourriture</strong> : App\u00e2t \u00e0 canards</li>` +
+`<li><strong>Production</strong> : Plumes de canard</li>` +
+`</ul>` +
+`</div>` +
+`<div class="animal-card">` +
+`<h4>\u00c9cureuils (Squirrel) \u2014 Niveau 62</h4>` +
+`<ul>` +
+`<li><strong>Nourriture</strong> : Cacahu\u00e8tes des buissons</li>` +
+`<li><strong>Production</strong> : Cacahu\u00e8tes via leur maison</li>` +
+`</ul>` +
+`</div>`
+  },
+  {
+    id: 7,
+    name: "B\u00e2timents de Production",
+    icon: "\ud83c\udfed",
+    html: `<h3>B\u00e2timents principaux</h3>` +
+`<table class="wiki-table"><thead><tr><th>B\u00e2timent</th><th>Niveau</th><th>Prix</th><th>Temps de construction</th><th>Taille</th></tr></thead><tbody>` +
+`<tr><td>Boulangerie (Bakery)</td><td>2</td><td>20</td><td>10 s</td><td>3x3</td></tr>` +
+`<tr><td>Moulin \u00e0 aliments 1 (Feed Mill)</td><td>3</td><td>5</td><td>40 s</td><td>3x3</td></tr>` +
+`<tr><td>Moulin \u00e0 aliments 2</td><td>12</td><td>3 200</td><td>40 s</td><td>3x3</td></tr>` +
+`<tr><td>Laiterie (Dairy)</td><td>6</td><td>50</td><td>2 h</td><td>4x4</td></tr>` +
+`<tr><td>Sucri\u00e8re 1 (Sugar Mill)</td><td>7</td><td>350</td><td>6 h</td><td>2x2</td></tr>` +
+`<tr><td>Sucri\u00e8re 2</td><td>76</td><td>200 000</td><td>6 h</td><td>2x2</td></tr>` +
+`<tr><td>Machine \u00e0 popcorn</td><td>8</td><td>650</td><td>8 h</td><td>3x3</td></tr>` +
+`<tr><td>BBQ (Grill)</td><td>9</td><td>730</td><td>8 h</td><td>3x3</td></tr>` +
+`<tr><td>Four \u00e0 tartes (Pie Oven)</td><td>14</td><td>2 200</td><td>12 h</td><td>3x3</td></tr>` +
+`<tr><td>M\u00e9tier \u00e0 tisser (Loom)</td><td>17</td><td>3 200</td><td>1 j</td><td>4x3</td></tr>` +
+`<tr><td>Machine \u00e0 coudre</td><td>19</td><td>4 500</td><td>20 h</td><td>3x3</td></tr>` +
+`<tr><td>Four \u00e0 g\u00e2teaux (Cake Oven)</td><td>21</td><td>4 800</td><td>1 j 4 h</td><td>3x3</td></tr>` +
+`<tr><td>Mine (Mine)</td><td>24</td><td>7 800</td><td>1 j 12 h</td><td>3x3</td></tr>` +
+`<tr><td>Fonte (Smelter) x5</td><td>24</td><td>7 800</td><td>2 j</td><td>3x3</td></tr>` +
+`<tr><td>Presse-agrumes (Juice Press)</td><td>26</td><td>9 000</td><td>2 j 6 h</td><td>3x3</td></tr>` +
+`<tr><td>\u00c9tabli \u00e0 app\u00e2ts (Lure Workbench)</td><td>27</td><td><strong>Gratuit</strong></td><td>\u2014</td><td>2x2</td></tr>` +
+`<tr><td>Machine \u00e0 glace</td><td>29</td><td>15 000</td><td>1 j 12 h</td><td>3x3</td></tr>` +
+`<tr><td>Atelier \u00e0 filets (Net Maker)</td><td>30</td><td>16 000</td><td>2 j 12 h</td><td>3x3</td></tr>` +
+`<tr><td>Stand \u00e0 Kebab</td><td>32</td><td>23 000</td><td>2 j 10 h</td><td>2x3</td></tr>` +
+`<tr><td>Confiturier (Jam Maker)</td><td>35</td><td>29 500</td><td>3 j 6 h</td><td>3x3</td></tr>` +
+`<tr><td>Bijouterie (Jeweler)</td><td>38</td><td>38 000</td><td>3 j 18 h</td><td>3x3</td></tr>` +
+`<tr><td>Extracteur de miel</td><td>39</td><td>42 000</td><td>3 j 6 h</td><td>3x3</td></tr>` +
+`<tr><td>Kiosque \u00e0 caf\u00e9</td><td>42</td><td>57 000</td><td>4 j 10 h</td><td>3x3</td></tr>` +
+`<tr><td>Bassin \u00e0 homards</td><td>44</td><td>60 000</td><td>5 j</td><td>4x4</td></tr>` +
+`<tr><td>Soupi\u00e8re (Soup Kitchen)</td><td>46</td><td>70 000</td><td>5 j 12 h</td><td>3x3</td></tr>` +
+`<tr><td>Chandellerie (Candle Maker)</td><td>48</td><td>80 000</td><td>6 j</td><td>3x3</td></tr>` +
+`<tr><td>Fleuriste (Flower Shop)</td><td>49</td><td>85 000</td><td>6 j 12 h</td><td>3x3</td></tr>` +
+`<tr><td>Salon du canard</td><td>50</td><td>90 000</td><td>6 j 18 h</td><td>4x4</td></tr>` +
+`<tr><td>Machine \u00e0 bonbons</td><td>51</td><td>95 000</td><td>7 j</td><td>3x3</td></tr>` +
+`<tr><td>Saucerie (Sauce Maker)</td><td>54</td><td>105 000</td><td>7 j 12 h</td><td>3x3</td></tr>` +
+`<tr><td>Bar \u00e0 sushi</td><td>56</td><td>115 000</td><td>8 j</td><td>3x3</td></tr>` +
+`<tr><td>Bar \u00e0 salade</td><td>58</td><td>125 000</td><td>8 j 12 h</td><td>3x3</td></tr>` +
+`<tr><td>Sandwicherie</td><td>61</td><td>140 000</td><td>9 j</td><td>3x3</td></tr>` +
+`<tr><td>Mixeur \u00e0 smoothies</td><td>64</td><td>155 000</td><td>9 j 12 h</td><td>3x3</td></tr>` +
+`<tr><td>Fabricant de p\u00e2tes</td><td>67</td><td>170 000</td><td>10 j</td><td>3x3</td></tr>` +
+`<tr><td>Huiles essentielles</td><td>68</td><td>175 000</td><td>10 j</td><td>3x3</td></tr>` +
+`<tr><td>Wok</td><td>69</td><td>180 000</td><td>10 j 12 h</td><td>3x3</td></tr>` +
+`<tr><td>Chapelier (Hat Maker)</td><td>70</td><td>185 000</td><td>10 j 12 h</td><td>3x3</td></tr>` +
+`<tr><td>Cuisine \u00e0 p\u00e2tes</td><td>72</td><td>195 000</td><td>11 j</td><td>3x3</td></tr>` +
+`<tr><td>Stand \u00e0 hot-dogs</td><td>75</td><td>210 000</td><td>11 j 12 h</td><td>3x3</td></tr>` +
+`<tr><td>Machine \u00e0 donuts</td><td>76</td><td>215 000</td><td>11 j 12 h</td><td>3x3</td></tr>` +
+`<tr><td>Cuisine \u00e0 tacos</td><td>77</td><td>220 000</td><td>12 j</td><td>3x3</td></tr>` +
+`<tr><td>Station \u00e0 omelettes</td><td>77</td><td>220 000</td><td>12 j</td><td>3x3</td></tr>` +
+`<tr><td>Stand \u00e0 th\u00e9</td><td>80</td><td>235 000</td><td>12 j 12 h</td><td>3x3</td></tr>` +
+`<tr><td>Marmite \u00e0 fondue</td><td>81</td><td>240 000</td><td>12 j 12 h</td><td>3x3</td></tr>` +
+`<tr><td>Kiosque \u00e0 bains</td><td>84</td><td>255 000</td><td>13 j</td><td>3x3</td></tr>` +
+`<tr><td>Friteuse (Deep Fryer)</td><td>87</td><td>270 000</td><td>14 j</td><td>3x3</td></tr>` +
+`<tr><td>Station de conservation</td><td>91</td><td>290 000</td><td>14 j 12 h</td><td>3x3</td></tr>` +
+`<tr><td>Atelier de poterie</td><td>94</td><td>300 000</td><td>15 j</td><td>3x3</td></tr>` +
+`<tr><td>Boutique de fudge</td><td>99</td><td>325 000</td><td>16 j</td><td>3x3</td></tr>` +
+`<tr><td>Yaourti\u00e8re</td><td>103</td><td>350 000</td><td>16 j 12 h</td><td>3x3</td></tr>` +
+`<tr><td>Marmite (Stew Pot)</td><td>106</td><td>365 000</td><td>17 j</td><td>3x3</td></tr>` +
+`<tr><td>Machine \u00e0 cupcakes</td><td>109</td><td>380 000</td><td>17 j 12 h</td><td>3x3</td></tr>` +
+`<tr><td>Parfumerie</td><td>110</td><td>385 000</td><td>18 j</td><td>3x3</td></tr>` +
+`<tr><td>Gaufrier</td><td>114</td><td>400 000</td><td>18 j 12 h</td><td>3x3</td></tr>` +
+`<tr><td>Bar \u00e0 porridge</td><td>119</td><td>425 000</td><td>19 j</td><td>3x3</td></tr>` +
+`<tr><td>Bar \u00e0 milkshakes</td><td>124</td><td>450 000</td><td>20 j</td><td>3x3</td></tr>` +
+`</tbody></table>` +
+`<h3>B\u00e2timents temporaires</h3>` +
+`<table class="wiki-table"><thead><tr><th>B\u00e2timent</th><th>Niveau</th></tr></thead><tbody>` +
+`<tr><td>Station d'emballage cadeaux</td><td>17</td></tr>` +
+`<tr><td>Machine \u00e0 \u0153ufs de P\u00e2ques</td><td>17</td></tr>` +
+`<tr><td>Machine \u00e0 ballons d'anniversaire</td><td>17</td></tr>` +
+`<tr><td>Machine \u00e0 friandises d'Halloween</td><td>17</td></tr>` +
+`</tbody></table>` +
+`<h3>Syst\u00e8me de slots (emplacements)</h3>` +
+`<ul>` +
+`<li>Jusqu'\u00e0 <strong>9 slots</strong> par machine (6 pour le bassin \u00e0 homards et le salon du canard)</li>` +
+`<li>Les slots suppl\u00e9mentaires co\u00fbtent des diamants (sauf homard et canard : pi\u00e8ces)</li>` +
+`<li>Prix des slots : 6, 9, 12, 15, 18, 21, 24, 27 diamants (augmente progressivement)</li>` +
+`<li><strong>Stacking</strong> : Vous pouvez accumuler jusqu'\u00e0 52 produits finis devant une machine sans les ramasser</li>` +
+`</ul>` +
+`<h3>Ma\u00eetrises (Masteries)</h3>` +
+`<ul>` +
+`<li>Chaque machine peut gagner des niveaux de ma\u00eetrise en fonction du temps d'utilisation</li>` +
+`<li>\u2605 : -10% de temps de production</li>` +
+`<li>\u2605\u2605 : -20% de temps de production</li>` +
+`<li>\u2605\u2605\u2605 : -25% de temps de production</li>` +
+`</ul>`
+  }
+];
+
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = sections17Data;
+}
+
+const sections1018Data = [
+  {
+    id: 10,
+    name: "Le Chemin de Fer & la Ville",
+    icon: "\uD83D\uDE82",
+    html: `<h3>D\u00E9blocage</h3>
+<ul>
+  <li><strong>Niveau 34</strong> : Acc\u00E8s \u00E0 la ville</li>
+  <li><strong>Co\u00FBt</strong> : 39 000 pi\u00E8ces pour r\u00E9parer la gare</li>
+  <li><strong>Temps</strong> : 3 jours de construction</li>
+</ul>
+<h3>Gare EGGspress</h3>
+<ul>
+  <li>Arrive toutes les <strong>6 heures</strong></li>
+  <li>Capacit\u00E9 initiale : <strong>3 visiteurs</strong> (max 12 apr\u00E8s am\u00E9liorations)</li>
+  <li>Am\u00E9liorations : briques, perceuses, seaux de goudron</li>
+</ul>
+<h3>Train personnel</h3>
+<ul>
+  <li><strong>Co\u00FBt</strong> : 13 000 pi\u00E8ces</li>
+  <li><strong>Temps</strong> : 6 h de construction</li>
+  <li>Capacit\u00E9 max : 10 visiteurs</li>
+  <li>Temps minimum entre trains : 1 h 30</li>
+  <li>Am\u00E9liorations : fer, charbon, lingots d'argent/or/platine</li>
+</ul>
+<h3>B\u00E2timents de la ville</h3>
+<table class="wiki-table">
+  <thead>
+    <tr><th>B\u00E2timent</th><th>Niveau R\u00E9putation</th><th>Co\u00FBt</th><th>Temps construction</th><th>Temps de repos</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>\u00C9picerie (Grocery)</td><td>1</td><td>500</td><td>14 s</td><td>8 h</td></tr>
+    <tr><td>Cin\u00E9ma</td><td>2</td><td>4 500</td><td>5 h 30</td><td>3 h</td></tr>
+    <tr><td>Restaurant</td><td>3</td><td>26 000</td><td>1 j</td><td>2 h 30</td></tr>
+    <tr><td>Auberge (B&B)</td><td>5</td><td>45 000</td><td>1 j 8 h</td><td>8 h</td></tr>
+    <tr><td>Spa</td><td>9</td><td>62 000</td><td>1 j 12 h</td><td>4 h</td></tr>
+    <tr><td>Caf\u00E9 de la plage</td><td>13</td><td>71 000</td><td>2 j</td><td>2 h 30</td></tr>
+    <tr><td>Boutique de souvenirs</td><td>17</td><td>90 000</td><td>2 j 12 h</td><td>3 h</td></tr>
+    <tr><td>Piscine</td><td>21</td><td>110 000</td><td>3 j</td><td>5 h</td></tr>
+    <tr><td>Observatoire</td><td>25</td><td>135 000</td><td>3 j 12 h</td><td>2 h</td></tr>
+    <tr><td>Jeux d'arcade</td><td>29</td><td>165 000</td><td>4 j</td><td>2 h</td></tr>
+    <tr><td>Salle de sport</td><td>33</td><td>200 000</td><td>4 j 12 h</td><td>2 h 30</td></tr>
+  </tbody>
+</table>
+<h3>Am\u00E9liorations des b\u00E2timents</h3>
+<p>Chaque b\u00E2timent peut \u00EAtre am\u00E9lior\u00E9 dans 3 cat\u00E9gories :</p>
+<ul>
+  <li><strong>Slots</strong> : nombre de clients simultan\u00E9s (1 \u00E0 6)</li>
+  <li><strong>Temps</strong> : r\u00E9duction du temps de service</li>
+  <li><strong>R\u00E9compenses</strong> : bonus de pi\u00E8ces/XP/r\u00E9putation</li>
+</ul>
+<h3>Mairie (Town Hall)</h3>
+<ul>
+  <li>Capacit\u00E9 initiale : <strong>9 visiteurs</strong></li>
+  <li>Capacit\u00E9 max : <strong>36 visiteurs</strong></li>
+  <li>Am\u00E9liorations : blocs de pierre, marteaux, seaux de peinture</li>
+</ul>
+<h3>Visiteurs de la ville</h3>
+<p>10 personnages non-joueurs diff\u00E9rents visitent la ville :</p>
+<ul>
+  <li>Chaque visiteur a des commandes sp\u00E9cifiques</li>
+  <li>Les servir compl\u00E8tement rapporte : pi\u00E8ces, XP, r\u00E9putation, fournitures</li>
+  <li>Les visiteurs peuvent aussi visiter le sanctuaire apr\u00E8s leurs achats</li>
+</ul>`
+  },
+  {
+    id: 11,
+    name: "Le Bateau (Riverboat)",
+    icon: "\u26F5",
+    html: `<h3>Fonctionnement</h3>
+<ul>
+  <li><strong>D\u00E9blocage</strong> : Niveau 18</li>
+  <li>Arrive r\u00E9guli\u00E8rement au dock</li>
+  <li>Contient 3 \u00E0 6 caisses \u00E0 remplir</li>
+  <li>Chaque caisse demande des quantit\u00E9s sp\u00E9cifiques de marchandises</li>
+</ul>
+<h3>Types de bateaux</h3>
+<ul>
+  <li><strong>Bateau normal</strong> : R\u00E9compenses en pi\u00E8ces, XP, mat\u00E9riaux d'expansion</li>
+  <li><strong>Bateau puzzle</strong> : Donne des pi\u00E8ces de puzzle pour le sanctuaire</li>
+  <li><strong>Bateau sp\u00E9cial</strong> : \u00C9v\u00E9nements saisonniers avec r\u00E9compenses uniques</li>
+</ul>
+<h3>Strat\u00E9gie</h3>
+<ul>
+  <li>Les quantit\u00E9s par caisse varient selon votre niveau (ex: bl\u00E9 50-101 par caisse)</li>
+  <li>Remplir un bateau rapporte beaucoup d'XP</li>
+  <li>Activer un booster de bateau double les r\u00E9compenses</li>
+  <li>Aider les membres du voisinage \u00E0 remplir leurs bateaux rapporte de l'XP</li>
+</ul>`
+  },
+  {
+    id: 12,
+    name: "Les Camions",
+    icon: "\uD83D\uDE9A",
+    html: `<h3>Fonctionnement</h3>
+<ul>
+  <li><strong>D\u00E9blocage</strong> : Niveau 1 (toujours disponible)</li>
+  <li>Commandes al\u00E9atoires de marchandises</li>
+  <li>2 \u00E0 3 commandes visibles \u00E0 la fois</li>
+  <li>Nouvelles commandes toutes les ~30 minutes</li>
+</ul>
+<h3>R\u00E9compenses</h3>
+<ul>
+  <li>Pi\u00E8ces et XP</li>
+  <li>Parfois des mat\u00E9riaux d'expansion</li>
+  <li>\u00C9v\u00E9nements : doubles pi\u00E8ces, doubles XP, mat\u00E9riaux garantis</li>
+</ul>
+<h3>Astuce</h3>
+<ul>
+  <li>Les commandes camion paient souvent moins que la boutique</li>
+  <li>Utile en d\u00E9but de jeu pour l'XP</li>
+  <li>Priorisez pendant les \u00E9v\u00E9nements</li>
+</ul>`
+  },
+  {
+    id: 13,
+    name: "Le Derby",
+    icon: "\uD83C\uDFC7",
+    html: `<h3>D\u00E9blocage</h3>
+<ul>
+  <li><strong>Niveau 18</strong> et appartenir \u00E0 un voisinage</li>
+  <li>Dur\u00E9e : <strong>6 jours</strong> (du mardi 9h au lundi 9h)</li>
+  <li>Refroidissement de <strong>24h</strong> entre les derbies</li>
+</ul>
+<h3>Fonctionnement</h3>
+<ul>
+  <li>Jusqu'\u00E0 <strong>15 voisinages</strong> dans la m\u00EAme ligue</li>
+  <li>Seuls les voisinages avec le m\u00EAme nombre de participants sont match\u00E9s</li>
+  <li>Chaque t\u00E2che compl\u00E9t\u00E9e rapporte des <strong>fer \u00E0 cheval</strong> (horseshoes)</li>
+  <li>Les fers \u00E0 cheval d\u00E9bloquent des r\u00E9compenses</li>
+</ul>
+<h3>Ligues</h3>
+<table class="wiki-table">
+  <thead>
+    <tr><th>Ligue</th><th>T\u00E2ches max</th><th>R\u00E9compenses</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>L\u00E9gumes (Rookie)</td><td>9</td><td>Basiques</td></tr>
+    <tr><td>Acier (Steel)</td><td>10</td><td>Standards</td></tr>
+    <tr><td>\u00C9meraude (Emerald)</td><td>11</td><td>Bonnes</td></tr>
+    <tr><td>Saphir (Sapphire)</td><td>12</td><td>Sup\u00E9rieures</td></tr>
+    <tr><td>Championnat</td><td>14</td><td>Maximum</td></tr>
+  </tbody>
+</table>
+<h3>Types de t\u00E2ches</h3>
+<ul>
+  <li>R\u00E9colte de cultures (quantit\u00E9 sp\u00E9cifique)</li>
+  <li>Production d'articles (depuis les machines)</li>
+  <li>Livraison par camion/bateau</li>
+  <li>Service en ville</li>
+  <li>Nourrir les animaux</li>
+  <li>P\u00EAche / Homards / Canards</li>
+  <li>Exploitation mini\u00E8re</li>
+</ul>
+<h3>Points des t\u00E2ches</h3>
+<table class="wiki-table">
+  <thead>
+    <tr><th>Type</th><th>Points max</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Cultures</td><td>320</td></tr>
+    <tr><td>Production</td><td>320</td></tr>
+    <tr><td>Ville (compl\u00E8te)</td><td>320</td></tr>
+    <tr><td>Camion/Bateau</td><td>320</td></tr>
+    <tr><td>Minerai</td><td>320</td></tr>
+  </tbody>
+</table>
+<h3>R\u00E9compenses</h3>
+<ul>
+  <li>Pi\u00E8ces, diamants, mat\u00E9riaux d'expansion</li>
+  <li>Pi\u00E8ces de puzzle</li>
+  <li>Permis d'extension</li>
+  <li>Bons (verts, bleus, violets, dor\u00E9s)</li>
+  <li>D\u00E9corations exclusives (derby \u00E0 th\u00E8me)</li>
+</ul>`
+  },
+  {
+    id: 14,
+    name: "La Vall\u00E9e (Valley)",
+    icon: "\uD83C\uDFDE",
+    html: `<h3>D\u00E9blocage</h3>
+<ul>
+  <li><strong>Niveau 52</strong></li>
+  <li>Zone saisonni\u00E8re avec coop\u00E9ration entre joueurs</li>
+</ul>
+<h3>Fonctionnement</h3>
+<ul>
+  <li>Conduisez un v\u00E9hicule dans la vall\u00E9e</li>
+  <li>Collectez des ressources et des animaux de la vall\u00E9e</li>
+  <li>\u00C9changez des marchandises</li>
+  <li>Objectifs saisonniers avec r\u00E9compenses uniques</li>
+</ul>
+<h3>R\u00E9compenses</h3>
+<ul>
+  <li>Pi\u00E8ces de puzzle</li>
+  <li>Permis d'extension</li>
+  <li>D\u00E9corations exclusives</li>
+  <li>Mat\u00E9riaux rares</li>
+</ul>`
+  },
+  {
+    id: 15,
+    name: "Le Sanctuaire",
+    icon: "\uD83E\uDE99",
+    html: `<h3>D\u00E9blocage</h3>
+<ul>
+  <li><strong>Niveau de r\u00E9putation 3</strong></li>
+  <li>Situ\u00E9 dans la ville, de l'autre c\u00F4t\u00E9 de la rivi\u00E8re</li>
+</ul>
+<h3>Animaux du sanctuaire</h3>
+<p>Chaque esp\u00E8ce a : 2 adultes + 2 b\u00E9b\u00E9s = 48 animaux au total</p>
+<table class="wiki-table">
+  <thead>
+    <tr><th>Esp\u00E8ce</th><th>Nourriture</th><th>Pi\u00E8ces n\u00E9cessaires</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Girafe</td><td>Fagot de bl\u00E9</td><td>36</td></tr>
+    <tr><td>Hippopotame</td><td>Fagot de bl\u00E9</td><td>36</td></tr>
+    <tr><td>\u00C9l\u00E9phant</td><td>Fagot de bl\u00E9</td><td>36</td></tr>
+    <tr><td>Z\u00E8bre</td><td>Fagot de bl\u00E9</td><td>36</td></tr>
+    <tr><td>Gorille</td><td>Seau de viande</td><td>36</td></tr>
+    <tr><td>Renne</td><td>Fagot de bl\u00E9</td><td>36</td></tr>
+    <tr><td>Renard arctique</td><td>Seau de viande</td><td>36</td></tr>
+    <tr><td>Gu\u00E9pard</td><td>Seau de viande</td><td>36</td></tr>
+    <tr><td>Morse</td><td>Seau de viande</td><td>36</td></tr>
+    <tr><td>Suricate</td><td>Seau de viande</td><td>36</td></tr>
+    <tr><td>Manchot</td><td>Fagot de bl\u00E9</td><td>36</td></tr>
+    <tr><td>Autruche</td><td>Fagot de bl\u00E9</td><td>36</td></tr>
+  </tbody>
+</table>
+<h3>Comment obtenir des pi\u00E8ces de puzzle</h3>
+<ul>
+  <li>Bateau puzzle (al\u00E9atoire)</li>
+  <li>Boutique de la vall\u00E9e</li>
+  <li>R\u00E9compenses de Derby</li>
+  <li>Pass de ferme</li>
+  <li>Coffres myst\u00E8res</li>
+  <li>Roue de la fortune</li>
+</ul>
+<h3>Nourriture du sanctuaire</h3>
+<ul>
+  <li><strong>Fagot de bl\u00E9</strong> : 75 bl\u00E9s (fabriqu\u00E9 au moulin \u00E0 aliments)</li>
+  <li><strong>Seau de viande</strong> : 3 filets de poisson + 5 carottes (fabriqu\u00E9 au moulin)</li>
+</ul>`
+  },
+  {
+    id: 16,
+    name: "La P\u00EAche",
+    icon: "\uD83C\uDFA3",
+    html: `<h3>D\u00E9blocage</h3>
+<ul>
+  <li><strong>Niveau 27</strong> : Canne \u00E0 p\u00EAche offerte</li>
+  <li>Acc\u00E8s au lac de p\u00EAche</li>
+</ul>
+<h3>Zones de p\u00EAche</h3>
+<ul>
+  <li>7 zones de p\u00EAche autour du lac</li>
+  <li>Chaque zone a un temps de recharge apr\u00E8s utilisation</li>
+  <li>Utilisez des app\u00E2ts pour attirer diff\u00E9rents poissons</li>
+</ul>
+<h3>Poissons</h3>
+<table class="wiki-table">
+  <thead>
+    <tr><th>Poisson</th><th>App\u00E2t pr\u00E9f\u00E9r\u00E9</th><th>Temps</th><th>Prix</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Carpe</td><td>Ver</td><td>30 min</td><td>36</td></tr>
+    <tr><td>Perche</td><td>Ver</td><td>1 h</td><td>45</td></tr>
+    <tr><td>Poisson-chat</td><td>Fromage</td><td>2 h</td><td>63</td></tr>
+    <tr><td>Saumon</td><td>Papillon</td><td>3 h</td><td>90</td></tr>
+    <tr><td>Poisson-tigre</td><td>Ver</td><td>4 h</td><td>108</td></tr>
+    <tr><td>Dorade</td><td>Papillon</td><td>1 h 30</td><td>54</td></tr>
+    <tr><td>Esturgeon</td><td>Fromage</td><td>5 h</td><td>126</td></tr>
+    <tr><td>Thon</td><td>Papillon</td><td>6 h</td><td>144</td></tr>
+  </tbody>
+</table>
+<h3>\u00C9tabli \u00E0 app\u00E2ts (Lure Workbench)</h3>
+<ul>
+  <li>Fabrique des app\u00E2ts (vers, papillons, fromage)</li>
+  <li>Utilise des ressources de la ferme</li>
+</ul>
+<h3>Filets de p\u00EAche (Net Maker)</h3>
+<ul>
+  <li><strong>Niveau 30</strong></li>
+  <li>Capture plusieurs poissons \u00E0 la fois</li>
+  <li>3 types de filets : petit, moyen, grand</li>
+</ul>
+<h3>Bassin \u00E0 homards \u2014 Niveau 44</h3>
+<ul>
+  <li>App\u00E2t sp\u00E9cial pour homards</li>
+  <li>Production : 1 homard / 2 h</li>
+</ul>
+<h3>Salon du canard \u2014 Niveau 50</h3>
+<ul>
+  <li>App\u00E2t sp\u00E9cial pour canards</li>
+  <li>Production : plumes de canard</li>
+</ul>`
+  },
+  {
+    id: 17,
+    name: "La Mine",
+    icon: "\u26CF",
+    html: `<h3>D\u00E9blocage</h3>
+<ul>
+  <li><strong>Niveau 24</strong></li>
+  <li><strong>Co\u00FBt</strong> : 7 800 pi\u00E8ces</li>
+  <li><strong>Temps</strong> : 1 j 12 h</li>
+</ul>
+<h3>Fonctionnement</h3>
+<ul>
+  <li>5 fonderies (Smelters) peuvent \u00EAtre construites</li>
+  <li>Utilisez des pioches pour miner</li>
+  <li>Les pioches s'obtiennent via : camions, bateaux, ville, Derby</li>
+</ul>
+<h3>Minerais</h3>
+<table class="wiki-table">
+  <thead>
+    <tr><th>Minerai</th><th>Valeur</th><th>Temps de fonte</th><th>Lingot obtenu</th><th>Prix du lingot</th><th>XP</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Charbon</td><td>Faible</td><td>1 h</td><td>\u2014</td><td>\u2014</td><td>\u2014</td></tr>
+    <tr><td>Fer</td><td>Faible</td><td>1 h 30</td><td>Lingot de fer</td><td>72</td><td>8</td></tr>
+    <tr><td>Argent</td><td>Moyen</td><td>2 h</td><td>Lingot d'argent</td><td>90</td><td>10</td></tr>
+    <tr><td>Or</td><td>\u00C9lev\u00E9</td><td>3 h</td><td>Lingot d'or</td><td>126</td><td>14</td></tr>
+    <tr><td>Platine</td><td>Tr\u00E8s \u00E9lev\u00E9</td><td>4 h</td><td>Lingot de platine</td><td>180</td><td>18</td></tr>
+    <tr><td>Diamant</td><td>Rare</td><td>\u2014</td><td>Diamant brut</td><td>270</td><td>25</td></tr>
+  </tbody>
+</table>
+<h3>Utilisations des lingots</h3>
+<ul>
+  <li>Bijouterie : bracelets, colliers, bagues, diad\u00E8mes</li>
+  <li>Am\u00E9lioration du train personnel</li>
+  <li>Vente \u00E0 la boutique</li>
+</ul>`
+  },
+  {
+    id: 18,
+    name: "Les Animaux de Compagnie (Pets)",
+    icon: "\uD83D\uDC3E",
+    html: `<h3>Chiens</h3>
+<table class="wiki-table">
+  <thead>
+    <tr><th>Animal</th><th>Niveau</th><th>Prix (bons)</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Retriever</td><td>20</td><td>10 bleus</td></tr>
+    <tr><td>Pinscher</td><td>22</td><td>10 verts</td></tr>
+    <tr><td>Husky</td><td>24</td><td>10 violets</td></tr>
+    <tr><td>Hound</td><td>30</td><td>10 verts</td></tr>
+    <tr><td>Retriever (chiot)</td><td>50</td><td>25 bleus</td></tr>
+    <tr><td>Husky (chiot)</td><td>40</td><td>25 violets</td></tr>
+    <tr><td>Pinscher (chiot)</td><td>50</td><td>25 verts</td></tr>
+    <tr><td>Malamute</td><td>25</td><td>10 verts</td></tr>
+    <tr><td>Malamute (chiot)</td><td>50</td><td>25 verts</td></tr>
+  </tbody>
+</table>
+<h3>Chats</h3>
+<table class="wiki-table">
+  <thead>
+    <tr><th>Animal</th><th>Niveau</th><th>Prix (bons)</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Chat tabby</td><td>21</td><td>10 violets</td></tr>
+    <tr><td>Chat calico</td><td>23</td><td>10 bleus</td></tr>
+    <tr><td>Chat tuxedo</td><td>31</td><td>10 or</td></tr>
+    <tr><td>Chaton tabby</td><td>49</td><td>25 violets</td></tr>
+    <tr><td>Chaton calico</td><td>56</td><td>25 bleus</td></tr>
+    <tr><td>Chaton tuxedo</td><td>60</td><td>25 or</td></tr>
+  </tbody>
+</table>
+<h3>Chevaux</h3>
+<table class="wiki-table">
+  <thead>
+    <tr><th>Animal</th><th>Niveau</th><th>Prix (bons)</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Bay horse</td><td>27</td><td>10 bleus</td></tr>
+    <tr><td>Palomino</td><td>50</td><td>50 or</td></tr>
+    <tr><td>Pinto</td><td>50</td><td>50 verts</td></tr>
+    <tr><td>Shetland Pony</td><td>50</td><td>50 bleus</td></tr>
+    <tr><td>Andalusian</td><td>40</td><td>50 violets</td></tr>
+    <tr><td>Lipizzaner</td><td>48</td><td>50 or</td></tr>
+    <tr><td>Fjord Pony</td><td>52</td><td>50 verts</td></tr>
+    <tr><td>Appaloosa</td><td>61</td><td>75 bleus</td></tr>
+  </tbody>
+</table>
+<h3>Autres animaux</h3>
+<table class="wiki-table">
+  <thead>
+    <tr><th>Animal</th><th>Niveau</th><th>Prix (bons)</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Lapin blanc</td><td>31</td><td>10 verts</td></tr>
+    <tr><td>Lapin noir</td><td>50</td><td>25 violets</td></tr>
+    <tr><td>Lapin fluffy</td><td>41</td><td>25 or</td></tr>
+    <tr><td>\u00C2ne de Provence</td><td>43</td><td>25 bleus</td></tr>
+    <tr><td>\u00C2ne d'Anatolie</td><td>52</td><td>50 verts</td></tr>
+    <tr><td>\u00C2ne d'Andalousie</td><td>55</td><td>50 bleus</td></tr>
+    <tr><td>Cochon d'Inde Teddy</td><td>60</td><td>50 violets</td></tr>
+    <tr><td>Cochon d'Inde Sheba</td><td>64</td><td>75 verts</td></tr>
+    <tr><td>Cochon d'Inde Silkie</td><td>71</td><td>75 or</td></tr>
+  </tbody>
+</table>
+<h3>Oiseaux d\u00E9coratifs (Niveau 20)</h3>
+<p>Paons, Toucans, Perroquets, P\u00E9licans, H\u00E9rons, Flamants, Cygnes, Aras</p>
+<ul>
+  <li>Prix : 5 \u00E0 15 bons chacun</li>
+</ul>
+<h3>Nourrir les animaux de compagnie</h3>
+<ul>
+  <li>Donne XP et parfois des fournitures (\u224822% de chance, 29% pour les chevaux)</li>
+  <li>Taux d'obtention d'items pour les \u00E2nes et sanctuaire : \u22489%</li>
+</ul>
+<h3>Statistiques des bons</h3>
+<p>Pour tous les animaux de compagnie du jeu :</p>
+<ul>
+  <li><strong>Bons verts n\u00E9cessaires</strong> : 736</li>
+  <li><strong>Bons bleus n\u00E9cessaires</strong> : 854</li>
+  <li><strong>Bons violets n\u00E9cessaires</strong> : 771</li>
+  <li><strong>Bons dor\u00E9s n\u00E9cessaires</strong> : 338</li>
+  <li><strong>Bons poussin n\u00E9cessaires</strong> : 216</li>
+</ul>`
+  }
+];
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = sections1018Data;
+}
+
+const sections1927Data = [
+  {
+    id: 19,
+    name: "Niveaux d'Expérience & Récompenses",
+    icon: "⭐",
+    html: `<h3>Mécanique d'XP</h3>
+<ul>
+  <li>L'XP (étoiles bleues) est gagnée par toutes les actions</li>
+  <li>Plus le niveau est élevé, plus il faut d'XP</li>
+  <li>Jusqu'au niveau 50 : augmentation irrégulière</li>
+  <li>Niveaux 50-500 : +11 000 XP par niveau</li>
+  <li>Niveaux 500+ : +20 000 XP par niveau</li>
+</ul>
+
+<h3>Sources d'XP</h3>
+<ul>
+  <li>Récolte des cultures</li>
+  <li>Collecte des produits des machines</li>
+  <li>Livraisons camion, bateau, ville</li>
+  <li>Vente aux visiteurs (5 XP)</li>
+  <li>Réveil des animaux de compagnie</li>
+  <li>Ranimer les arbres/buissons des amis (~12 XP)</li>
+  <li>Pêche avec appâts</li>
+  <li>Collecte des pièges à canards/homards</li>
+  <li>Minage et collecte du minerai</li>
+  <li>Déblocage de nouveaux bâtiments</li>
+  <li>Placement de décorations</li>
+  <li>Pass de ferme</li>
+</ul>
+
+<h3>Seuils (à partir du niveau 15)</h3>
+<table class="wiki-table">
+<thead><tr><th>Niveaux</th><th>Nombre de paliers</th></tr></thead>
+<tbody>
+<tr><td>1-14</td><td>0</td></tr>
+<tr><td>15-24</td><td>1</td></tr>
+<tr><td>25-39</td><td>2</td></tr>
+<tr><td>40-59</td><td>3</td></tr>
+<tr><td>60-84</td><td>4</td></tr>
+<tr><td>85+</td><td>5</td></tr>
+</tbody>
+</table>
+
+<p>Chaque palier atteint dans la barre d'XP donne une récompense (matériaux, diamants, bons)</p>
+
+<h3>Récompenses régulières</h3>
+<ul>
+  <li><strong>Champs</strong> : 3 (niveaux 1-49), 2 (niveaux 50-99), 1 (niveaux 100-701), 1/4 niveaux (702-801), 1/10 niveaux (802+)</li>
+  <li><strong>Diamants</strong> : Offerts à certains niveaux clés</li>
+</ul>
+
+<h3>Tableau des déblocages (niveaux principaux)</h3>
+<table class="wiki-table">
+<thead><tr><th>Niveau</th><th>Déblocage</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Blé, poules, boutique</td></tr>
+<tr><td>2</td><td>Maïs, boulangerie</td></tr>
+<tr><td>3</td><td>Moulin à aliments</td></tr>
+<tr><td>5</td><td>Soja</td></tr>
+<tr><td>6</td><td>Laiterie, vaches</td></tr>
+<tr><td>7</td><td>Canne à sucre, sucrière</td></tr>
+<tr><td>8</td><td>Machine à pop-corn</td></tr>
+<tr><td>9</td><td>BBQ, carottes</td></tr>
+<tr><td>10</td><td>Cochons</td></tr>
+<tr><td>12</td><td>Second moulin</td></tr>
+<tr><td>13</td><td>Indigo, fromage</td></tr>
+<tr><td>14</td><td>Four à tartes</td></tr>
+<tr><td>15</td><td>Citrouille, pommiers</td></tr>
+<tr><td>16</td><td>Moutons</td></tr>
+<tr><td>17</td><td>Métier à tisser</td></tr>
+<tr><td>18</td><td>Coton, bateau</td></tr>
+<tr><td>19</td><td>Machine à coudre, framboisiers</td></tr>
+<tr><td>20</td><td>Piments</td></tr>
+<tr><td>21</td><td>Four à gâteaux</td></tr>
+<tr><td>22</td><td>Cerisiers, sirop</td></tr>
+<tr><td>24</td><td>Mine, tomates, fondeurs</td></tr>
+<tr><td>25</td><td>Agneaux</td></tr>
+<tr><td>26</td><td>Presse-agrumes, roses</td></tr>
+<tr><td>27</td><td>Canne à pêche, fraises, poissons</td></tr>
+<tr><td>29</td><td>Machine à glace, bananiers</td></tr>
+<tr><td>30</td><td>Filets de pêche, myrtilles</td></tr>
+<tr><td>32</td><td>Chèvres, pommes de terre, stand kebab</td></tr>
+<tr><td>33</td><td>Poiriers</td></tr>
+<tr><td>34</td><td>Ville (gare), laitue</td></tr>
+<tr><td>35</td><td>Confiturier</td></tr>
+<tr><td>37</td><td>Pêchers</td></tr>
+<tr><td>38</td><td>Bijouterie, oignons</td></tr>
+<tr><td>39</td><td>Extracteur de miel, abeilles</td></tr>
+<tr><td>40</td><td>Mûriers</td></tr>
+<tr><td>42</td><td>Kiosque à café, ail</td></tr>
+<tr><td>43</td><td>Olivier</td></tr>
+<tr><td>44</td><td>Bassin à homards</td></tr>
+<tr><td>45</td><td>Poireau</td></tr>
+<tr><td>46</td><td>Soupière</td></tr>
+<tr><td>47</td><td>Pastèque</td></tr>
+<tr><td>48</td><td>Chandellerie, chou</td></tr>
+<tr><td>49</td><td>Fleuriste</td></tr>
+<tr><td>50</td><td>Salon du canard, canards, cassissiers</td></tr>
+<tr><td>51</td><td>Machine à bonbons, betterave</td></tr>
+<tr><td>52</td><td>Vallée, prunier</td></tr>
+<tr><td>54</td><td>Saucerie, rhubarbe</td></tr>
+<tr><td>55</td><td>Piment vert</td></tr>
+<tr><td>56</td><td>Bar à sushi</td></tr>
+<tr><td>57</td><td>Champignons</td></tr>
+<tr><td>58</td><td>Bar à salade, myrtilliers</td></tr>
+<tr><td>59</td><td>Sésame</td></tr>
+<tr><td>60</td><td>Manguier</td></tr>
+<tr><td>61</td><td>Sandwicherie, Appaloosa</td></tr>
+<tr><td>62</td><td>Artichaut, écureuils</td></tr>
+<tr><td>64</td><td>Mixeur à smoothies</td></tr>
+<tr><td>65</td><td>Pois chiche</td></tr>
+<tr><td>66</td><td>Lys</td></tr>
+<tr><td>67</td><td>Fabricant de pâtes, cocotier</td></tr>
+<tr><td>68</td><td>Huiles essentielles</td></tr>
+<tr><td>69</td><td>Wok</td></tr>
+<tr><td>70</td><td>Chapelier</td></tr>
+<tr><td>71</td><td>Épinards, cochon d'Inde Silkie</td></tr>
+<tr><td>72</td><td>Cuisine à pâtes</td></tr>
+<tr><td>73</td><td>Gombo</td></tr>
+<tr><td>74</td><td>Goyavier</td></tr>
+<tr><td>75</td><td>Stand à hot-dogs</td></tr>
+<tr><td>76</td><td>Machine à donuts, 2e sucrière</td></tr>
+<tr><td>77</td><td>Cuisine à tacos, station à omelettes</td></tr>
+<tr><td>78</td><td>Fruit de la passion</td></tr>
+<tr><td>80</td><td>Stand à thé</td></tr>
+<tr><td>81</td><td>Marmite à fondue</td></tr>
+<tr><td>82</td><td>Aubergine</td></tr>
+<tr><td>84</td><td>Kiosque à bains</td></tr>
+<tr><td>86</td><td>Luffa</td></tr>
+<tr><td>87</td><td>Friteuse</td></tr>
+<tr><td>88</td><td>Poireau</td></tr>
+<tr><td>91</td><td>Station de conservation</td></tr>
+<tr><td>92</td><td>Gingembre</td></tr>
+<tr><td>94</td><td>Atelier de poterie</td></tr>
+<tr><td>96</td><td>Lavande</td></tr>
+<tr><td>99</td><td>Boutique de fudge</td></tr>
+<tr><td>100</td><td>Fleur de sureau</td></tr>
+<tr><td>103</td><td>Yaourtière</td></tr>
+<tr><td>104</td><td>Chou kale</td></tr>
+<tr><td>106</td><td>Marmite</td></tr>
+<tr><td>107</td><td>Grenadier</td></tr>
+<tr><td>108</td><td>Papaye</td></tr>
+<tr><td>109</td><td>Machine à cupcakes</td></tr>
+<tr><td>110</td><td>Parfumerie</td></tr>
+<tr><td>112</td><td>Daikon</td></tr>
+<tr><td>114</td><td>Gaufrier</td></tr>
+<tr><td>116</td><td>Vanille</td></tr>
+<tr><td>117</td><td>—</td></tr>
+<tr><td>119</td><td>Bar à porridge</td></tr>
+<tr><td>120</td><td>Wasabi</td></tr>
+<tr><td>124</td><td>Bar à milkshakes</td></tr>
+<tr><td>125</td><td>Piment doux</td></tr>
+<tr><td>126+</td><td>Plus que diamants et champs</td></tr>
+</tbody>
+</table>`
+  },
+  {
+    id: 20,
+    name: "Niveaux de Réputation",
+    icon: "🏆",
+    html: `<h3>Fonctionnement</h3>
+<ul>
+  <li>Gagnés en servant les visiteurs de la ville</li>
+  <li>Les visiteurs rapportent des points de réputation</li>
+  <li>Plus le niveau est élevé, plus vous pouvez améliorer les bâtiments</li>
+</ul>
+
+<h3>Niveaux max</h3>
+<ul>
+  <li><strong>Niveau de réputation actuel max</strong> : varie selon les mises à jour</li>
+  <li><strong>Niveau 38</strong> : dernier niveau pour maxer tous les bâtiments à 100%</li>
+</ul>
+
+<h3>Améliorations de la mairie</h3>
+<ul>
+  <li>Capacité d'accueil augmente avec chaque niveau</li>
+  <li>Matériaux nécessaires : planches, vis, clous, marteaux, peinture</li>
+</ul>`
+  },
+  {
+    id: 21,
+    name: "Extension du Territoire",
+    icon: "🗺️",
+    html: `<h3>Types d'extension</h3>
+<ol>
+  <li><strong>Terrain de la ferme</strong> : agrandit l'espace cultivable</li>
+  <li><strong>Terrain du lac</strong> : agrandit autour du lac de pêche</li>
+  <li><strong>Terrain de la ville</strong> : agrandit la ville</li>
+  <li><strong>Terrain du sanctuaire</strong> : zones spéciales</li>
+</ol>
+
+<h3>Matériaux d'extension</h3>
+<table class="wiki-table">
+<thead><tr><th>Type</th><th>Matériaux</th></tr></thead>
+<tbody>
+<tr><td>Ferme</td><td>Planches, vis, ruban adhésif</td></tr>
+<tr><td>Lac</td><td>Clous, marteaux, panneaux de bois</td></tr>
+<tr><td>Ville</td><td>Pièces de carte, piquets, maillets, acte de propriété</td></tr>
+<tr><td>Sanctuaires</td><td>Pièces de carte</td></tr>
+</tbody>
+</table>
+
+<h3>Permis d'extension</h3>
+<ul>
+  <li>Utilisés pour débloquer certaines zones spéciales</li>
+  <li>Obtenus via : Derby, Valley, Pass de ferme</li>
+</ul>
+
+<h3>Autres matériaux</h3>
+<ul>
+  <li><strong>Matériaux de construction</strong> : pour améliorer les bâtiments de la ville</li>
+  <li><strong>Matériaux de nettoyage</strong> : haches, dynamite, pioches, scies, bombes TNT</li>
+  <li>Pour enlever souches, rochers, buissons, arbres morts</li>
+</ul>`
+  },
+  {
+    id: 22,
+    name: "Le Pass de Ferme (Farm Pass)",
+    icon: "🎟️",
+    html: `<h3>Fonctionnement</h3>
+<ul>
+  <li>Système de saison (environ 1 mois)</li>
+  <li>Complétez des missions pour gagner des points de pass</li>
+  <li>Débloquez des paliers de récompenses</li>
+</ul>
+
+<h3>Types</h3>
+<ul>
+  <li><strong>Pass gratuit</strong> : récompenses de base</li>
+  <li><strong>Pass premium</strong> (diamants) : récompenses supplémentaires exclusives</li>
+</ul>
+
+<h3>Récompenses</h3>
+<ul>
+  <li>Pièces, diamants, matériaux d'expansion</li>
+  <li>Décorations saisonnières exclusives</li>
+  <li>Bons, pièces de puzzle</li>
+  <li>Permis d'extension</li>
+</ul>`
+  },
+  {
+    id: 23,
+    name: "Les Boosters",
+    icon: "🚀",
+    html: `<h3>Fonctionnement</h3>
+<ul>
+  <li>Cartes à usage unique qui donnent des bonus temporaires</li>
+  <li>Obtenues via : Derby, coffres mystères, Pass de ferme</li>
+  <li>Durée limitée (30 min à plusieurs heures)</li>
+  <li>Stackables mais un seul type actif à la fois</li>
+</ul>
+
+<h3>Types de boosters</h3>
+<table class="wiki-table">
+<thead><tr><th>Booster</th><th>Effet</th></tr></thead>
+<tbody>
+<tr><td>Pièces +50%</td><td>Multiplie les pièces des ventes boutique</td></tr>
+<tr><td>XP +50%</td><td>Multiplie l'XP gagnée</td></tr>
+<tr><td>Bateau +50%/+100%</td><td>Multiplie les récompenses des bateaux</td></tr>
+<tr><td>Camion +50%</td><td>Multiplie les récompenses des camions</td></tr>
+<tr><td>Ville X2</td><td>Double l'XP/récompenses de la ville</td></tr>
+<tr><td>Machine rapide</td><td>Accélère la production d'une machine</td></tr>
+<tr><td>Pêche rapide</td><td>Réduit le temps de pêche</td></tr>
+<tr><td>Récolte rapide</td><td>Réduit le temps de croissance des cultures</td></tr>
+<tr><td>Ami productif</td><td>Tom produit plus longtemps</td></tr>
+</tbody>
+</table>`
+  },
+  {
+    id: 24,
+    name: "Personnages Spéciaux",
+    icon: "👤",
+    html: `<h3>Tom</h3>
+<ul>
+  <li><strong>Déblocage</strong> : Niveau 1</li>
+  <li>Peut être appelé gratuitement (cooldown) ou avec des diamants</li>
+  <li>Va chercher des produits que vous lui demandez</li>
+  <li>Utile pour les articles rares ou les commandes urgentes</li>
+</ul>
+
+<h3>Greg (le voisin)</h3>
+<ul>
+  <li>Ferme de démonstration</li>
+  <li>Visitable quotidiennement</li>
+  <li>Sa boutique contient parfois des articles rares</li>
+  <li>Donne un cadeau en visitant</li>
+</ul>
+
+<h3>Rose</h3>
+<ul>
+  <li>Assistante de ferme</li>
+  <li>S'occupe automatiquement des animaux (nourriture)</li>
+  <li>Payée en pièces</li>
+</ul>
+
+<h3>Ernest</h3>
+<ul>
+  <li>Assistant de production</li>
+  <li>Utilise les machines automatiquement</li>
+  <li>Payé en pièces</li>
+</ul>
+
+<h3>Maggie</h3>
+<ul>
+  <li>Designer de la ferme</li>
+  <li>Propose des designs de ferme</li>
+  <li>Accessible via la boutique</li>
+</ul>
+
+<h3>Alfred</h3>
+<ul>
+  <li>Le facteur</li>
+  <li>Apporte des cadeaux aléatoires</li>
+  <li>Apparaît occasionnellement</li>
+</ul>`
+  },
+  {
+    id: 25,
+    name: "Astuces & Optimisations Avancées",
+    icon: "💡",
+    html: `<h3>Pour gagner des pièces (débutant)</h3>
+<ol>
+  <li><strong>Niveaux 1-16</strong> : Bacon & Œufs, Cookies, Pop-corn au beurre</li>
+  <li><strong>Niveaux 17-30</strong> : Tourtes, produits laitiers, chemises en coton</li>
+  <li><strong>Niveaux 31-50</strong> : Confitures, bijoux, gâteaux</li>
+  <li><strong>Niveaux 50+</strong> : Sandwichs, smoothies, plats cuisinés</li>
+</ol>
+
+<h3>Pour gagner de l'XP rapidement</h3>
+<ol>
+  <li>Gardez TOUTES les machines en production constante</li>
+  <li>Plantez des cultures rapides (blé/maïs) en boucle</li>
+  <li>Remplissez les commandes camion</li>
+  <li>Servez les visiteurs de la ville en priorité</li>
+  <li>Réveillez tous vos animaux de compagnie quotidiennement</li>
+  <li>Ranimez les arbres des amis</li>
+  <li>Activez les boosters XP pendant les sessions intensives</li>
+</ol>
+
+<h3>Meilleurs produits par rentabilité (pièces/heure)</h3>
+<ol>
+  <li>Smoothies tropicaux</li>
+  <li>Bijoux (diadème en diamant)</li>
+  <li>Confitures de fruits rares</li>
+  <li>Plats du wok</li>
+  <li>Sandwichs spéciaux</li>
+</ol>
+
+<h3>Gestion des machines</h3>
+<ul>
+  <li>Utilisez TOUS les slots disponibles</li>
+  <li>Stackez les produits (jusqu'à 52) pour les tâches Derby</li>
+  <li>Priorisez les machines avec les temps les plus longs la nuit</li>
+  <li>Verrouillez 1 à 2 slots pour les articles Derby</li>
+</ul>
+
+<h3>Stratégie ville</h3>
+<ul>
+  <li>La ville est <strong>le meilleur moyen de monter de niveau</strong></li>
+  <li>Améliorez d'abord le temps dans les bâtiments</li>
+  <li>Utilisez le train personnel pour aller chez les voisins</li>
+  <li>Servez complètement chaque visiteur (ne faites pas moitié)</li>
+  <li>Les événements ville double réputation sont à prioriser absolument</li>
+</ul>
+
+<h3>Stratégie Derby</h3>
+<ul>
+  <li>Choisissez des tâches que vous pouvez compléter facilement</li>
+  <li>Évitez les tâches qui bloquent longtemps (8+ heures)</li>
+  <li>Coordonnez-vous avec votre voisinage</li>
+  <li>Les tâches de production (320pts) sont souvent les plus rapides</li>
+  <li>Préparez des articles à l'avance (stacking)</li>
+  <li>Utilisez des boosters pendant le Derby</li>
+</ul>
+
+<h3>Gestion du silo et de la grange</h3>
+<ul>
+  <li>Ne stockez pas trop de produits de base (blé, maïs)</li>
+  <li>Vendez le surplus à la boutique au prix max</li>
+  <li>Gardez toujours un stock de matériaux d'expansion</li>
+  <li>Équilibrez votre production pour ne pas saturer</li>
+</ul>
+
+<h3>Astuces diverses</h3>
+<ul>
+  <li><strong>Blé</strong> : plante rapide, excellent pour trouver des matériaux dans le journal</li>
+  <li><strong>Visiteurs</strong> : ils paient moins que la boutique — sauf pendant les événements</li>
+  <li><strong>Bateaux</strong> : bons pour l'XP, mauvais pour les pièces</li>
+  <li><strong>Tom</strong> : utilisez-le pour les articles longs à produire</li>
+  <li><strong>Arbres fruitiers</strong> : plantez beaucoup pour un revenu passif régulier</li>
+  <li><strong>Ne vous précipitez pas</strong> : Hay Day n'a pas de fin, prendre son temps est la clé</li>
+  <li><strong>Voisinage actif</strong> : rejoignez un voisinage qui partage et s'entraide</li>
+  <li><strong>Journal</strong> : vérifiez régulièrement pour des matériaux d'expansion à bon prix</li>
+</ul>`
+  },
+  {
+    id: 26,
+    name: "Événements & Calendrier",
+    icon: "📅",
+    html: `<h3>Événements hebdomadaires typiques</h3>
+<table class="wiki-table">
+<thead><tr><th>Jour</th><th>Événement possible</th></tr></thead>
+<tbody>
+<tr><td>Lundi</td><td>Roue de la fortune (pièces de puzzle)</td></tr>
+<tr><td>Mardi</td><td>Événement camion (x2 pièces ou matériaux)</td></tr>
+<tr><td>Mercredi</td><td>Visiteurs x2 / Bateau bonus</td></tr>
+<tr><td>Jeudi</td><td>Derby / Événement de pêche</td></tr>
+<tr><td>Vendredi</td><td>Événement ville / Tom</td></tr>
+<tr><td>Week-end</td><td>Événement global / Tournoi de pêche / Double XP</td></tr>
+</tbody>
+</table>
+
+<h3>Événements saisonniers</h3>
+<ul>
+  <li><strong>Printemps</strong> : Festival du printemps (mai)</li>
+  <li><strong>Été</strong> : Anniversaire Hay Day (juin) — événements spéciaux</li>
+  <li><strong>Automne</strong> : Halloween — décorations et recettes spéciales</li>
+  <li><strong>Hiver</strong> : Noël / Nouvel An — thème hivernal</li>
+</ul>
+
+<h3>Événements spéciaux 2026</h3>
+<ul>
+  <li>Février 2026 : Roue de la fortune (pièces de puzzle)</li>
+  <li>Avril 2026 : Tournoi de pêche</li>
+  <li>Mai 2026 : Festival du printemps</li>
+  <li>Juin 2026 : 14e anniversaire de Hay Day</li>
+</ul>`
+  },
+  {
+    id: 27,
+    name: "Codes Promotionnels",
+    icon: "🎁",
+    html: `<h3>Codes valides (Juin 2026 - vérifiez dans le jeu)</h3>
+<table class="wiki-table">
+<thead><tr><th>Code</th><th>Récompense</th></tr></thead>
+<tbody>
+<tr><td>SPRING2026</td><td>5 diamants</td></tr>
+<tr><td>FARMINGPRO</td><td>10 000 pièces</td></tr>
+<tr><td>SUPERCELL10</td><td>10 diamants</td></tr>
+</tbody>
+</table>
+
+<p><em>Note : Les codes sont limités dans le temps. Activez-les dans la boutique du jeu ou sur store.supercell.com</em></p>`
+  },
+  {
+    id: 28,
+    name: "FAQ",
+    icon: "❓",
+    html: `<h3>Questions fr\u00e9quentes</h3>
+<dl>
+  <dt><strong>Q: Quel est le niveau max ?</strong></dt>
+  <dd>Le jeu n'a pas de niveau max officiel. Les d\u00e9blocages s'arr\u00eatent au niveau ~126, mais vous pouvez continuer \u00e0 monter jusqu'au niveau 500+.</dd>
+
+  <dt><strong>Q: Comment avoir plus de champs ?</strong></dt>
+  <dd>Tous les 2 niveaux (3 champs jusqu'au niveau 49, 2 jusqu'au 99, 1 par la suite).</dd>
+
+  <dt><strong>Q: Les diamants sont-ils n\u00e9cessaires ?</strong></dt>
+  <dd>Non, le jeu est parfaitement jouable sans d\u00e9penser. Les diamants acc\u00e9l\u00e8rent seulement les choses.</dd>
+
+  <dt><strong>Q: Quelle est la meilleure culture pour les pi\u00e8ces ?</strong></dt>
+  <dd>D\u00e9butant : Bl\u00e9 (rotation rapide). Interm\u00e9diaire : Coton. Avanc\u00e9 : M\u00fbres, Fruits de la passion.</dd>
+
+  <dt><strong>Q: Comment agrandir sa ferme rapidement ?</strong></dt>
+  <dd>Concentrez-vous sur un type d'extension \u00e0 la fois. Utilisez le journal. Rejoignez un voisinage actif qui partage les mat\u00e9riaux.</dd>
+
+  <dt><strong>Q: \u00c0 quoi servent les pi\u00e8ces de puzzle ?</strong></dt>
+  <dd>\u00c0 d\u00e9bloquer les animaux du sanctuaire (36 pi\u00e8ces par animal).</dd>
+</dl>`
+  },
+  {
+    id: 29,
+    name: "Ressources utiles",
+    icon: "🔗",
+    html: `<h3>Liens utiles</h3>
+<ul>
+  <li><strong>Site officiel</strong> : <a href="https://supercell.com/en/games/hayday" target="_blank" rel="noopener">supercell.com/en/games/hayday</a></li>
+  <li><strong>Wiki officiel</strong> : <a href="https://hayday.fandom.com" target="_blank" rel="noopener">hayday.fandom.com</a></li>
+  <li><strong>Calculateur de production</strong> : <a href="https://hayday.info/production_guide" target="_blank" rel="noopener">hayday.info/production_guide</a></li>
+  <li><strong>Discord communautaire</strong> : <a href="https://discord.gg/hayday" target="_blank" rel="noopener">discord.gg/hayday</a></li>
+  <li><strong>Support Supercell</strong> : <a href="https://support.supercell.com/hay-day" target="_blank" rel="noopener">support.supercell.com/hay-day</a></li>
+</ul>
+
+<p><em>Disclaimer : Ce guide est une ressource non-officielle cr\u00e9\u00e9e par des fans. Hay Day est une marque d\u00e9pos\u00e9e de Supercell. Les donn\u00e9es sont bas\u00e9es sur la version 1.58+ (Juin 2026). Les prix et m\u00e9caniques peuvent changer avec les mises \u00e0 jour.</em></p>`
+  }
+];
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = sections1927Data;
+}
+
+(() => {
+  'use strict';
+
+const allSections = [
+    { id: 0, name: "Accueil", icon: "🏠", type: "home" },
+    ...sections17Data,
+    { id: 8, name: "Liste Complète des Produits", icon: "📦", type: "products" },
+    { id: 9, name: "Prix de Vente par Quantité", icon: "💰", type: "prices" },
+    ...sections1018Data,
+    ...sections1927Data
+];
+
+  let currentSection = 0;
+
+  const app = document.getElementById('app');
+  const sidebarNav = document.getElementById('sidebar-nav');
+  const backToTop = document.getElementById('back-to-top');
+
+  function getSection(id) {
+    return allSections.find(s => s.id === id);
+  }
+
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  function formatTime(time) {
+    if (time === '?' || !time) return '<span class="product-time unknown">?</span>';
+    if (/^\d+$/.test(time)) return `<span class="product-time">${time} h</span>`;
+    return `<span class="product-time">${time}</span>`;
+  }
+
+  function sortTime(a, b) {
+    const toMin = (t) => {
+      if (t === '?' || !t) return Infinity;
+      let m = 0;
+      const d = t.match(/(\d+)\s*j/);
+      if (d) m += parseInt(d[1]) * 1440;
+      const h = t.match(/(\d+)\s*h/);
+      if (h) m += parseInt(h[1]) * 60;
+      const min = t.match(/(\d+)\s*min/);
+      if (min) m += parseInt(min[1]);
+      if (/^\d+$/.test(t)) m += parseInt(t) * 60;
+      return m;
+    };
+    return toMin(a) - toMin(b);
+  }
+
+  function renderNav() {
+    let html = '';
+    const groups = [
+      { title: "🏠 Accueil", range: [0] },
+      { title: "🏡 Présentation", range: [1, 3] },
+      { title: "🌿 Ressources", range: [4, 7] },
+      { title: "📦 Produits", range: [8] },
+      { title: "💰 Prix", range: [9] },
+      { title: "🚂 Ville & Transport", range: [10, 12] },
+      { title: "🏆 Compétition", range: [13, 14] },
+      { title: "🦒 Sanctuaire", range: [15] },
+      { title: "🎣 Pêche & Mine", range: [16, 17] },
+      { title: "🐾 Animaux", range: [18] },
+      { title: "⭐ Progression", range: [19, 21] },
+      { title: "🎮 Fonctionnalités", range: [22, 24] },
+      { title: "💡 Astuces", range: [25] },
+      { title: "📅 Événements", range: [26, 27] },
+      { title: "❓ FAQ & Liens", range: [28, 29] }
+    ];
+
+    groups.forEach(group => {
+      html += '<div class="nav-section">';
+      html += '<div class="nav-section-title">' + group.title + '</div>';
+      allSections.forEach(s => {
+        if (group.range.length === 2) {
+          if (s.id < group.range[0] || s.id > group.range[1]) return;
+        } else {
+          if (s.id !== group.range[0]) return;
+        }
+        const active = currentSection === s.id ? ' active' : '';
+        html += `<a class="nav-item${active}" data-id="${s.id}">${s.icon} ${s.name}</a>`;
+      });
+      html += '</div>';
+    });
+
+    sidebarNav.innerHTML = html;
+
+    sidebarNav.querySelectorAll('.nav-item').forEach(item => {
+      item.addEventListener('click', () => {
+        navigateTo(parseInt(item.dataset.id));
+      });
+    });
+  }
+
+  function navigateTo(id) {
+    currentSection = id;
+    renderNav();
+    renderView();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function renderHome() {
+    const tocSections = allSections.filter(s => s.id > 0).sort((a, b) => a.id - b.id);
+    let html = '';
+    html += '<div class="page-header home-header">';
+    html += '<h1>🏠 Hay Day — Guide Complet</h1>';
+    html += '<div class="home-meta">';
+    html += '<p><strong>Version du jeu :</strong> 1.58+ (Juin 2026)</p>';
+    html += '<p><strong>Développeur :</strong> Supercell (Finlande)</p>';
+    html += '<p><strong>Date de sortie :</strong> 21 Juin 2012</p>';
+    html += '<p><strong>Plateformes :</strong> iOS, Android</p>';
+    html += '<p><strong>Genre :</strong> Simulation agricole</p>';
+    html += '<p><strong>Téléchargements :</strong> 500M+</p>';
+    html += '</div>';
+    html += '<p class="home-desc">Guide exhaustif non-officiel regroupant toutes les informations essentielles du jeu Hay Day par Supercell.</p>';
+    html += '</div>';
+
+    html += '<div class="home-toc">';
+    html += '<h2>📖 Table des matières</h2>';
+    html += '<div class="toc-grid">';
+    tocSections.forEach(s => {
+      const typeLabel = s.type === 'products' ? '📦' : s.type === 'prices' ? '💰' : s.icon || '📄';
+      html += `<a class="toc-item" data-id="${s.id}">${typeLabel} <span>${s.name}</span></a>`;
+    });
+    html += '</div></div>';
+
+    html += '<div class="home-footer">';
+    html += '<p><em>Disclaimer : Ce guide est une ressource non-officielle créée par des fans. Hay Day est une marque déposée de Supercell. Les données sont basées sur la version 1.58+ (Juin 2026). Les prix et mécaniques peuvent changer avec les mises à jour.</em></p>';
+    html += '</div>';
+
+    app.innerHTML = html;
+
+    app.querySelectorAll('.toc-item').forEach(item => {
+      item.addEventListener('click', () => {
+        navigateTo(parseInt(item.dataset.id));
+      });
+    });
+  }
+
+  function renderView() {
+    const section = getSection(currentSection);
+    if (!section) return;
+    if (section.type === 'home') renderHome();
+    else if (section.type === 'products') renderProducts();
+    else if (section.type === 'prices') renderPrices();
+    else renderTextSection(section);
+    updateBackToTop();
+  }
+
+  function renderTextSection(section) {
+    let html = '';
+    html += '<div class="page-header">';
+    html += `<h2>${section.icon} ${section.name}</h2>`;
+    html += '</div>';
+    html += '<div class="content section-content">';
+    html += section.html || '<p>Contenu non disponible.</p>';
+    html += '</div>';
+    app.innerHTML = html;
+  }
+
+  function renderProducts() {
+    if (!productsData) return;
+
+    const searchTerm = (document.getElementById('product-search')?.value || '').toLowerCase();
+    const sortBy = document.getElementById('product-sort')?.value || 'name';
+    const catFilter = document.getElementById('product-cat')?.value || 'all';
+
+    let filtered = [];
+    if (catFilter === 'all') {
+      productsData.forEach(cat => {
+        cat.products.forEach(p => {
+          filtered.push({ ...p, category: cat.name, catId: cat.id });
+        });
+      });
+    } else {
+      const cat = productsData.find(c => c.id === parseInt(catFilter));
+      if (cat) {
+        cat.products.forEach(p => filtered.push({ ...p, category: cat.name, catId: cat.id }));
+      }
+    }
+
+    if (searchTerm) {
+      filtered = filtered.filter(p => p.name.toLowerCase().includes(searchTerm));
+    }
+    if (catFilter !== 'all' && !searchTerm) {
+    }
+
+    if (sortBy === 'name') filtered.sort((a, b) => a.name.localeCompare(b.name, 'fr'));
+    else if (sortBy === 'price-asc') filtered.sort((a, b) => a.price - b.price);
+    else if (sortBy === 'price-desc') filtered.sort((a, b) => b.price - a.price);
+    else if (sortBy === 'time') filtered.sort((a, b) => sortTime(a.time, b.time));
+    else if (sortBy === 'cat') filtered.sort((a, b) => a.catId - b.catId || a.name.localeCompare(b.name, 'fr'));
+
+    const unknownTime = filtered.filter(p => p.time === '?').length;
+    const totalPrice = filtered.reduce((sum, p) => sum + p.price, 0);
+
+    let html = '';
+    html += '<div class="page-header">';
+    html += '<h2>📦 Liste Complète des Produits</h2>';
+    html += '<p>' + filtered.length + ' produit' + (filtered.length > 1 ? 's' : '') + ' — ' + productsData.reduce((s, c) => s + c.products.length, 0) + ' au total</p>';
+    html += '</div>';
+    html += '<div class="content">';
+
+    html += '<div class="filter-bar">';
+    html += '<input type="text" id="product-search" placeholder="Rechercher un produit…" value="' + escapeHtml(document.getElementById('product-search')?.value || '') + '">';
+    html += '<select id="product-cat">';
+    html += '<option value="all"' + (catFilter === 'all' ? ' selected' : '') + '>Toutes les catégories</option>';
+    productsData.forEach(c => {
+      html += '<option value="' + c.id + '"' + (catFilter === String(c.id) ? ' selected' : '') + '>' + c.icon + ' ' + c.name + '</option>';
+    });
+    html += '</select>';
+    html += '<select id="product-sort">';
+    html += '<option value="name"' + (sortBy === 'name' ? ' selected' : '') + '>Tri : Nom</option>';
+    html += '<option value="cat"' + (sortBy === 'cat' ? ' selected' : '') + '>Tri : Catégorie</option>';
+    html += '<option value="price-asc"' + (sortBy === 'price-asc' ? ' selected' : '') + '>Tri : Prix ↑</option>';
+    html += '<option value="price-desc"' + (sortBy === 'price-desc' ? ' selected' : '') + '>Tri : Prix ↓</option>';
+    html += '<option value="time"' + (sortBy === 'time' ? ' selected' : '') + '>Tri : Temps</option>';
+    html += '</select>';
+    html += '</div>';
+
+    html += '<div class="stats-bar">';
+    html += '<span class="stat">Produits : <span class="stat-value">' + filtered.length + '</span></span>';
+    html += '<span class="stat">Prix moyen : <span class="stat-value">' + (filtered.length ? Math.round(totalPrice / filtered.length) : 0) + ' pièces</span></span>';
+    if (unknownTime > 0) {
+      html += '<span class="stat">Temps inconnu : <span class="stat-value">' + unknownTime + '</span></span>';
+    }
+    html += '</div>';
+
+    if (filtered.length === 0) {
+      html += '<div class="empty-state"><div class="icon">🔍</div><h3>Aucun résultat</h3><p>Essayez de modifier votre recherche.</p></div>';
+    } else {
+      html += '<div class="category-card"><table class="product-table">';
+      html += '<thead><tr><th>Produit</th><th>Catégorie</th><th>Prix max</th><th>Temps</th></tr></thead><tbody>';
+      filtered.forEach(p => {
+        html += '<tr><td class="product-name">' + escapeHtml(p.name) + '</td><td>' + escapeHtml(p.category) + '</td><td class="product-price">' + p.price + '</td><td>' + formatTime(p.time) + '</td></tr>';
+      });
+      html += '</tbody></table></div>';
+    }
+
+    html += '</div>';
+    app.innerHTML = html;
+
+    document.getElementById('product-search').addEventListener('input', () => renderProducts());
+    document.getElementById('product-cat').addEventListener('change', () => renderProducts());
+    document.getElementById('product-sort').addEventListener('change', () => renderProducts());
+  }
+
+  function renderPrices() {
+    if (!pricesData) return;
+
+    const searchTerm = (document.getElementById('price-search')?.value || '').toLowerCase();
+    const sectionFilter = document.getElementById('price-section')?.value || 'all';
+
+    let selectedSections = [];
+    if (sectionFilter === 'all') {
+      selectedSections = pricesData.filter(s => s.id > 0);
+    } else {
+      const s = pricesData.find(s => s.id === parseInt(sectionFilter));
+      if (s) selectedSections = [s];
+    }
+
+    let html = '';
+    html += '<div class="page-header">';
+    html += '<h2>💰 Prix de Vente par Quantité</h2>';
+    html += '<p>Prix par quantité (boutique en bord de route) — coefficients multiplicateurs inclus</p>';
+    html += '</div>';
+    html += '<div class="content">';
+
+    html += '<div class="filter-bar">';
+    html += '<input type="text" id="price-search" placeholder="Rechercher un produit…" value="' + escapeHtml(document.getElementById('price-search')?.value || '') + '">';
+    html += '<select id="price-section">';
+    html += '<option value="all"' + (sectionFilter === 'all' ? ' selected' : '') + '>Toutes les sections</option>';
+    pricesData.filter(s => s.id > 0).forEach(s => {
+      html += '<option value="' + s.id + '"' + (sectionFilter === String(s.id) ? ' selected' : '') + '>' + s.icon + ' ' + s.name + '</option>';
+    });
+    html += '</select>';
+    html += '</div>';
+
+    const renderTable = (rows, headers) => {
+      const filtered = searchTerm ? rows.filter(r => r.name.toLowerCase().includes(searchTerm)) : rows;
+      if (filtered.length === 0) return '';
+
+      let t = '<div class="price-table-wrapper"><table class="price-table">';
+      t += '<thead><tr>';
+      if (headers) {
+        headers.forEach(h => { t += '<th>' + escapeHtml(h) + '</th>'; });
+      } else {
+        t += '<th>Produit</th>';
+        for (let i = 1; i <= 10; i++) t += '<th>' + i + '</th>';
+      }
+      t += '</tr></thead><tbody>';
+      filtered.forEach(r => {
+        t += '<tr><td>' + escapeHtml(r.name) + '</td>';
+        r.prices.forEach(pr => { t += '<td>' + pr + '</td>'; });
+        t += '</tr>';
+      });
+      t += '</tbody></table></div>';
+      return t;
+    };
+
+    let anyVisible = false;
+    selectedSections.forEach(sec => {
+      if (sec.subGroups) {
+        sec.subGroups.forEach(sg => {
+          const tableHtml = renderTable(sg.rows, sec.headers);
+          if (tableHtml) {
+            html += '<div class="category-card"><div class="subgroup-header">' + escapeHtml(sg.name) + '</div>' + tableHtml + '</div>';
+            anyVisible = true;
+          }
+        });
+      } else {
+        const tableHtml = renderTable(sec.rows, sec.headers);
+        if (tableHtml) {
+          html += '<div class="category-card"><div class="category-header"><span class="icon">' + sec.icon + '</span>' + escapeHtml(sec.name) + '</div>' + tableHtml + '</div>';
+          anyVisible = true;
+        }
+      }
+    });
+
+    if (!anyVisible && searchTerm) {
+      html += '<div class="empty-state"><div class="icon">🔍</div><h3>Aucun résultat</h3><p>Essayez de modifier votre recherche.</p></div>';
+    }
+
+    html += '</div>';
+    app.innerHTML = html;
+
+    const si = document.getElementById('price-search');
+    if (si) si.addEventListener('input', () => renderPrices());
+    const ps = document.getElementById('price-section');
+    if (ps) ps.addEventListener('change', () => renderPrices());
+  }
+
+  function updateBackToTop() {
+    window.removeEventListener('scroll', updateBackToTop._handler);
+    updateBackToTop._handler = () => {
+      backToTop.classList.toggle('visible', window.scrollY > 400);
+    };
+    window.addEventListener('scroll', updateBackToTop._handler);
+    backToTop.classList.toggle('visible', window.scrollY > 400);
+  }
+
+  backToTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  renderNav();
+  navigateTo(0);
+
+})();
+
+  </script>
+</body>
+</html>
